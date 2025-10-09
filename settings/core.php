@@ -7,18 +7,20 @@ if (session_status() == PHP_SESSION_NONE) {
 
 /**
  * Check if user is logged in.
- * Works with both $_SESSION['user'] (array) or individual session keys like 'user_id'
+ * Works with $_SESSION['user'] (array), or individual session keys like 'user_id', 'user_role', 'user_name'.
  */
 function isUserLoggedIn() {
     if (isset($_SESSION['user']) && !empty($_SESSION['user'])) return true;
     if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])) return true;
+    if (isset($_SESSION['user_role']) && !empty($_SESSION['user_role'])) return true;
+    if (isset($_SESSION['user_name']) && !empty($_SESSION['user_name'])) return true;
     return false;
 }
 
 /**
  * Check if current logged in user is admin.
- * Works with $_SESSION['user']['role'] or $_SESSION['role'].
- * We consider role value 1 (administrator) or string 'admin' as admin.
+ * Works with $_SESSION['user']['role'], $_SESSION['role'], or $_SESSION['user_role'].
+ * Only users with role value 2 (numeric or string) are admins.
  */
 function isAdmin() {
     if (!isUserLoggedIn()) return false;
@@ -27,12 +29,14 @@ function isAdmin() {
         $role = $_SESSION['user']['role'];
     } elseif (isset($_SESSION['role'])) {
         $role = $_SESSION['role'];
+    } elseif (isset($_SESSION['user_role'])) {
+        $role = $_SESSION['user_role'];
     } else {
         return false;
     }
 
-    // Accept numeric 1 or 'admin'
-    if ($role === 1 || $role === '1' || strtolower((string)$role) === 'admin') {
+    // Only accept numeric 2 or string '2' as admin
+    if ($role === 2 || $role === '2') {
         return true;
     }
     return false;

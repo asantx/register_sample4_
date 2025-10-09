@@ -150,12 +150,12 @@
                                 <label class="form-label">Register As</label>
                                 <div class="d-flex justify-content-start">
                                     <div class="form-check me-3 custom-radio">
-                                        <input class="form-check-input" type="radio" name="role" id="customer" value="1" checked>
-                                        <label class="form-check-label" for="customer">Customer</label>
+                                        <input class="form-check-input" type="radio" name="role" id="smitten" value="1" checked>
+                                        <label class="form-check-label" for="customer">Smitten</label>
                                     </div>
                                     <div class="form-check custom-radio">
-                                        <input class="form-check-input" type="radio" name="role" id="owner" value="2">
-                                        <label class="form-check-label" for="owner">Restaurant Owner</label>
+                                        <input class="form-check-input" type="radio" name="role" id="cupid" value="2">
+                                        <label class="form-check-label" for="cupid">Cupid</label>
                                     </div>
                                 </div>
                             </div>
