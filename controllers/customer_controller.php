@@ -10,4 +10,9 @@ function check_email_ctr($email) {
     $customer = new Customer();
     return $customer->checkEmailExists($email);
 }
+
+function login_customer_ctr($email, $password) {
+    $customer = new Customer();
+    return $customer->verifyCustomerLogin($email, $password);
+}
 ?>
