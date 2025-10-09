@@ -47,13 +47,26 @@ $(document).ready(function() {
 		// AJAX submit
 		$.post('../actions/login_customer_action.php', formData, function(response) {
 			if (response.status === 'success') {
-				alert('Login successful! Redirecting...');
-				window.location.href = '../index.php';
+				Swal.fire({
+					icon: 'success',
+					title: 'Login successful!',
+					text: 'Redirecting...'
+				}).then(() => {
+					window.location.href = '../index.php';
+				});
 			} else {
-				alert('Error: ' + response.message);
+				Swal.fire({
+					icon: 'error',
+					title: 'Login Failed',
+					text: response.message || 'Invalid credentials.'
+				});
 			}
 		}, 'json').fail(function() {
-			alert('An error occurred. Please try again.');
+			Swal.fire({
+				icon: 'error',
+				title: 'Error',
+				text: 'An error occurred. Please try again.'
+			});
 		}).always(function() {
 			submitBtn.prop('disabled', false).html('Login');
 		});
