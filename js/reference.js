@@ -15,8 +15,8 @@ $(document).ready(function () {
             `);
         } else {
             tray.html(`
-                <a href="login/register.php" class="btn btn-sm btn-outline-primary">Register</a>
-                <a href="login/login.php" class="btn btn-sm btn-outline-secondary ms-2">Login</a>
+                <a href="../login/register.php" class="btn btn-sm btn-outline-primary">Register</a>
+                <a href="../login/login.php" class="btn btn-sm btn-outline-secondary ms-2">Login</a>
             `);
         }
     }
@@ -26,7 +26,7 @@ $(document).ready(function () {
     }
 
     function fetchSession() {
-        $.getJSON('/actions/get_session_info.php').done(function (res) {
+        $.getJSON('../actions/get_session_info.php').done(function (res) {
             renderMenu(res);
         }).fail(function () {
         });
@@ -45,7 +45,7 @@ $(document).ready(function () {
             cancelButtonText: 'Cancel'
         }).then((result) => {
             if (result.isConfirmed) {
-                $.post('/login/logout.php').always(function () {
+                $.post('../login/logout.php').always(function () {
                     fetchSession();
                     location.reload();
                 });
