@@ -26,7 +26,7 @@ $(document).ready(function () {
     }
 
     function fetchSession() {
-        $.getJSON('/actions/get_session_info.php').done(function (res) {
+        $.getJSON('../actions/get_session_info.php').done(function (res) {
             renderMenu(res);
         }).fail(function () {
             // keep defaults
