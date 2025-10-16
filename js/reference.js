@@ -6,7 +6,8 @@ $(document).ready(function () {
         if (data.logged_in) {
             let adminBtn = '';
             if (String(data.user_role) === '2') {
-                adminBtn = '<a href="admin/dashboard.php" class="btn btn-sm btn-outline-info ms-2">Admin</a>';
+                var adminHref = (window && typeof window.appUrl === 'function') ? window.appUrl('admin/dashboard.php') : 'admin/dashboard.php';
+                adminBtn = '<a href="' + adminHref + '" class="btn btn-sm btn-outline-info ms-2">Admin</a>';
             }
             tray.html(`
                 <span class="me-2">Welcome, <strong class="user-name">${escapeHtml(data.user_name || 'User')}</strong>!</span>
@@ -26,10 +27,18 @@ $(document).ready(function () {
     }
 
     function fetchSession() {
-        $.getJSON('../actions/get_session_info.php').done(function (res) {
-            renderMenu(res);
-        }).fail(function () {
-        });
+        var url = (window && typeof window.appUrl === 'function') ? window.appUrl('actions/get_session_info.php') : null;
+        var attempts = [];
+        if (url) attempts.push(url);
+        attempts.push('../actions/get_session_info.php');
+        attempts.push('/actions/get_session_info.php');
+
+        function tryNext() {
+            if (!attempts.length) { renderMenu({ logged_in: false }); return; }
+            var u = attempts.shift();
+            $.getJSON(u).done(function (res) { renderMenu(res); }).fail(function () { tryNext(); });
+        }
+        tryNext();
     }
 
     // Delegate logout click
@@ -45,10 +54,8 @@ $(document).ready(function () {
             cancelButtonText: 'Cancel'
         }).then((result) => {
             if (result.isConfirmed) {
-                $.post('../login/logout.php').always(function () {
-                    fetchSession();
-                    location.reload();
-                });
+                var logoutUrl = (window && typeof window.appUrl === 'function') ? window.appUrl('login/logout.php') : '../login/logout.php';
+                $.post(logoutUrl).always(function () { fetchSession(); location.reload(); });
             }
         });
     });

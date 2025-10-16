@@ -26,10 +26,31 @@ $(document).ready(function () {
     }
 
     function fetchSession() {
-        $.getJSON('/actions/get_session_info.php').done(function (res) {
-            renderMenu(res);
-        }).fail(function () {
-        });
+        var url = null;
+        if (window && typeof window.appUrl === 'function') {
+            url = window.appUrl('actions/get_session_info.php');
+        }
+
+        // fallback chain
+        var attempts = [];
+        if (url) attempts.push(url);
+        attempts.push('actions/get_session_info.php');
+        attempts.push('/actions/get_session_info.php');
+
+        function tryNext() {
+            if (!attempts.length) {
+                renderMenu({ logged_in: false });
+                return;
+            }
+            var u = attempts.shift();
+            $.getJSON(u).done(function (res) {
+                renderMenu(res);
+            }).fail(function () {
+                tryNext();
+            });
+        }
+
+        tryNext();
     }
 
     // Delegate logout click
@@ -45,7 +66,8 @@ $(document).ready(function () {
             cancelButtonText: 'Cancel'
         }).then((result) => {
             if (result.isConfirmed) {
-                $.post('/login/logout.php').always(function () {
+                var logoutUrl = (window && typeof window.appUrl === 'function') ? window.appUrl('login/logout.php') : 'login/logout.php';
+                $.post(logoutUrl).always(function () {
                     fetchSession();
                     location.reload();
                 });
