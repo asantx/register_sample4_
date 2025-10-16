@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     function renderMenu(data) {
         const tray = $('.menu-tray');
         if (!tray.length) return;
@@ -26,15 +26,15 @@ $(document).ready(function() {
     }
 
     function fetchSession() {
-        $.getJSON('actions/get_session_info.php').done(function(res) {
+        $.getJSON('/actions/get_session_info.php').done(function (res) {
             renderMenu(res);
-        }).fail(function() {
+        }).fail(function () {
             // keep defaults
         });
     }
 
     // Delegate logout click
-    $(document).on('click', '#logout-btn', function(e) {
+    $(document).on('click', '#logout-btn', function (e) {
         e.preventDefault();
         Swal.fire({
             title: 'Logout?',
@@ -46,7 +46,7 @@ $(document).ready(function() {
             cancelButtonText: 'Cancel'
         }).then((result) => {
             if (result.isConfirmed) {
-                $.post('login/logout.php').always(function() {
+                $.post('/login/logout.php').always(function () {
                     fetchSession();
                     location.reload();
                 });

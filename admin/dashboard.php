@@ -50,6 +50,11 @@ requireAdmin('../login/login.php');
 </head>
 
 <body>
+    <div class="menu-tray-love menu-tray">
+        <span class="love-heart">&#10084;&#65039;</span>
+        <!-- dynamic menu inserted by js/index.js -->
+    </div>
+
     <div class="container-fluid py-4">
         <div class="row">
             <div class="col-md-3 mb-3">
@@ -64,7 +69,7 @@ requireAdmin('../login/login.php');
                         <a class="nav-link" href="#"> <i class="fa fa-users"></i> Users</a>
                     </nav>
                     <div class="mt-3 text-center">
-                        <button id="logout-btn" class="btn btn-outline-danger btn-sm">Logout</button>
+                        <!-- Legacy logout button removed to centralize logout in menu tray -->
                     </div>
                 </div>
             </div>
@@ -101,26 +106,7 @@ requireAdmin('../login/login.php');
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        $(function() {
-            $('#logout-btn').on('click', function() {
-                Swal.fire({
-                    title: 'Logout?',
-                    text: 'Confirm logout',
-                    icon: 'question',
-                    showCancelButton: true,
-                    confirmButtonColor: '#d72660',
-                    confirmButtonText: 'Logout'
-                }).then(function(r) {
-                    if (r.isConfirmed) {
-                        $.post('../login/logout.php').always(function() {
-                            window.location = '../index.php';
-                        });
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="/js/index.js"></script>
 </body>
 
 </html>

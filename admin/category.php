@@ -123,10 +123,9 @@ requireAdmin('../login/login.php');
 </head>
 
 <body>
-    <div class="menu-tray-love">
+    <div class="menu-tray-love menu-tray">
         <span class="love-heart">&#10084;&#65039;</span>
-        <a href="../index.php" class="btn btn-outline-danger btn-sm">Home</a>
-        <a href="../login/logout.php" class="btn btn-outline-danger btn-sm">Logout</a>
+        <!-- dynamic menu populated by js/index.js -->
     </div>
     <div class="container py-4">
         <div class="love-header text-center">DistantLove Admin &mdash; Category Management</div>
@@ -168,6 +167,7 @@ requireAdmin('../login/login.php');
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/js/index.js"></script>
     <script src="../js/category.js"></script>
 </body>
 
