@@ -6,7 +6,7 @@ $(document).ready(function() {
         if (data.logged_in) {
             let adminBtn = '';
             if (String(data.user_role) === '2') {
-                adminBtn = '<a href="admin/category.php" class="btn btn-sm btn-outline-info ms-2">Admin</a>';
+                adminBtn = '<a href="admin/dashboard.php" class="btn btn-sm btn-outline-info ms-2">Admin</a>';
             }
             tray.html(`
                 <span class="me-2">Welcome, <strong class="user-name">${escapeHtml(data.user_name || 'User')}</strong>!</span>
