@@ -10,7 +10,25 @@ requireAdmin('../login/login.php');
     <title>DistantLove Admin - Categories</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
+        .sidebar {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(215, 38, 96, 0.07);
+            padding: 16px;
+        }
+
+        .sidebar a {
+            color: #d72660;
+            font-weight: 600;
+        }
+
+        .sidebar a.active {
+            background: #fbe6ea;
+            border-radius: 8px;
+        }
+
         body {
             background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
             min-height: 100vh;
@@ -178,7 +196,7 @@ requireAdmin('../login/login.php');
                     <div class="text-center mb-2 admin-name">Logged in as: <span class="admin-user">Admin</span></div>
                     <nav class="nav flex-column">
                         <a class="nav-link active" href="category.php"> <i class="fa fa-list"></i> Categories</a>
-                        <a class="nav-link" href="#"> <i class="fa fa-tag"></i> Brand</a>
+                        <a class="nav-link" href="brand.php"> <i class="fa fa-tag"></i> Brand</a>
                         <a class="nav-link" href="#"> <i class="fa fa-box"></i> Product</a>
                         <a class="nav-link" href="#"> <i class="fa fa-shopping-cart"></i> Orders</a>
                         <a class="nav-link" href="#"> <i class="fa fa-users"></i> Users</a>
