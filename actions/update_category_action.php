@@ -8,8 +8,8 @@ error_reporting(E_ALL);
 require_once __DIR__ . '/../settings/core.php';
 require_once __DIR__ . '/../controllers/category_controller.php';
 
-if (!isUserLoggedIn()) {
-    echo json_encode(['status'=>'error','message'=>'Not authenticated']);
+if (!isAdmin()) {
+    echo json_encode(['status'=>'error','message'=>'Not authorized']);
     exit();
 }
 

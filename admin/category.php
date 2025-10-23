@@ -170,42 +170,62 @@ requireAdmin('../login/login.php');
         <span class="love-heart">&#10084;&#65039;</span>
         <!-- session / user info will be injected here -->
     </div>
-    <div class="container py-4">
-        <div class="love-header text-center">DistantLove Admin &mdash; Category Management</div>
-    <div class="text-center mb-3 admin-info">Logged in as: <span class="admin-user">Admin</span></div>
-        <div class="card category-card mb-4">
-            <div class="card-body">
-                <form id="add-category-form" class="row g-2 align-items-center justify-content-center">
-                    <div class="col-md-7 col-lg-8">
-                        <input id="category-name" name="name" class="form-control form-control-lg" placeholder="Category name" required />
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <div class="p-3 sidebar">
+                    <h3 class="text-center" style="font-family: 'Pacifico', cursive; color:#d72660;">DistantLove Admin</h3>
+                    <div class="text-center mb-2 admin-name">Logged in as: <span class="admin-user">Admin</span></div>
+                    <nav class="nav flex-column">
+                        <a class="nav-link active" href="category.php"> <i class="fa fa-list"></i> Categories</a>
+                        <a class="nav-link" href="#"> <i class="fa fa-tag"></i> Brand</a>
+                        <a class="nav-link" href="#"> <i class="fa fa-box"></i> Product</a>
+                        <a class="nav-link" href="#"> <i class="fa fa-shopping-cart"></i> Orders</a>
+                        <a class="nav-link" href="#"> <i class="fa fa-users"></i> Users</a>
+                    </nav>
+                    <div class="mt-3 text-center">
+                        <!-- Legacy logout button removed to centralize logout in menu tray -->
                     </div>
-                    <div class="col-md-3 col-lg-2">
-                        <button id="add-category-btn" class="btn btn-add btn-lg w-100" type="submit">
-                            <i class="fa fa-plus"></i> Add Category
-                        </button>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="love-header text-center">DistantLove Admin &mdash; Category Management</div>
+                <div class="text-center mb-3 admin-info">Logged in as: <span class="admin-user">Admin</span></div>
+                <div class="card category-card mb-4">
+                    <div class="card-body">
+                        <form id="add-category-form" class="row g-2 align-items-center justify-content-center">
+                            <div class="col-md-7 col-lg-8">
+                                <input id="category-name" name="name" class="form-control form-control-lg" placeholder="Category name" required />
+                            </div>
+                            <div class="col-md-3 col-lg-2">
+                                <button id="add-category-btn" class="btn btn-add btn-lg w-100" type="submit">
+                                    <i class="fa fa-plus"></i> Add Category
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
+                <div class="card category-card">
+                    <div class="card-body p-0">
+                        <table class="table table-bordered category-table mb-0" id="categories-table">
+                            <thead>
+                                <tr>
+                                    <th style="width:60px">ID</th>
+                                    <th>Name</th>
+                                    <th style="width:120px">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="3">Loading...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <a href="../index.php" class="btn btn-outline-secondary mt-4">Back to Home</a>
             </div>
         </div>
-        <div class="card category-card">
-            <div class="card-body p-0">
-                <table class="table table-bordered category-table mb-0" id="categories-table">
-                    <thead>
-                        <tr>
-                            <th style="width:60px">ID</th>
-                            <th>Name</th>
-                            <th style="width:120px">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td colspan="3">Loading...</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <a href="../index.php" class="btn btn-outline-secondary mt-4">Back to Home</a>
     </div>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
