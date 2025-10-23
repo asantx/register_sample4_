@@ -30,8 +30,7 @@ $(document).ready(function () {
         var url = (window && typeof window.appUrl === 'function') ? window.appUrl('actions/get_session_info.php') : null;
         var attempts = [];
         if (url) attempts.push(url);
-        attempts.push('../actions/get_session_info.php');
-        attempts.push('/actions/get_session_info.php');
+    attempts.push('../actions/get_session_info.php');
 
         function tryNext() {
             if (!attempts.length) { renderMenu({ logged_in: false }); return; }
@@ -60,5 +59,9 @@ $(document).ready(function () {
         });
     });
 
-    fetchSession();
+    if (window && window.APP_ROOT_READY && typeof window.APP_ROOT_READY.then === 'function') {
+        window.APP_ROOT_READY.then(function () { fetchSession(); }).catch(function () { fetchSession(); });
+    } else {
+        fetchSession();
+    }
 });

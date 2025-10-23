@@ -34,8 +34,7 @@ $(document).ready(function () {
         // fallback chain
         var attempts = [];
         if (url) attempts.push(url);
-        attempts.push('actions/get_session_info.php');
-        attempts.push('/actions/get_session_info.php');
+    attempts.push('actions/get_session_info.php');
 
         function tryNext() {
             if (!attempts.length) {
@@ -75,5 +74,10 @@ $(document).ready(function () {
         });
     });
 
-    fetchSession();
+    // Wait for app root detection to finish before fetching session. If APP_ROOT_READY isn't present, proceed immediately.
+    if (window && window.APP_ROOT_READY && typeof window.APP_ROOT_READY.then === 'function') {
+        window.APP_ROOT_READY.then(function () { fetchSession(); }).catch(function () { fetchSession(); });
+    } else {
+        fetchSession();
+    }
 });
