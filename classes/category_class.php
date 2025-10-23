@@ -4,6 +4,12 @@ require_once __DIR__ . '/../settings/db_class.php';
 class Category extends db_connection {
     private $table = 'categories';
 
+    public function __construct()
+    {
+        // ensure DB connection is initialized
+        $this->db_conn();
+    }
+
     public function addCategory($name) {
         // ensure name unique globally
         $stmt = $this->db->prepare("SELECT cat_id FROM categories WHERE cat_name = ? LIMIT 1");
