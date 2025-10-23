@@ -74,28 +74,39 @@ requireAdmin('../login/login.php');
                 </div>
             </div>
             <div class="col-md-9">
-                <div class="card" style="border-radius:14px;">
+                <div class="card" style="border-radius:14px; background: linear-gradient(135deg, #fff5f7 0%, #fff 100%); border: none; box-shadow: 0 8px 24px rgba(215, 38, 96, 0.08);">
                     <div class="card-body">
-                        <h4>Admin Overview</h4>
-                        <p>Welcome to the admin panel. Use the sidebar to manage categories, products, brands and view orders.</p>
-                        <p>Click <a href="category.php">Categories</a> to manage categories.</p>
+                        <div class="text-center mb-4">
+                            <h3 style="color: #d72660; font-family: 'Pacifico', cursive;">Welcome to DistantLove Admin</h3>
+                            <p class="text-muted">Manage your online store with love and care ❤️</p>
+                        </div>
                         <div id="dashboard-widgets" class="row">
                             <div class="col-md-4 mb-3">
-                                <div class="p-3" style="background:#fff;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.03)">
-                                    <h5>Categories</h5>
-                                    <p class="text-muted">Manage categories</p>
+                                <div class="p-4" style="background:#fff; border-radius:12px; box-shadow:0 6px 18px rgba(215, 38, 96, 0.06); transition: transform 0.2s; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i class="fa fa-list" style="color: #d72660; font-size: 24px; margin-right: 12px;"></i>
+                                        <h5 class="mb-0" style="color: #d72660;">Categories</h5>
+                                    </div>
+                                    <p class="text-muted mb-0">Organize your products with love</p>
+                                    <a href="category.php" class="stretched-link"></a>
                                 </div>
                             </div>
                             <div class="col-md-4 mb-3">
-                                <div class="p-3" style="background:#fff;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.03)">
-                                    <h5>Products</h5>
-                                    <p class="text-muted">Manage products and inventory</p>
+                                <div class="p-4" style="background:#fff; border-radius:12px; box-shadow:0 6px 18px rgba(215, 38, 96, 0.06); transition: transform 0.2s; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i class="fa fa-box" style="color: #d72660; font-size: 24px; margin-right: 12px;"></i>
+                                        <h5 class="mb-0" style="color: #d72660;">Products</h5>
+                                    </div>
+                                    <p class="text-muted mb-0">Curate your special offerings</p>
                                 </div>
                             </div>
                             <div class="col-md-4 mb-3">
-                                <div class="p-3" style="background:#fff;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.03)">
-                                    <h5>Orders</h5>
-                                    <p class="text-muted">View recent orders</p>
+                                <div class="p-4" style="background:#fff; border-radius:12px; box-shadow:0 6px 18px rgba(215, 38, 96, 0.06); transition: transform 0.2s; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <i class="fa fa-shopping-cart" style="color: #d72660; font-size: 24px; margin-right: 12px;"></i>
+                                        <h5 class="mb-0" style="color: #d72660;">Orders</h5>
+                                    </div>
+                                    <p class="text-muted mb-0">Manage customer happiness</p>
                                 </div>
                             </div>
                         </div>
@@ -107,8 +118,69 @@ requireAdmin('../login/login.php');
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../js/app_root.js"></script>
-    <script src="../js/reference.js"></script>
+    <script>
+        $(document).ready(function () {
+            function escapeHtml(s) {
+                return $('<div>').text(s).html();
+            }
+
+            function updateAdminUI(data) {
+                // Update the admin name in the sidebar
+                if (data.user_name) {
+                    $('.admin-user').text(escapeHtml(data.user_name));
+                }
+
+                // Update menu tray
+                const tray = $('.menu-tray');
+                if (tray.length) {
+                    tray.html(`
+                        <span class="me-2">Welcome, <strong class="user-name">${escapeHtml(data.user_name || 'Admin')}</strong>!</span>
+                        <a href="#" id="logout-btn" class="btn btn-sm btn-outline-danger ms-2">Logout</a>
+                    `);
+                }
+            }
+
+            function fetchSessionInfo() {
+                $.getJSON('../actions/get_session_info.php')
+                    .done(function(res) {
+                        if (!res.logged_in || res.user_role !== '2') {
+                            // If not logged in or not admin, redirect to login
+                            window.location.href = '../login/login.php';
+                            return;
+                        }
+                        updateAdminUI(res);
+                    })
+                    .fail(function() {
+                        // On failure, redirect to login
+                        window.location.href = '../login/login.php';
+                    });
+            }
+
+            // Handle logout
+            $(document).on('click', '#logout-btn', function(e) {
+                e.preventDefault();
+                Swal.fire({
+                    title: 'Logout?',
+                    text: 'Are you sure you want to logout?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d72660',
+                    confirmButtonText: 'Logout',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.post('../login/logout.php')
+                            .always(function() {
+                                window.location.href = '../login/login.php';
+                            });
+                    }
+                });
+            });
+
+            // Initialize session check
+            fetchSessionInfo();
+        });
+    </script>
 </body>
 
 </html>
