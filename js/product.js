@@ -38,12 +38,16 @@ $(document).ready(function() {
     // Load categories and brands for dropdowns
     function loadCategories() {
         $.getJSON('../actions/fetch_category_action.php')
-            .done(function(categories) {
-                const select = $('#product-category');
-                select.find('option:not(:first)').remove();
-                categories.forEach(function(category) {
-                    select.append(`<option value="${category.cat_id}">${escapeHtml(category.cat_name)}</option>`);
-                });
+            .done(function(response) {
+                if (response.status === 'success' && response.categories) {
+                    const select = $('#product-category');
+                    select.find('option:not(:first)').remove();
+                    response.categories.forEach(function(category) {
+                        select.append(`<option value="${category.cat_id}">${escapeHtml(category.cat_name)}</option>`);
+                    });
+                } else {
+                    showError('Failed to load categories. Please try again.');
+                }
             })
             .fail(function(err) {
                 console.error('Failed to load categories:', err);
@@ -53,12 +57,16 @@ $(document).ready(function() {
 
     function loadBrands() {
         $.getJSON('../actions/fetch_brand_action.php')
-            .done(function(brands) {
-                const select = $('#product-brand');
-                select.find('option:not(:first)').remove();
-                brands.forEach(function(brand) {
-                    select.append(`<option value="${brand.brand_id}">${escapeHtml(brand.brand_name)}</option>`);
-                });
+            .done(function(response) {
+                if (response.status === 'success' && response.brands) {
+                    const select = $('#product-brand');
+                    select.find('option:not(:first)').remove();
+                    response.brands.forEach(function(brand) {
+                        select.append(`<option value="${brand.brand_id}">${escapeHtml(brand.brand_name)}</option>`);
+                    });
+                } else {
+                    showError('Failed to load brands. Please try again.');
+                }
             })
             .fail(function(err) {
                 console.error('Failed to load brands:', err);
