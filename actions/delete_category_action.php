@@ -7,8 +7,6 @@ if (!isUserLoggedIn()) {
     echo json_encode(['status'=>'error','message'=>'Not authenticated']);
     exit();
 }
-$user_id = isset($_SESSION['user']['id']) ? $_SESSION['user']['id'] : (isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null);
-if (!$user_id) { echo json_encode(['status'=>'error','message'=>'User not found']); exit(); }
 
 $cat_id = isset($_POST['cat_id']) ? intval($_POST['cat_id']) : 0;
 if ($cat_id <= 0) {
@@ -16,7 +14,7 @@ if ($cat_id <= 0) {
     exit();
 }
 
-$res = delete_category_ctr($cat_id, $user_id);
+$res = delete_category_ctr($cat_id);
 if ($res) echo json_encode(['status'=>'success','message'=>'Category deleted']);
 else echo json_encode(['status'=>'error','message'=>'Could not delete category']);
 ?>

@@ -15,6 +15,49 @@ requireAdmin('../login/login.php');
             background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
             min-height: 100vh;
             font-family: 'Roboto', sans-serif;
+            padding-top: 60px; /* room for fixed menu tray */
+        }
+
+        .menu-tray {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.95);
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            box-shadow: 0 2px 12px rgba(215,38,96,0.08);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+        }
+
+        .menu-tray .user-name {
+            color: #d72660;
+            font-family: 'Pacifico', cursive;
+        }
+
+        .menu-tray .btn-outline-danger {
+            border-color: #d72660;
+            color: #d72660;
+        }
+
+        .menu-tray .btn-outline-danger:hover {
+            background-color: #d72660;
+            color: white;
+        }
+
+        .love-heart {
+            color: #d72660;
+            margin-right: 8px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
 
         .love-header {
@@ -123,13 +166,13 @@ requireAdmin('../login/login.php');
 </head>
 
 <body>
-    <div class="menu-tray-love menu-tray">
+    <div class="menu-tray">
         <span class="love-heart">&#10084;&#65039;</span>
-        <!-- dynamic menu populated by js/index.js -->
+        <!-- session / user info will be injected here -->
     </div>
     <div class="container py-4">
         <div class="love-header text-center">DistantLove Admin &mdash; Category Management</div>
-    <div class="text-center mb-3 admin-user">Logged in as: <span class="admin-user">Admin</span></div>
+    <div class="text-center mb-3 admin-info">Logged in as: <span class="admin-user">Admin</span></div>
         <div class="card category-card mb-4">
             <div class="card-body">
                 <form id="add-category-form" class="row g-2 align-items-center justify-content-center">
@@ -167,8 +210,6 @@ requireAdmin('../login/login.php');
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../js/app_root.js"></script>
-    <script src="../js/index.js"></script>
     <script src="../js/category.js"></script>
 </body>
 

@@ -1,23 +1,23 @@
 <?php
 require_once __DIR__ . '/../classes/category_class.php';
 
-function add_category_ctr($name, $user_id) {
+function add_category_ctr($name) {
     $cat = new Category();
-    return $cat->addCategory($name, $user_id);
+    return $cat->addCategory($name);
 }
 
-function fetch_categories_ctr($user_id) {
+function fetch_categories_ctr() {
     $cat = new Category();
-    return $cat->getCategoriesByUser($user_id);
+    return $cat->getAllCategories();
 }
 
-function update_category_ctr($cat_id, $name, $user_id) {
+function update_category_ctr($cat_id, $name) {
     $cat = new Category();
-    return $cat->updateCategory($cat_id, $name, $user_id);
+    return $cat->updateCategory($cat_id, $name);
 }
 
-function delete_category_ctr($cat_id, $user_id) {
+function delete_category_ctr($cat_id) {
     $cat = new Category();
-    return $cat->deleteCategory($cat_id, $user_id);
+    return $cat->deleteCategory($cat_id);
 }
 ?>

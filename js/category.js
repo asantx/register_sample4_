@@ -1,43 +1,31 @@
 $(document).ready(function() {
-    // fetch session info and update admin UI
+    // fetch session info and update admin UI (small resilient helper)
     function updateAdminFromSession() {
-        var buildUrl = function(p) {
-            if (window && typeof window.appUrl === 'function') return window.appUrl(p);
-            return '../' + p; // fallback relative from admin folder
-        };
+        var attempts = [];
+        if (window && typeof window.appUrl === 'function') attempts.push(window.appUrl('actions/get_session_info.php'));
+        attempts.push('../actions/get_session_info.php');
 
-        function doFetch() {
-            var attempts = [];
-            var url = null;
-            if (window && typeof window.appUrl === 'function') url = window.appUrl('actions/get_session_info.php');
-            if (url) attempts.push(url);
-            attempts.push('../actions/get_session_info.php');
+        function tryNext() {
+            if (!attempts.length) return;
+            var u = attempts.shift();
+            $.getJSON(u).done(function(res) {
+                if (res && res.logged_in) {
+                    var name = res.user_name || 'Admin';
+                    // set admin name in sidebar and header
+                    $('.admin-user').text(name);
+                    $('.admin-info').html('Logged in as: <span class="admin-user">' + $('<div>').text(name).html() + '</span>');
 
-            function tryNext() {
-                if (!attempts.length) return;
-                var u = attempts.shift();
-                $.getJSON(u).done(function(res) {
-                    if (res && res.logged_in) {
-                        var name = res.user_name || 'Admin';
-                        $('.admin-user, .admin-name').each(function() {
-                            // set only the span text if present
-                            if ($(this).find('.admin-name').length) $(this).find('.admin-name').text(name);
-                            else $(this).text('Logged in as: ' + name);
-                        });
+                    // Update top tray if present
+                    if ($('.menu-tray').length) {
+                        $('.menu-tray').html('\n                            <span class="love-heart">&#10084;&#65039;</span>\n                            <span class="me-2">Welcome back, <strong class="user-name">' + $('<div>').text(name).html() + '</strong></span>\n                            <a href="#" id="logout-btn" class="btn btn-sm btn-outline-danger ms-2">\n                                <i class="fa fa-sign-out-alt me-1"></i> Logout\n                            </a>\n                        ');
                     }
-                }).fail(function() {
-                    tryNext();
-                });
-            }
-
-            tryNext();
+                }
+            }).fail(function() {
+                tryNext();
+            });
         }
 
-        if (window && window.APP_ROOT_READY && typeof window.APP_ROOT_READY.then === 'function') {
-            window.APP_ROOT_READY.then(doFetch).catch(doFetch);
-        } else {
-            doFetch();
-        }
+        tryNext();
     }
 
     updateAdminFromSession();
@@ -63,12 +51,15 @@ $(document).ready(function() {
                     }).join('');
                     $('#categories-table tbody').html(rows);
                 } else {
-                    $('#categories-table tbody').html('<tr><td colspan="3" class="text-center text-danger">No categories found. <span class="love-heart">&#10084;&#65039;</span></td></tr>');
+                    $('#categories-table tbody').html('<tr><td colspan="3" class="text-center text-muted">No categories found. <span class="love-heart">&#10084;&#65039;</span></td></tr>');
                 }
             },
-            error: function() {
-                $('#categories-table tbody').html('<tr><td colspan="3" class="text-center text-danger">Error loading categories <span class="love-heart">&#10084;&#65039;</span></td></tr>');
-                Swal.fire({ icon:'error', title:'Error', text:'Could not load categories. Please try again.' });
+            error: function(xhr, status, err) {
+                console.error('Categories fetch error:', status, err);
+                // Friendly inline error with Retry and Login options
+                var loginUrl = '../login/login.php';
+                var retryRow = '\n                    <tr>\n                        <td colspan="3" class="text-center">\n                            <div class="py-3">\n                                <div class="mb-2">\n                                    <strong class="text-danger">Unable to load categories</strong>\n                                </div>\n                                <div class="mb-2 text-muted">There was a problem fetching your categories. You can retry or sign in again if your session expired.</div>\n                                <div>\n                                    <button id="categories-retry" class="btn btn-sm btn-outline-danger me-2">Retry</button>\n                                    <a href="' + loginUrl + '" class="btn btn-sm btn-outline-secondary">Login</a>\n                                </div>\n                            </div>\n                        </td>\n                    </tr>';
+                $('#categories-table tbody').html(retryRow);
             }
         });
     }
@@ -186,5 +177,10 @@ $(document).ready(function() {
                 });
             }
         });
+    });
+
+    // Retry handler (delegated because retry row is injected)
+    $('#categories-table').on('click', '#categories-retry', function() {
+        loadCategories();
     });
 });
