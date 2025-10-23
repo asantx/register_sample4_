@@ -38,16 +38,12 @@ $(document).ready(function() {
     // Load categories and brands for dropdowns
     function loadCategories() {
         $.getJSON('../actions/fetch_category_action.php')
-            .done(function(response) {
-                if (response.status === 'success' && response.categories) {
-                    const select = $('#product-category');
-                    select.find('option:not(:first)').remove();
-                    response.categories.forEach(function(category) {
-                        select.append(`<option value="${category.cat_id}">${escapeHtml(category.cat_name)}</option>`);
-                    });
-                } else {
-                    showError('Failed to load categories. Please try again.');
-                }
+            .done(function(categories) {
+                const select = $('#product-category');
+                select.find('option:not(:first)').remove();
+                categories.forEach(function(category) {
+                    select.append(`<option value="${category.cat_id}">${escapeHtml(category.cat_name)}</option>`);
+                });
             })
             .fail(function(err) {
                 console.error('Failed to load categories:', err);
@@ -57,16 +53,12 @@ $(document).ready(function() {
 
     function loadBrands() {
         $.getJSON('../actions/fetch_brand_action.php')
-            .done(function(response) {
-                if (response.status === 'success' && response.brands) {
-                    const select = $('#product-brand');
-                    select.find('option:not(:first)').remove();
-                    response.brands.forEach(function(brand) {
-                        select.append(`<option value="${brand.brand_id}">${escapeHtml(brand.brand_name)}</option>`);
-                    });
-                } else {
-                    showError('Failed to load brands. Please try again.');
-                }
+            .done(function(brands) {
+                const select = $('#product-brand');
+                select.find('option:not(:first)').remove();
+                brands.forEach(function(brand) {
+                    select.append(`<option value="${brand.brand_id}">${escapeHtml(brand.brand_name)}</option>`);
+                });
             })
             .fail(function(err) {
                 console.error('Failed to load brands:', err);
@@ -153,25 +145,32 @@ $(document).ready(function() {
             type: 'POST',
             data: formData,
             processData: false,
-            contentType: false,
-            success: function(response) {
-                if (response.success) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success!',
-                        text: 'Product added successfully'
-                    }).then(() => {
-                        $('#add-product-form')[0].reset();
-                        $('#image-preview').html('<i class="fa fa-cloud-upload-alt upload-icon"></i>');
-                        loadProducts();
-                    });
-                } else {
-                    showError(response.error || 'Failed to add product');
-                }
-            },
-            error: function() {
-                showError('Failed to add product. Please try again.');
+            contentType: false
+        }).done(function(response) {
+            if (response.error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: response.error
+                });
+                return;
             }
+            
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'Product added successfully'
+            }).then(() => {
+                $('#add-product-form')[0].reset();
+                $('#image-preview').html('<i class="fa fa-cloud-upload-alt upload-icon"></i>');
+                loadProducts();
+            });
+        }).fail(function() {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to add product. Please try again.'
+            });
         });
     });
 
@@ -248,8 +247,8 @@ $(document).ready(function() {
                             processData: false,
                             contentType: false
                         }).then(response => {
-                            if (!response.success) {
-                                throw new Error(response.error || 'Failed to update product');
+                            if (response.error) {
+                                throw new Error(response.error);
                             }
                             return response;
                         }).catch(error => {
@@ -305,32 +304,32 @@ $(document).ready(function() {
             if (result.isConfirmed) {
                 $.post('../actions/delete_product_action.php', { product_id: productId })
                     .done(function(response) {
-                        if (response.success) {
+                        if (response.error) {
                             Swal.fire({
-                                icon: 'success',
-                                title: 'Deleted!',
-                                text: 'Product has been deleted'
+                                icon: 'error',
+                                title: 'Error',
+                                text: response.error
                             });
-                            loadProducts();
-                        } else {
-                            showError(response.error || 'Failed to delete product');
+                            return;
                         }
+                        
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Deleted!',
+                            text: 'Product has been deleted'
+                        });
+                        loadProducts();
                     })
                     .fail(function() {
-                        showError('Failed to delete product');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Failed to delete product'
+                        });
                     });
             }
         });
     };
-
-    // Error helper
-    function showError(message) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: message
-        });
-    }
 
     // Handle logout
     $(document).on('click', '#logout-btn', function(e) {

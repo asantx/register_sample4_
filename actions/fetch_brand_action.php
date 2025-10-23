@@ -14,5 +14,5 @@ if (!isAdmin()) {
 }
 
 $brands = fetch_brands_ctr();
-echo json_encode($brands);
+echo json_encode(['status' => 'success', 'brands' => $brands]);
 ?>

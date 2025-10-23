@@ -14,4 +14,4 @@ if (!isAdmin()) {
 }
 
 $cats = fetch_categories_ctr();
-echo json_encode($cats);
+echo json_encode(['status' => 'success', 'categories' => $cats]);
