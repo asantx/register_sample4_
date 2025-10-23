@@ -197,7 +197,7 @@ requireAdmin('../login/login.php');
                     <nav class="nav flex-column">
                         <a class="nav-link active" href="category.php"> <i class="fa fa-list"></i> Categories</a>
                         <a class="nav-link" href="brand.php"> <i class="fa fa-tag"></i> Brand</a>
-                        <a class="nav-link" href="#"> <i class="fa fa-box"></i> Product</a>
+                        <a class="nav-link" href="product.php"> <i class="fa fa-box"></i> Product</a>
                         <a class="nav-link" href="#"> <i class="fa fa-shopping-cart"></i> Orders</a>
                         <a class="nav-link" href="#"> <i class="fa fa-users"></i> Users</a>
                     </nav>
