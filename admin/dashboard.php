@@ -60,7 +60,7 @@ requireAdmin('../login/login.php');
             <div class="col-md-3 mb-3">
                 <div class="p-3 sidebar">
                     <h3 class="text-center" style="font-family: 'Pacifico', cursive; color:#d72660;">DistantLove Admin</h3>
-                    <div class="text-center mb-2 admin-name">Logged in as: <?php echo htmlspecialchars($_SESSION['user_name'] ?? 'Admin'); ?></div>
+                    <div class="text-center mb-2 admin-name">Logged in as: <span class="admin-user">Admin</span></div>
                     <nav class="nav flex-column">
                         <a class="nav-link active" href="category.php"> <i class="fa fa-list"></i> Categories</a>
                         <a class="nav-link" href="#"> <i class="fa fa-tag"></i> Brand</a>
@@ -76,8 +76,9 @@ requireAdmin('../login/login.php');
             <div class="col-md-9">
                 <div class="card" style="border-radius:14px;">
                     <div class="card-body">
-                        <h4>Dashboard</h4>
-                        <p>Welcome to the admin dashboard. Use the sidebar to navigate management pages.</p>
+                        <h4>Admin Overview</h4>
+                        <p>Welcome to the admin panel. Use the sidebar to manage categories, products, brands and view orders.</p>
+                        <p>Click <a href="category.php">Categories</a> to manage categories.</p>
                         <div id="dashboard-widgets" class="row">
                             <div class="col-md-4 mb-3">
                                 <div class="p-3" style="background:#fff;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.03)">

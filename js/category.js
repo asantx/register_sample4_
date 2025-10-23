@@ -1,4 +1,47 @@
 $(document).ready(function() {
+    // fetch session info and update admin UI
+    function updateAdminFromSession() {
+        var buildUrl = function(p) {
+            if (window && typeof window.appUrl === 'function') return window.appUrl(p);
+            return '../' + p; // fallback relative from admin folder
+        };
+
+        function doFetch() {
+            var attempts = [];
+            var url = null;
+            if (window && typeof window.appUrl === 'function') url = window.appUrl('actions/get_session_info.php');
+            if (url) attempts.push(url);
+            attempts.push('../actions/get_session_info.php');
+
+            function tryNext() {
+                if (!attempts.length) return;
+                var u = attempts.shift();
+                $.getJSON(u).done(function(res) {
+                    if (res && res.logged_in) {
+                        var name = res.user_name || 'Admin';
+                        $('.admin-user, .admin-name').each(function() {
+                            // set only the span text if present
+                            if ($(this).find('.admin-name').length) $(this).find('.admin-name').text(name);
+                            else $(this).text('Logged in as: ' + name);
+                        });
+                    }
+                }).fail(function() {
+                    tryNext();
+                });
+            }
+
+            tryNext();
+        }
+
+        if (window && window.APP_ROOT_READY && typeof window.APP_ROOT_READY.then === 'function') {
+            window.APP_ROOT_READY.then(doFetch).catch(doFetch);
+        } else {
+            doFetch();
+        }
+    }
+
+    updateAdminFromSession();
+
     // fetch and render categories
     function loadCategories() {
         $('#categories-table tbody').html('<tr><td colspan="3" class="text-center"><span class="spinner-border text-danger"></span> Loading...</td></tr>');

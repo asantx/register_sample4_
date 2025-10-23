@@ -129,7 +129,7 @@ requireAdmin('../login/login.php');
     </div>
     <div class="container py-4">
         <div class="love-header text-center">DistantLove Admin &mdash; Category Management</div>
-        <div class="text-center mb-3 admin-user">Logged in as: <?php echo isset($_SESSION['name']) ? htmlspecialchars($_SESSION['name']) : 'Admin'; ?></div>
+    <div class="text-center mb-3 admin-user">Logged in as: <span class="admin-user">Admin</span></div>
         <div class="card category-card mb-4">
             <div class="card-body">
                 <form id="add-category-form" class="row g-2 align-items-center justify-content-center">
