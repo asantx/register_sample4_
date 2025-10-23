@@ -84,4 +84,5 @@ $(document).ready(function () {
     });
 
     // Session fetching is handled by page-specific scripts now.
+    fetchSession();
 });
