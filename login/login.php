@@ -134,8 +134,47 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- <script src="../js/app_root.js"></script> -->
     <script src="../js/login.js"></script>
-    <script src="../js/index.js"></script>
+
+    <script>
+    // Page-specific session fetch and menu rendering (no app_root dependency)
+    $(function(){
+        function escapeHtml(s){ return $('<div>').text(s).html(); }
+
+        function renderMenu(data){
+            var tray = $('.menu-tray-love');
+            if (!tray.length) return;
+            if (data && data.logged_in){
+                var adminBtn = '';
+                if (String(data.user_role) === '2') {
+                    adminBtn = '<a href="../admin/dashboard.php" class="btn btn-sm btn-outline-info ms-2">Admin</a>';
+                }
+                tray.html('\n                    <span class="me-2">Welcome, <strong class="user-name">'+escapeHtml(data.user_name||'User')+'</strong>!</span>' + adminBtn + '\n                    <a href="#" id="logout-btn" class="btn btn-sm btn-outline-danger ms-2">Logout</a>\n                ');
+            } else {
+                tray.html('\n                    <a href="register.php" class="btn btn-sm btn-outline-primary">Register</a>' +
+                             '\n                    <a href="login.php" class="btn btn-sm btn-outline-secondary ms-2">Login</a>\n                ');
+            }
+        }
+
+        function fetchSession(){
+            $.getJSON('../actions/get_session_info.php').done(function(res){ renderMenu(res); }).fail(function(){ renderMenu({ logged_in:false }); });
+        }
+
+        // Delegate logout click on the dynamic element
+        $(document).on('click','#logout-btn', function(e){
+            e.preventDefault();
+            Swal.fire({
+                title: 'Logout?', text: 'Are you sure you want to logout?', icon: 'question', showCancelButton: true,
+                confirmButtonColor: '#d72660', confirmButtonText: 'Logout', cancelButtonText: 'Cancel'
+            }).then(function(result){
+                if (result.isConfirmed){
+                    $.post('../login/logout.php').always(function(){ fetchSession(); location.reload(); });
+                }
+            });
+        });
+
+        fetchSession();
+    });
+    </script>
 </body>
 </html>

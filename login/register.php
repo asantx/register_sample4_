@@ -171,7 +171,28 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../js/app_root.js"></script>
     <script src="../js/register.js"></script>
+
+    <script>
+    // In-page session fetch: render menu and redirect to root index if already logged in
+    $(function(){
+        function escapeHtml(s){ return $('<div>').text(s).html(); }
+
+        function renderMenu(data){
+            var tray = $('.menu-tray-love');
+            if (!tray.length) return;
+            if (data && data.logged_in){
+                // if user already logged in, send back to index.php at root
+                window.location.href = '../index.php';
+                return;
+            } else {
+                tray.html('\n                    <a href="register.php" class="btn btn-sm btn-outline-primary">Register</a>' +
+                         '\n                    <a href="login.php" class="btn btn-sm btn-outline-secondary ms-2">Login</a>\n                ');
+            }
+        }
+
+        $.getJSON('../actions/get_session_info.php').done(function(res){ renderMenu(res); }).fail(function(){ renderMenu({ logged_in:false }); });
+    });
+    </script>
 </body>
 </html>

@@ -26,30 +26,8 @@ $(document).ready(function () {
     }
 
     function fetchSession() {
-        var url = null;
-        if (window && typeof window.appUrl === 'function') {
-            url = window.appUrl('actions/get_session_info.php');
-        }
-
-        // fallback chain
-        var attempts = [];
-        if (url) attempts.push(url);
-    attempts.push('actions/get_session_info.php');
-
-        function tryNext() {
-            if (!attempts.length) {
-                renderMenu({ logged_in: false });
-                return;
-            }
-            var u = attempts.shift();
-            $.getJSON(u).done(function (res) {
-                renderMenu(res);
-            }).fail(function () {
-                tryNext();
-            });
-        }
-
-        tryNext();
+        // Session fetch removed from index.js per design — handled in page-specific scripts.
+        // This function intentionally left blank.
     }
 
     // Delegate logout click
@@ -65,7 +43,7 @@ $(document).ready(function () {
             cancelButtonText: 'Cancel'
         }).then((result) => {
             if (result.isConfirmed) {
-                var logoutUrl = (window && typeof window.appUrl === 'function') ? window.appUrl('login/logout.php') : 'login/logout.php';
+                var logoutUrl = 'login/logout.php';
                 $.post(logoutUrl).always(function () {
                     fetchSession();
                     location.reload();
@@ -74,10 +52,5 @@ $(document).ready(function () {
         });
     });
 
-    // Wait for app root detection to finish before fetching session. If APP_ROOT_READY isn't present, proceed immediately.
-    if (window && window.APP_ROOT_READY && typeof window.APP_ROOT_READY.then === 'function') {
-        window.APP_ROOT_READY.then(function () { fetchSession(); }).catch(function () { fetchSession(); });
-    } else {
-        fetchSession();
-    }
+    // Session fetching is handled by page-specific scripts now.
 });
