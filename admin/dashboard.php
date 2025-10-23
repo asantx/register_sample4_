@@ -143,16 +143,13 @@ requireAdmin('../login/login.php');
             function fetchSessionInfo() {
                 $.getJSON('../actions/get_session_info.php')
                     .done(function(res) {
-                        if (!res.logged_in || res.user_role !== '2') {
-                            // If not logged in or not admin, redirect to login
-                            window.location.href = '../login/login.php';
-                            return;
+                        // Update UI if logged in - PHP already checks admin status
+                        if (res.logged_in) {
+                            updateAdminUI(res);
                         }
-                        updateAdminUI(res);
                     })
-                    .fail(function() {
-                        // On failure, redirect to login
-                        window.location.href = '../login/login.php';
+                    .fail(function(err) {
+                        console.error('Failed to fetch session info:', err);
                     });
             }
 
