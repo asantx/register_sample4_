@@ -38,7 +38,11 @@ $(document).ready(function() {
     // Load categories and brands for dropdowns
     function loadCategories() {
         $.getJSON('../actions/fetch_category_action.php')
-            .done(function(categories) {
+            .done(function(response) {
+                let categories = response.categories || response;
+                if (!Array.isArray(categories)) {
+                    categories = [];
+                }
                 const select = $('#product-category');
                 select.find('option:not(:first)').remove();
                 categories.forEach(function(category) {
@@ -47,13 +51,16 @@ $(document).ready(function() {
             })
             .fail(function(err) {
                 console.error('Failed to load categories:', err);
-                showError('Failed to load categories. Please try again.');
             });
     }
 
     function loadBrands() {
         $.getJSON('../actions/fetch_brand_action.php')
-            .done(function(brands) {
+            .done(function(response) {
+                let brands = response.brands || response;
+                if (!Array.isArray(brands)) {
+                    brands = [];
+                }
                 const select = $('#product-brand');
                 select.find('option:not(:first)').remove();
                 brands.forEach(function(brand) {
@@ -62,7 +69,6 @@ $(document).ready(function() {
             })
             .fail(function(err) {
                 console.error('Failed to load brands:', err);
-                showError('Failed to load brands. Please try again.');
             });
     }
 
@@ -268,7 +274,11 @@ $(document).ready(function() {
 
                 // Load categories and brands into the edit form
                 $.getJSON('../actions/fetch_category_action.php')
-                    .done(function(categories) {
+                    .done(function(response) {
+                        let categories = response.categories || response;
+                        if (!Array.isArray(categories)) {
+                            categories = [];
+                        }
                         const select = $('.swal2-container select[name="category_id"]');
                         categories.forEach(function(category) {
                             const selected = category.cat_id == product.product_cat ? 'selected' : '';
@@ -277,7 +287,11 @@ $(document).ready(function() {
                     });
 
                 $.getJSON('../actions/fetch_brand_action.php')
-                    .done(function(brands) {
+                    .done(function(response) {
+                        let brands = response.brands || response;
+                        if (!Array.isArray(brands)) {
+                            brands = [];
+                        }
                         const select = $('.swal2-container select[name="brand_id"]');
                         brands.forEach(function(brand) {
                             const selected = brand.brand_id == product.product_brand ? 'selected' : '';
@@ -286,7 +300,11 @@ $(document).ready(function() {
                     });
             })
             .fail(function() {
-                showError('Failed to load product details');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Failed to load product details'
+                });
             });
     };
 
