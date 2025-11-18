@@ -3,7 +3,7 @@ $(document).ready(function() {
     
     function loadOrders() {
         $.ajax({
-            url: 'actions/get_orders_action.php',
+            url: '../actions/get_orders_action.php',
             type: 'GET',
             dataType: 'json',
             success: function(response) {
