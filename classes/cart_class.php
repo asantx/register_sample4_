@@ -3,6 +3,9 @@ require_once '../settings/db_class.php';
 
 class Cart extends db_connection {
     public function __construct() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         $this->db_connect();
     }
 
