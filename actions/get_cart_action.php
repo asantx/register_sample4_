@@ -15,7 +15,7 @@ $cart_count = get_cart_count_ctr();
 $cart_total = get_cart_total_ctr();
 
 // Transform image paths to full URLs
-$base_url = 'http://' . $_SERVER['HTTP_HOST'];
+$base_url = '../';
 foreach ($cart_items as &$item) {
     if ($item['product_image']) {
         $item['product_image'] = $base_url . '/' . $item['product_image'];
