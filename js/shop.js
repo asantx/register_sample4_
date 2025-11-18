@@ -20,9 +20,8 @@ $(document).ready(function () {
 
     function loadProducts() {
         $.ajax({
-            url: '../controllers/product_controller.php',
+            url: '../actions/fetch_product_action.php',
             type: 'GET',
-            data: { action: 'get_all_products' },
             dataType: 'json',
             success: function (data) {
                 if (data && Array.isArray(data)) {
