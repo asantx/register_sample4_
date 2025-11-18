@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once dirname(__DIR__) . '/controllers/order_controller.php';
+require_once '../controllers/order_controller.php';
 
 header('Content-Type: application/json');
 
