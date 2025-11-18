@@ -39,15 +39,17 @@ $(document).ready(function() {
     function loadCategories() {
         $.getJSON('../actions/fetch_category_action.php')
             .done(function(response) {
-                let categories = response.categories || response;
+                let categories = response.categories || response || [];
                 if (!Array.isArray(categories)) {
                     categories = [];
                 }
                 const select = $('#product-category');
                 select.find('option:not(:first)').remove();
-                categories.forEach(function(category) {
-                    select.append(`<option value="${category.cat_id}">${escapeHtml(category.cat_name)}</option>`);
-                });
+                if (categories.length > 0) {
+                    categories.forEach(function(category) {
+                        select.append(`<option value="${category.cat_id}">${escapeHtml(category.cat_name)}</option>`);
+                    });
+                }
             })
             .fail(function(err) {
                 console.error('Failed to load categories:', err);
@@ -57,15 +59,17 @@ $(document).ready(function() {
     function loadBrands() {
         $.getJSON('../actions/fetch_brand_action.php')
             .done(function(response) {
-                let brands = response.brands || response;
+                let brands = response.brands || response || [];
                 if (!Array.isArray(brands)) {
                     brands = [];
                 }
                 const select = $('#product-brand');
                 select.find('option:not(:first)').remove();
-                brands.forEach(function(brand) {
-                    select.append(`<option value="${brand.brand_id}">${escapeHtml(brand.brand_name)}</option>`);
-                });
+                if (brands.length > 0) {
+                    brands.forEach(function(brand) {
+                        select.append(`<option value="${brand.brand_id}">${escapeHtml(brand.brand_name)}</option>`);
+                    });
+                }
             })
             .fail(function(err) {
                 console.error('Failed to load brands:', err);
@@ -275,28 +279,32 @@ $(document).ready(function() {
                 // Load categories and brands into the edit form
                 $.getJSON('../actions/fetch_category_action.php')
                     .done(function(response) {
-                        let categories = response.categories || response;
+                        let categories = response.categories || response || [];
                         if (!Array.isArray(categories)) {
                             categories = [];
                         }
                         const select = $('.swal2-container select[name="category_id"]');
-                        categories.forEach(function(category) {
-                            const selected = category.cat_id == product.product_cat ? 'selected' : '';
-                            select.append(`<option value="${category.cat_id}" ${selected}>${escapeHtml(category.cat_name)}</option>`);
-                        });
+                        if (categories.length > 0) {
+                            categories.forEach(function(category) {
+                                const selected = category.cat_id == product.product_cat ? 'selected' : '';
+                                select.append(`<option value="${category.cat_id}" ${selected}>${escapeHtml(category.cat_name)}</option>`);
+                            });
+                        }
                     });
 
                 $.getJSON('../actions/fetch_brand_action.php')
                     .done(function(response) {
-                        let brands = response.brands || response;
+                        let brands = response.brands || response || [];
                         if (!Array.isArray(brands)) {
                             brands = [];
                         }
                         const select = $('.swal2-container select[name="brand_id"]');
-                        brands.forEach(function(brand) {
-                            const selected = brand.brand_id == product.product_brand ? 'selected' : '';
-                            select.append(`<option value="${brand.brand_id}" ${selected}>${escapeHtml(brand.brand_name)}</option>`);
-                        });
+                        if (brands.length > 0) {
+                            brands.forEach(function(brand) {
+                                const selected = brand.brand_id == product.product_brand ? 'selected' : '';
+                                select.append(`<option value="${brand.brand_id}" ${selected}>${escapeHtml(brand.brand_name)}</option>`);
+                            });
+                        }
                     });
             })
             .fail(function() {
