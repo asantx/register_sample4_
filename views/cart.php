@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'settings/core.php';
+require_once '../settings/core.php';
 requireLogin();
 ?>
 <!DOCTYPE html>
@@ -14,8 +14,8 @@ requireLogin();
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #667eea;
-            --secondary: #764ba2;
+            --primary: #d72660;
+            --secondary: #a8325e;
             --success: #48dbfb;
             --danger: #ff6b6b;
         }
@@ -25,12 +25,12 @@ requireLogin();
         }
         
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
             min-height: 100vh;
         }
         
         .navbar {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
         
@@ -84,7 +84,7 @@ requireLogin();
         .cart-item-image {
             width: 80px;
             height: 80px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
             border-radius: 8px;
             display: flex;
             align-items: center;
@@ -124,7 +124,7 @@ requireLogin();
         }
         
         .quantity-control button {
-            background: var(--primary);
+            background: #d72660;
             color: white;
             border: none;
             padding: 5px 10px;
@@ -177,7 +177,7 @@ requireLogin();
         
         .checkout-btn {
             width: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #d72660 0%, #a8325e 100%);
             color: white;
             border: none;
             padding: 12px;
@@ -204,7 +204,7 @@ requireLogin();
         }
         
         .modal-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #d72660 0%, #a8325e 100%);
             color: white;
         }
         
@@ -216,7 +216,7 @@ requireLogin();
         
         .form-control:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+            box-shadow: 0 0 0 0.2rem rgba(215, 38, 96, 0.25);
         }
     </style>
 </head>
@@ -316,7 +316,7 @@ requireLogin();
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" onclick="confirmPayment()" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none;">
+                    <button type="button" class="btn btn-primary" onclick="confirmPayment()" style="background: linear-gradient(135deg, #d72660 0%, #a8325e 100%); border: none;">
                         <i class="fas fa-lock"></i> Confirm Payment
                     </button>
                 </div>

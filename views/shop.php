@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once 'settings/core.php';
-require_once 'settings/db_class.php';
+require_once '../settings/core.php';
+require_once '../settings/db_class.php';
 
 $db = new DB_Connection();
 $db_conn = $db->db_conn();
@@ -32,8 +32,8 @@ while ($row = $result->fetch_assoc()) {
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #667eea;
-            --secondary: #764ba2;
+            --primary: #d72660;
+            --secondary: #a8325e;
             --success: #48dbfb;
             --danger: #ff6b6b;
         }
@@ -43,12 +43,12 @@ while ($row = $result->fetch_assoc()) {
         }
         
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
             min-height: 100vh;
         }
         
         .navbar {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
         
@@ -152,7 +152,7 @@ while ($row = $result->fetch_assoc()) {
         .product-image {
             width: 100%;
             height: 200px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -187,7 +187,7 @@ while ($row = $result->fetch_assoc()) {
         
         .add-to-cart-btn {
             width: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #d72660 0%, #a8325e 100%);
             color: white;
             border: none;
             padding: 8px;
