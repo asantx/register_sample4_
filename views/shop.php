@@ -1,25 +1,8 @@
 <?php
 session_start();
 require_once '../settings/core.php';
-require_once '../settings/db_class.php';
-
-$db = new DB_Connection();
-$db_conn = $db->db_conn();
-
-// Get categories and brands for filters
-$categories = [];
-$sql = "SELECT cat_id, cat_name FROM categories ORDER BY cat_name";
-$result = $db_conn->query($sql);
-while ($row = $result->fetch_assoc()) {
-    $categories[] = $row;
-}
-
-$brands = [];
-$sql = "SELECT brand_id, brand_name FROM brands ORDER BY brand_name";
-$result = $db_conn->query($sql);
-while ($row = $result->fetch_assoc()) {
-    $brands[] = $row;
-}
+// Backend/data loading is performed by controllers/actions and fetched
+// client-side via AJAX (keep view clean and MVC-compliant).
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -230,18 +213,18 @@ while ($row = $result->fetch_assoc()) {
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="login/logout.php">
+                            <a class="nav-link" href="../login/logout.php">
                                 <i class="fas fa-sign-out-alt"></i> Logout
                             </a>
                         </li>
                     <?php else: ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="login/login.php">
+                            <a class="nav-link" href="../login/login.php">
                                 <i class="fas fa-sign-in-alt"></i> Login
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="login/register.php">
+                            <a class="nav-link" href="../login/register.php">
                                 <i class="fas fa-user-plus"></i> Register
                             </a>
                         </li>
@@ -268,21 +251,15 @@ while ($row = $result->fetch_assoc()) {
 
                 <div class="sidebar-section">
                     <h6><i class="fas fa-tag"></i> Categories</h6>
-                    <select id="category" class="form-select">
-                        <option value="">All Categories</option>
-                        <?php foreach ($categories as $cat): ?>
-                            <option value="<?php echo $cat['cat_id']; ?>"><?php echo htmlspecialchars($cat['cat_name']); ?></option>
-                        <?php endforeach; ?>
-                    </select>
+                        <select id="category" class="form-select">
+                            <option value="">All Categories</option>
+                        </select>
                 </div>
 
                 <div class="sidebar-section">
                     <h6><i class="fas fa-trademark"></i> Brands</h6>
                     <select id="brand" class="form-select">
                         <option value="">All Brands</option>
-                        <?php foreach ($brands as $brand): ?>
-                            <option value="<?php echo $brand['brand_id']; ?>"><?php echo htmlspecialchars($brand['brand_name']); ?></option>
-                        <?php endforeach; ?>
                     </select>
                 </div>
             </div>
@@ -303,6 +280,6 @@ while ($row = $result->fetch_assoc()) {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="js/shop.js"></script>
+    <script src="../js/shop.js"></script>
 </body>
 </html>
