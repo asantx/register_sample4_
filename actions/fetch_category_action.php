@@ -8,10 +8,7 @@ error_reporting(E_ALL);
 require_once __DIR__ . '/../settings/core.php';
 require_once __DIR__ . '/../controllers/category_controller.php';
 
-if (!isAdmin()) {
-    echo json_encode(['status' => 'error', 'message' => 'Not authorized']);
-    exit();
-}
+
 
 $cats = fetch_categories_ctr();
 echo json_encode(['status' => 'success', 'categories' => $cats]);

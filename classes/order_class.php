@@ -1,12 +1,11 @@
 <?php
-require_once dirname(__DIR__) . '/settings/db_class.php';
+require_once '../settings/db_class.php';
 
-class Order {
-    private $db;
+class Order extends db_connection {
 
-    public function __construct() {
-        $this->db = new DB_Connection();
-        $this->db = $this->db->db_conn();
+    public function __construct()
+    {
+        $this->db_conn();
     }
 
     private function generateOrderReference() {

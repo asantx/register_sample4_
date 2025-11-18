@@ -15,7 +15,36 @@ $(document).ready(function () {
     });
 
     function loadCategoriesBrands() {
-        // This is already done in PHP, we just need the filters to work
+        // Load categories
+        $.ajax({
+            url: '../actions/fetch_category_action.php',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                if (data && data.status === 'success' && Array.isArray(data.categories)) {
+                    let catOptions = '<option value="">All Categories</option>';
+                    data.categories.forEach(function (cat) {
+                        catOptions += `<option value="${cat.cat_id}">${cat.cat_name}</option>`;
+                    });
+                    $('#category').html(catOptions);
+                }
+            }
+        });
+        // Load brands
+        $.ajax({
+            url: '../actions/fetch_brand_action.php',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                if (data && data.status === 'success' && Array.isArray(data.brands)) {
+                    let brandOptions = '<option value="">All Brands</option>';
+                    data.brands.forEach(function (brand) {
+                        brandOptions += `<option value="${brand.brand_id}">${brand.brand_name}</option>`;
+                    });
+                    $('#brand').html(brandOptions);
+                }
+            }
+        });
     }
 
     function loadProducts() {
@@ -42,12 +71,12 @@ $(document).ready(function () {
 
         let filtered = allProducts.filter(function (product) {
             let matchSearch = !search ||
-                product.product_title.toLowerCase().includes(search) ||
-                product.product_keywords.toLowerCase().includes(search) ||
-                product.product_desc.toLowerCase().includes(search);
+                (product.product_title && product.product_title.toLowerCase().includes(search)) ||
+                (product.product_keywords && product.product_keywords.toLowerCase().includes(search)) ||
+                (product.product_desc && product.product_desc.toLowerCase().includes(search));
 
-            let matchCategory = !category || product.product_cat == category;
-            let matchBrand = !brand || product.product_brand == brand;
+            let matchCategory = !category || String(product.product_cat) === String(category);
+            let matchBrand = !brand || String(product.product_brand) === String(brand);
 
             return matchSearch && matchCategory && matchBrand;
         });

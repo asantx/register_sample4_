@@ -8,10 +8,7 @@ error_reporting(E_ALL);
 require_once __DIR__ . '/../settings/core.php';
 require_once __DIR__ . '/../controllers/brand_controller.php';
 
-if (!isAdmin()) {
-    echo json_encode(['status' => 'error', 'message' => 'Not authorized']);
-    exit();
-}
+
 
 $brands = fetch_brands_ctr();
 echo json_encode(['status' => 'success', 'brands' => $brands]);
