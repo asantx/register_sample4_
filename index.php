@@ -1,3 +1,17 @@
+<?php
+require_once 'settings/core.php';
+
+if (isUserLoggedIn()) {
+	if (isAdmin()) {
+		header("Location: admin/dashboard.php");
+		exit();
+	} else {
+		header("Location: views/shop.php");
+		exit();
+	}
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
