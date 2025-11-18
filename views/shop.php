@@ -6,6 +6,7 @@ require_once '../settings/core.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,37 +21,37 @@ require_once '../settings/core.php';
             --success: #48dbfb;
             --danger: #ff6b6b;
         }
-        
+
         * {
             font-family: 'Roboto', sans-serif;
         }
-        
+
         body {
             background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
             min-height: 100vh;
         }
-        
+
         .navbar {
             background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
-        
+
         .navbar-brand {
             font-family: 'Pacifico', cursive;
             font-size: 1.8rem;
             color: white !important;
         }
-        
+
         .navbar-nav .nav-link {
-            color: rgba(255,255,255,0.8) !important;
+            color: rgba(255, 255, 255, 0.8) !important;
             margin: 0 10px;
             transition: color 0.3s;
         }
-        
+
         .navbar-nav .nav-link:hover {
             color: white !important;
         }
-        
+
         .cart-badge {
             background: var(--danger);
             border-radius: 50%;
@@ -58,32 +59,32 @@ require_once '../settings/core.php';
             font-size: 0.75rem;
             font-weight: bold;
         }
-        
+
         .shop-container {
             background: white;
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
             margin-top: 30px;
             margin-bottom: 30px;
         }
-        
+
         .sidebar {
             background: #f8f9fa;
             padding: 20px;
             border-right: 1px solid #dee2e6;
         }
-        
+
         .sidebar-section {
             margin-bottom: 25px;
         }
-        
+
         .sidebar-section h6 {
             color: var(--primary);
             font-weight: 600;
             margin-bottom: 12px;
         }
-        
+
         .sidebar-section input,
         .sidebar-section select {
             width: 100%;
@@ -93,7 +94,7 @@ require_once '../settings/core.php';
             font-size: 0.9rem;
             margin-bottom: 8px;
         }
-        
+
         .sidebar-section label {
             display: flex;
             align-items: center;
@@ -101,23 +102,23 @@ require_once '../settings/core.php';
             cursor: pointer;
             font-size: 0.9rem;
         }
-        
+
         .sidebar-section input[type="checkbox"] {
             width: auto;
             margin-right: 8px;
             cursor: pointer;
         }
-        
+
         .products-area {
             padding: 20px;
         }
-        
+
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 20px;
         }
-        
+
         .product-card {
             background: white;
             border: 1px solid #dee2e6;
@@ -126,12 +127,12 @@ require_once '../settings/core.php';
             transition: transform 0.3s, box-shadow 0.3s;
             cursor: pointer;
         }
-        
+
         .product-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
-        
+
         .product-image {
             width: 100%;
             height: 200px;
@@ -143,31 +144,31 @@ require_once '../settings/core.php';
             font-size: 3rem;
             overflow: hidden;
         }
-        
+
         .product-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        
+
         .product-info {
             padding: 15px;
         }
-        
+
         .product-title {
             font-weight: 600;
             color: #333;
             margin-bottom: 8px;
             font-size: 0.95rem;
         }
-        
+
         .product-price {
             color: var(--primary);
             font-weight: 700;
             font-size: 1.1rem;
             margin-bottom: 10px;
         }
-        
+
         .add-to-cart-btn {
             width: 100%;
             background: linear-gradient(135deg, #d72660 0%, #a8325e 100%);
@@ -179,11 +180,11 @@ require_once '../settings/core.php';
             font-size: 0.9rem;
             transition: opacity 0.3s;
         }
-        
+
         .add-to-cart-btn:hover {
             opacity: 0.9;
         }
-        
+
         .no-products {
             text-align: center;
             padding: 40px 20px;
@@ -191,6 +192,7 @@ require_once '../settings/core.php';
         }
     </style>
 </head>
+
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
@@ -251,9 +253,9 @@ require_once '../settings/core.php';
 
                 <div class="sidebar-section">
                     <h6><i class="fas fa-tag"></i> Categories</h6>
-                        <select id="category" class="form-select">
-                            <option value="">All Categories</option>
-                        </select>
+                    <select id="category" class="form-select">
+                        <option value="">All Categories</option>
+                    </select>
                 </div>
 
                 <div class="sidebar-section">
@@ -282,4 +284,5 @@ require_once '../settings/core.php';
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../js/shop.js"></script>
 </body>
+
 </html>

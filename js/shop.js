@@ -1,73 +1,73 @@
-$(document).ready(function() {
+$(document).ready(function () {
     let allProducts = [];
     let searchTimeout;
-    
+
     // Load categories, brands, and products on page load
     loadCategoriesBrands();
     loadProducts();
     updateCartBadge();
-    
+
     // Setup event listeners for filters
     $('#category, #brand').on('change', filterProducts);
-    $('#search').on('keyup', function() {
+    $('#search').on('keyup', function () {
         clearTimeout(searchTimeout);
         searchTimeout = setTimeout(filterProducts, 300);
     });
-    
+
     function loadCategoriesBrands() {
         // This is already done in PHP, we just need the filters to work
     }
-    
+
     function loadProducts() {
         $.ajax({
-            url: 'controllers/product_controller.php',
+            url: '../controllers/product_controller.php',
             type: 'GET',
             data: { action: 'get_all_products' },
             dataType: 'json',
-            success: function(data) {
+            success: function (data) {
                 if (data && Array.isArray(data)) {
                     allProducts = data;
                     renderProducts(allProducts);
                 }
             },
-            error: function() {
+            error: function () {
                 $('#product-grid').html('<div class="no-products col-12"><i class="fas fa-exclamation-circle"></i> Failed to load products</div>');
             }
         });
     }
-    
+
     function filterProducts() {
         let search = $('#search').val().toLowerCase();
         let category = $('#category').val();
         let brand = $('#brand').val();
-        
-        let filtered = allProducts.filter(function(product) {
-            let matchSearch = !search || 
+
+        let filtered = allProducts.filter(function (product) {
+            let matchSearch = !search ||
                 product.product_title.toLowerCase().includes(search) ||
                 product.product_keywords.toLowerCase().includes(search) ||
                 product.product_desc.toLowerCase().includes(search);
-            
+
             let matchCategory = !category || product.product_cat == category;
             let matchBrand = !brand || product.product_brand == brand;
-            
+
             return matchSearch && matchCategory && matchBrand;
         });
-        
+
         renderProducts(filtered);
     }
-    
+
     function renderProducts(products) {
         if (products.length === 0) {
             $('#product-grid').html('<div class="no-products col-12"><i class="fas fa-search"></i> No products found</div>');
             return;
         }
-        
+
         let html = '';
-        products.forEach(function(product) {
-            let imageUrl = product.product_image ? 
-                (product.product_image.startsWith('http') ? product.product_image : 'http://' + window.location.host + '/' + product.product_image) : 
+        products.forEach(function (product) {
+            let imageUrl = product.product_image ?
+                (product.product_image.startsWith('http') ? product.product_image : 'http://' + window.location.host + '/' + product.product_image) :
                 '';
-            
+
             html += `
                 <div class="product-card">
                     <div class="product-image">
@@ -83,20 +83,20 @@ $(document).ready(function() {
                 </div>
             `;
         });
-        
+
         $('#product-grid').html(html);
     }
-    
-    window.addToCart = function(productId) {
+
+    window.addToCart = function (productId) {
         $.ajax({
-            url: 'actions/add_to_cart_action.php',
+            url: '../actions/add_to_cart_action.php',
             type: 'POST',
             data: {
                 product_id: productId,
                 quantity: 1
             },
             dataType: 'json',
-            success: function(response) {
+            success: function (response) {
                 if (response.success) {
                     updateCartBadge();
                     Swal.fire({
@@ -110,18 +110,18 @@ $(document).ready(function() {
                     Swal.fire('Error', response.error || 'Failed to add to cart', 'error');
                 }
             },
-            error: function() {
+            error: function () {
                 Swal.fire('Error', 'Failed to add to cart', 'error');
             }
         });
     };
-    
+
     function updateCartBadge() {
         $.ajax({
-            url: 'actions/get_cart_action.php',
+            url: '../actions/get_cart_action.php',
             type: 'GET',
             dataType: 'json',
-            success: function(response) {
+            success: function (response) {
                 if (response.count) {
                     $('#cart-count').text(response.count).show();
                 } else {
@@ -130,7 +130,7 @@ $(document).ready(function() {
             }
         });
     }
-    
+
     function escapeHtml(text) {
         let map = {
             '&': '&amp;',
@@ -139,6 +139,6 @@ $(document).ready(function() {
             '"': '&quot;',
             "'": '&#039;'
         };
-        return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+        return text.replace(/[&<>"']/g, function (m) { return map[m]; });
     }
 });
