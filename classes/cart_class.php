@@ -48,11 +48,11 @@ class Cart extends db_connection {
             } else {
                 if ($identifier['type'] === 'c_id') {
                     $sql = "INSERT INTO cart (c_id, p_id, qty) VALUES (?, ?, ?)";
-                    $stmt = $this->db->db->prepare($sql);
+                    $stmt = $this->db->prepare($sql);
                     $stmt->bind_param("iii", $identifier['value'], $product_id, $quantity);
                 } else {
                     $sql = "INSERT INTO cart (ip_add, p_id, qty) VALUES (?, ?, ?)";
-                    $stmt = $this->db->db->prepare($sql);
+                    $stmt = $this->db->prepare($sql);
                     $stmt->bind_param("sii", $identifier['value'], $product_id, $quantity);
                 }
                 return $stmt->execute();
