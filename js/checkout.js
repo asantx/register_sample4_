@@ -1,20 +1,20 @@
-$(document).ready(function() {
+$(document).ready(function () {
     loadCart();
-    
+
     function loadCart() {
         $.ajax({
-            url: 'actions/get_cart_action.php',
+            url: '../actions/get_cart_action.php',
             type: 'GET',
             dataType: 'json',
-            success: function(response) {
+            success: function (response) {
                 renderCart(response);
             },
-            error: function() {
+            error: function () {
                 $('#cart-items').html('<div class="empty-cart"><i class="fas fa-exclamation-circle"></i> Failed to load cart</div>');
             }
         });
     }
-    
+
     function renderCart(cartData) {
         if (!cartData.items || cartData.items.length === 0) {
             $('#cart-items').html(`
@@ -30,18 +30,18 @@ $(document).ready(function() {
             updateSummary(0, 0, 0);
             return;
         }
-        
+
         let html = '';
         let subtotal = 0;
-        
-        cartData.items.forEach(function(item) {
-            let imageUrl = item.product_image && item.product_image.startsWith('http') ? 
-                item.product_image : 
+
+        cartData.items.forEach(function (item) {
+            let imageUrl = item.product_image && item.product_image.startsWith('http') ?
+                item.product_image :
                 (item.product_image ? 'http://' + window.location.host + '/' + item.product_image : '');
-            
+
             let itemTotal = parseFloat(item.product_price) * parseInt(item.quantity);
             subtotal += itemTotal;
-            
+
             html += `
                 <div class="cart-item" data-product-id="${item.product_id}">
                     <div class="cart-item-image">
@@ -65,35 +65,35 @@ $(document).ready(function() {
                 </div>
             `;
         });
-        
+
         $('#cart-items').html(html);
-        
+
         let tax = subtotal * 0.00;
         let total = subtotal + tax;
         updateSummary(subtotal, tax, total);
         $('#checkout-btn').prop('disabled', false);
     }
-    
+
     function updateSummary(subtotal, tax, total) {
         $('#subtotal').text('₦' + parseFloat(subtotal).toFixed(2));
         $('#tax').text('₦' + parseFloat(tax).toFixed(2));
         $('#total').text('₦' + parseFloat(total).toFixed(2));
         $('#checkout-total').text('₦' + parseFloat(total).toFixed(2));
     }
-    
-    window.updateQuantity = function(productId, quantity) {
+
+    window.updateQuantity = function (productId, quantity) {
         quantity = parseInt(quantity);
         if (quantity < 1) quantity = 1;
-        
+
         $.ajax({
-            url: 'actions/update_quantity_action.php',
+            url: '../actions/update_quantity_action.php',
             type: 'POST',
             data: {
                 product_id: productId,
                 quantity: quantity
             },
             dataType: 'json',
-            success: function(response) {
+            success: function (response) {
                 if (response.success) {
                     loadCart();
                     Swal.fire({
@@ -107,27 +107,27 @@ $(document).ready(function() {
                     Swal.fire('Error', response.error || 'Failed to update quantity', 'error');
                 }
             },
-            error: function() {
+            error: function () {
                 Swal.fire('Error', 'Failed to update quantity', 'error');
             }
         });
     };
-    
-    window.increaseQuantity = function(productId) {
+
+    window.increaseQuantity = function (productId) {
         let input = $(`input[value="${$('[data-product-id="' + productId + '"] .qty-input').val()}"]`).closest('.quantity-control').find('.qty-input');
         let currentQty = parseInt(input.val()) || 1;
         updateQuantity(productId, currentQty + 1);
     };
-    
-    window.decreaseQuantity = function(productId) {
+
+    window.decreaseQuantity = function (productId) {
         let input = $(`input[value="${$('[data-product-id="' + productId + '"] .qty-input').val()}"]`).closest('.quantity-control').find('.qty-input');
         let currentQty = parseInt(input.val()) || 1;
         if (currentQty > 1) {
             updateQuantity(productId, currentQty - 1);
         }
     };
-    
-    window.removeFromCart = function(productId) {
+
+    window.removeFromCart = function (productId) {
         Swal.fire({
             title: 'Remove Item?',
             text: 'Are you sure you want to remove this item from your cart?',
@@ -139,11 +139,11 @@ $(document).ready(function() {
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: 'actions/remove_from_cart_action.php',
+                    url: '../actions/remove_from_cart_action.php',
                     type: 'POST',
                     data: { product_id: productId },
                     dataType: 'json',
-                    success: function(response) {
+                    success: function (response) {
                         if (response.success) {
                             loadCart();
                             Swal.fire({
@@ -157,7 +157,7 @@ $(document).ready(function() {
                             Swal.fire('Error', response.error || 'Failed to remove item', 'error');
                         }
                     },
-                    error: function() {
+                    error: function () {
                         Swal.fire('Error', 'Failed to remove item', 'error');
                     }
                 });
@@ -175,19 +175,19 @@ function confirmPayment() {
     let customerName = $('#customer-name').val().trim();
     let customerEmail = $('#customer-email').val().trim();
     let shippingAddress = $('#shipping-address').val().trim();
-    
+
     if (!customerName || !customerEmail || !shippingAddress) {
         Swal.fire('Validation Error', 'Please fill in all fields', 'error');
         return;
     }
-    
+
     if (!isValidEmail(customerEmail)) {
         Swal.fire('Validation Error', 'Please enter a valid email address', 'error');
         return;
     }
-    
+
     $.ajax({
-        url: 'actions/process_checkout_action.php',
+        url: '../actions/process_checkout_action.php',
         type: 'POST',
         data: {
             customer_name: customerName,
@@ -195,7 +195,7 @@ function confirmPayment() {
             shipping_address: shippingAddress
         },
         dataType: 'json',
-        success: function(response) {
+        success: function (response) {
             if (response.status === 'success') {
                 Swal.fire({
                     icon: 'success',
@@ -214,7 +214,7 @@ function confirmPayment() {
                         window.location.href = 'orders.php';
                     }
                 });
-                
+
                 // Close modal and reset form
                 let modal = bootstrap.Modal.getInstance(document.getElementById('checkoutModal'));
                 modal.hide();
@@ -223,7 +223,7 @@ function confirmPayment() {
                 Swal.fire('Error', response.message || 'Failed to process order', 'error');
             }
         },
-        error: function(xhr) {
+        error: function (xhr) {
             let errorMsg = 'Failed to process order';
             if (xhr.responseJSON && xhr.responseJSON.error) {
                 errorMsg = xhr.responseJSON.error;
@@ -246,5 +246,5 @@ function escapeHtml(text) {
         '"': '&quot;',
         "'": '&#039;'
     };
-    return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+    return text.replace(/[&<>"']/g, function (m) { return map[m]; });
 }
