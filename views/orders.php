@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'settings/core.php';
+require_once '../settings/core.php';
 requireLogin();
 ?>
 <!DOCTYPE html>
