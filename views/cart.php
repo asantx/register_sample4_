@@ -241,7 +241,7 @@ requireLogin();
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="login/logout.php">
+                        <a class="nav-link" href="../login/logout.php">
                             <i class="fas fa-sign-out-alt"></i> Logout
                         </a>
                     </li>
@@ -327,6 +327,6 @@ requireLogin();
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="js/checkout.js"></script>
+    <script src="../js/checkout.js"></script>
 </body>
 </html>
