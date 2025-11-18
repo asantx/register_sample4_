@@ -35,9 +35,7 @@ $(document).ready(function () {
         let subtotal = 0;
 
         cartData.items.forEach(function (item) {
-            let imageUrl = item.product_image && item.product_image.startsWith('http') ?
-                item.product_image :
-                (item.product_image ? 'http://' + window.location.host + '/' + item.product_image : '');
+            let imageUrl = '../' + item.product_image;
 
             let itemTotal = parseFloat(item.product_price) * parseInt(item.quantity);
             subtotal += itemTotal;
