@@ -1,15 +1,18 @@
 <?php
 require_once '../settings/db_class.php';
 
-class Cart extends db_connection {
-    public function __construct() {
+class Cart extends db_connection
+{
+    public function __construct()
+    {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        $this->db_connect();
+        $this->db_conn();
     }
 
-    private function getCartIdentifier() {
+    private function getCartIdentifier()
+    {
         if (isset($_SESSION['user_id'])) {
             return ['type' => 'c_id', 'value' => $_SESSION['user_id']];
         }
@@ -17,7 +20,8 @@ class Cart extends db_connection {
         return ['type' => 'ip_add', 'value' => $ip_add];
     }
 
-    public function addToCart($product_id, $quantity = 1) {
+    public function addToCart($product_id, $quantity = 1)
+    {
         try {
             $identifier = $this->getCartIdentifier();
             $quantity = max(1, intval($quantity));
@@ -65,7 +69,8 @@ class Cart extends db_connection {
         }
     }
 
-    public function updateQuantity($product_id, $quantity) {
+    public function updateQuantity($product_id, $quantity)
+    {
         try {
             $identifier = $this->getCartIdentifier();
             $quantity = max(1, intval($quantity));
@@ -85,7 +90,8 @@ class Cart extends db_connection {
         }
     }
 
-    public function removeFromCart($product_id) {
+    public function removeFromCart($product_id)
+    {
         try {
             $identifier = $this->getCartIdentifier();
 
@@ -104,7 +110,8 @@ class Cart extends db_connection {
         }
     }
 
-    public function getCartItems() {
+    public function getCartItems()
+    {
         try {
             $identifier = $this->getCartIdentifier();
 
@@ -130,7 +137,8 @@ class Cart extends db_connection {
         }
     }
 
-    public function getCartCount() {
+    public function getCartCount()
+    {
         try {
             $identifier = $this->getCartIdentifier();
 
@@ -153,7 +161,8 @@ class Cart extends db_connection {
         }
     }
 
-    public function getCartTotal() {
+    public function getCartTotal()
+    {
         try {
             $identifier = $this->getCartIdentifier();
 
@@ -163,7 +172,7 @@ class Cart extends db_connection {
                 $stmt->bind_param("i", $identifier['value']);
             } else {
                 $sql = "SELECT SUM(p.product_price * c.qty) as total FROM cart c JOIN products p ON c.p_id = p.product_id WHERE c.ip_add = ? AND c.c_id IS NULL";
-                $stmt = $this->db->db->prepare($sql);
+                $stmt = $this->db->prepare($sql);
                 $stmt->bind_param("s", $identifier['value']);
             }
 
@@ -176,17 +185,18 @@ class Cart extends db_connection {
         }
     }
 
-    public function emptyCart() {
+    public function emptyCart()
+    {
         try {
             $identifier = $this->getCartIdentifier();
 
             if ($identifier['type'] === 'c_id') {
                 $sql = "DELETE FROM cart WHERE c_id = ?";
-                $stmt = $this->db->db->prepare($sql);
+                $stmt = $this->db->prepare($sql);
                 $stmt->bind_param("i", $identifier['value']);
             } else {
                 $sql = "DELETE FROM cart WHERE ip_add = ? AND c_id IS NULL";
-                $stmt = $this->db->db->prepare($sql);
+                $stmt = $this->db->prepare($sql);
                 $stmt->bind_param("s", $identifier['value']);
             }
             return $stmt->execute();
@@ -195,7 +205,8 @@ class Cart extends db_connection {
         }
     }
 
-    public function emptyCartByUserId($user_id) {
+    public function emptyCartByUserId($user_id)
+    {
         try {
             $sql = "DELETE FROM cart WHERE c_id = ?";
             $stmt = $this->db->prepare($sql);
