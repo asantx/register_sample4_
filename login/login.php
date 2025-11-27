@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <title>DistantLove - Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@300;400;500;600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/distantlove-theme.css">
     <style>
         body {
             background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
@@ -55,45 +56,121 @@
             background: #d72660;
             color: #fff;
         }
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+
         .card {
             border: none;
-            border-radius: 18px;
-            box-shadow: 0 4px 16px rgba(215,38,96,0.10);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+            animation: scaleIn 0.6s ease-out;
         }
+
         .card-header {
-            background: #d72660;
+            background: var(--gradient-rose);
             color: #fff;
-            border-top-left-radius: 18px;
-            border-top-right-radius: 18px;
+            padding: 2rem;
+            text-align: center;
         }
-        .btn-custom {
-            background-color: #d72660;
-            border-color: #d72660;
-            color: #fff;
-            transition: background-color 0.3s, border-color 0.3s;
+
+        .card-header h4 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
         }
-        .btn-custom:hover {
-            background-color: #a8325e;
-            border-color: #a8325e;
+
+        .card-body {
+            padding: 2.5rem;
         }
-        .highlight {
-            color: #d72660;
-            transition: color 0.3s;
+
+        .form-label {
+            font-weight: 600;
+            color: var(--primary-pink-dark);
+            margin-bottom: 0.5rem;
         }
-        .highlight:hover {
-            color: #a8325e;
-        }
-        .animate-pulse-custom {
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
+
         .form-label i {
             margin-left: 5px;
-            color: #d72660;
+            color: var(--primary-pink);
+        }
+
+        .form-control {
+            border: 2px solid var(--gray);
+            border-radius: var(--radius-md);
+            padding: 12px 16px;
+            transition: all var(--transition-normal);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-pink);
+            box-shadow: 0 0 0 0.2rem rgba(215, 38, 96, 0.15);
+        }
+
+        .btn-custom {
+            background: var(--gradient-rose);
+            border: none;
+            color: #fff;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all var(--transition-normal);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-custom:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-3px);
+        }
+
+        .btn-custom:active {
+            transform: translateY(-1px);
+        }
+
+        .highlight {
+            color: var(--primary-pink);
+            transition: color var(--transition-normal);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .highlight:hover {
+            color: var(--primary-pink-dark);
+            text-decoration: underline;
+        }
+
+        .card-footer {
+            background: var(--gradient-soft-pink);
+            padding: 1.5rem;
+            text-align: center;
+            border: none;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 2px solid var(--gray);
+        }
+
+        .divider span {
+            padding: 0 10px;
+            color: var(--dark-gray);
+            font-weight: 500;
         }
     </style>
 </head>

@@ -1,0 +1,612 @@
+/* ================================================
+   DistantLove E-Commerce Platform - Theme Styles
+   Beautiful Pink Color Palette & Interactive Design
+   ================================================ */
+
+:root {
+    /* Primary Pink Palette */
+    --primary-pink: #d72660;
+    --primary-pink-dark: #a8325e;
+    --primary-pink-light: #ff4d8d;
+    --primary-pink-lighter: #ffb3d1;
+    --primary-pink-lightest: #ffdde1;
+
+    /* Secondary Colors */
+    --secondary-coral: #ee9ca7;
+    --secondary-peach: #ffd89b;
+    --secondary-lavender: #e0c3fc;
+    --secondary-mint: #a8edea;
+
+    /* Accent Colors */
+    --accent-gold: #ffd700;
+    --accent-rose-gold: #b76e79;
+    --accent-blush: #fff0f5;
+    --accent-champagne: #f7e7ce;
+
+    /* Functional Colors */
+    --success: #48dbfb;
+    --success-light: #a8e6ff;
+    --danger: #ff6b6b;
+    --warning: #ffa502;
+    --info: #54a0ff;
+
+    /* Neutral Colors */
+    --white: #ffffff;
+    --off-white: #fefefe;
+    --light-gray: #f8f9fa;
+    --gray: #dee2e6;
+    --dark-gray: #6c757d;
+    --darker-gray: #343a40;
+    --black: #212529;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
+    --gradient-secondary: linear-gradient(135deg, #ffd89b 0%, #ee9ca7 100%);
+    --gradient-sunset: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #ffeaa7 100%);
+    --gradient-rose: linear-gradient(135deg, #d72660 0%, #a8325e 100%);
+    --gradient-soft-pink: linear-gradient(135deg, #ffb3d1 0%, #ffdde1 100%);
+    --gradient-dreamy: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+
+    /* Typography */
+    --font-primary: 'Roboto', sans-serif;
+    --font-heading: 'Pacifico', cursive;
+    --font-accent: 'Inter', sans-serif;
+
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-xxl: 3rem;
+
+    /* Border Radius */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 15px;
+    --radius-xl: 20px;
+    --radius-round: 50%;
+
+    /* Shadows */
+    --shadow-sm: 0 2px 8px rgba(215, 38, 96, 0.08);
+    --shadow-md: 0 4px 16px rgba(215, 38, 96, 0.12);
+    --shadow-lg: 0 8px 32px rgba(215, 38, 96, 0.16);
+    --shadow-xl: 0 12px 48px rgba(215, 38, 96, 0.20);
+    --shadow-hover: 0 10px 40px rgba(215, 38, 96, 0.25);
+
+    /* Transitions */
+    --transition-fast: 0.2s ease-in-out;
+    --transition-normal: 0.3s ease-in-out;
+    --transition-slow: 0.5s ease-in-out;
+
+    /* Z-Index Layers */
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-fixed: 1030;
+    --z-modal-backdrop: 1040;
+    --z-modal: 1050;
+    --z-popover: 1060;
+    --z-tooltip: 1070;
+}
+
+/* ==================== Global Styles ==================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-primary);
+    background: var(--gradient-primary);
+    min-height: 100vh;
+    color: var(--black);
+    overflow-x: hidden;
+}
+
+/* ==================== Typography ==================== */
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    color: var(--primary-pink-dark);
+    margin-bottom: var(--spacing-md);
+}
+
+.heading-fancy {
+    font-family: var(--font-heading);
+    color: var(--primary-pink);
+    letter-spacing: 2px;
+    text-shadow: 0 2px 8px rgba(255, 243, 246, 0.8);
+}
+
+p {
+    line-height: 1.6;
+    margin-bottom: var(--spacing-md);
+}
+
+/* ==================== Buttons ==================== */
+
+.btn-distantlove {
+    background: var(--gradient-rose);
+    color: var(--white);
+    border: none;
+    padding: 12px 30px;
+    border-radius: var(--radius-lg);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-distantlove::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: var(--radius-round);
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn-distantlove:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-distantlove:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+}
+
+.btn-distantlove:active {
+    transform: translateY(-1px);
+}
+
+.btn-outline-distantlove {
+    background: transparent;
+    color: var(--primary-pink);
+    border: 2px solid var(--primary-pink);
+    padding: 12px 30px;
+    border-radius: var(--radius-lg);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+}
+
+.btn-outline-distantlove:hover {
+    background: var(--gradient-rose);
+    color: var(--white);
+    border-color: transparent;
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-soft-pink {
+    background: var(--gradient-soft-pink);
+    color: var(--primary-pink-dark);
+    border: none;
+    padding: 10px 24px;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+}
+
+.btn-soft-pink:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+/* ==================== Cards ==================== */
+
+.card-distantlove {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-normal);
+    border: none;
+}
+
+.card-distantlove:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-hover);
+}
+
+.card-gradient {
+    background: var(--gradient-soft-pink);
+    border: none;
+}
+
+.card-glass {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: var(--shadow-lg);
+}
+
+/* ==================== Forms ==================== */
+
+.form-control-distantlove {
+    border: 2px solid var(--gray);
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+    font-size: 1rem;
+    transition: all var(--transition-normal);
+    background: var(--white);
+}
+
+.form-control-distantlove:focus {
+    border-color: var(--primary-pink);
+    box-shadow: 0 0 0 0.2rem rgba(215, 38, 96, 0.15);
+    outline: none;
+}
+
+.form-label-distantlove {
+    color: var(--primary-pink-dark);
+    font-weight: 500;
+    margin-bottom: var(--spacing-sm);
+    display: block;
+}
+
+/* ==================== Navigation ==================== */
+
+.navbar-distantlove {
+    background: var(--gradient-primary);
+    box-shadow: var(--shadow-lg);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: var(--z-sticky);
+    backdrop-filter: blur(10px);
+}
+
+.navbar-brand-distantlove {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    color: var(--white) !important;
+    text-decoration: none;
+    transition: all var(--transition-normal);
+}
+
+.navbar-brand-distantlove:hover {
+    transform: scale(1.05);
+    text-shadow: 0 4px 12px rgba(255, 255, 255, 0.4);
+}
+
+.nav-link-distantlove {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 500;
+    margin: 0 10px;
+    padding: 8px 16px !important;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-normal);
+    position: relative;
+}
+
+.nav-link-distantlove::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--white);
+    transition: all var(--transition-normal);
+    transform: translateX(-50%);
+}
+
+.nav-link-distantlove:hover::after {
+    width: 80%;
+}
+
+.nav-link-distantlove:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--white) !important;
+}
+
+/* ==================== Badges ==================== */
+
+.badge-distantlove {
+    background: var(--gradient-rose);
+    color: var(--white);
+    border-radius: var(--radius-round);
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    box-shadow: var(--shadow-sm);
+}
+
+.badge-outline-distantlove {
+    background: transparent;
+    color: var(--primary-pink);
+    border: 2px solid var(--primary-pink);
+    border-radius: var(--radius-round);
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* ==================== Animations ==================== */
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    20% { transform: scale(1.2); }
+    40% { transform: scale(0.95); }
+    60% { transform: scale(1.1); }
+    80% { transform: scale(0.98); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-glow {
+    0%, 100% { box-shadow: var(--shadow-md); }
+    50% { box-shadow: var(--shadow-xl); }
+}
+
+@keyframes shimmer {
+    0% { background-position: -1000px 0; }
+    100% { background-position: 1000px 0; }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Animation Classes */
+.animate-heartbeat {
+    animation: heartbeat 1.2s infinite;
+}
+
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-fadeInUp {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.animate-fadeInDown {
+    animation: fadeInDown 0.6s ease-out;
+}
+
+.animate-scaleIn {
+    animation: scaleIn 0.5s ease-out;
+}
+
+.animate-slideInLeft {
+    animation: slideInLeft 0.6s ease-out;
+}
+
+.animate-slideInRight {
+    animation: slideInRight 0.6s ease-out;
+}
+
+/* ==================== Loading States ==================== */
+
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        var(--light-gray) 0%,
+        var(--gray) 50%,
+        var(--light-gray) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: var(--radius-md);
+}
+
+.skeleton-text {
+    height: 1rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.skeleton-title {
+    height: 1.5rem;
+    width: 60%;
+    margin-bottom: var(--spacing-md);
+}
+
+.skeleton-image {
+    height: 200px;
+    width: 100%;
+}
+
+.spinner-distantlove {
+    border: 4px solid var(--primary-pink-lightest);
+    border-top: 4px solid var(--primary-pink);
+    border-radius: var(--radius-round);
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ==================== Icons & Decorations ==================== */
+
+.heart-icon {
+    color: var(--primary-pink);
+    font-size: 1.5rem;
+}
+
+.heart-icon-animated {
+    color: var(--primary-pink);
+    font-size: 1.5rem;
+    animation: heartbeat 1.2s infinite;
+}
+
+.star-icon {
+    color: var(--accent-gold);
+}
+
+/* ==================== Hover Effects ==================== */
+
+.hover-lift {
+    transition: all var(--transition-normal);
+}
+
+.hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.hover-glow {
+    transition: all var(--transition-normal);
+}
+
+.hover-glow:hover {
+    box-shadow: 0 0 20px rgba(215, 38, 96, 0.4);
+}
+
+.hover-scale {
+    transition: all var(--transition-normal);
+}
+
+.hover-scale:hover {
+    transform: scale(1.05);
+}
+
+/* ==================== Utilities ==================== */
+
+.text-gradient-pink {
+    background: var(--gradient-rose);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.bg-gradient-primary {
+    background: var(--gradient-primary) !important;
+}
+
+.bg-gradient-secondary {
+    background: var(--gradient-secondary) !important;
+}
+
+.bg-gradient-sunset {
+    background: var(--gradient-sunset) !important;
+}
+
+.bg-gradient-rose {
+    background: var(--gradient-rose) !important;
+}
+
+.shadow-distantlove {
+    box-shadow: var(--shadow-lg) !important;
+}
+
+.rounded-distantlove {
+    border-radius: var(--radius-lg) !important;
+}
+
+/* ==================== Responsive Design ==================== */
+
+@media (max-width: 768px) {
+    .heading-fancy {
+        font-size: 2rem;
+    }
+
+    .btn-distantlove,
+    .btn-outline-distantlove {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+
+    .card-distantlove {
+        margin-bottom: var(--spacing-md);
+    }
+}
+
+@media (max-width: 576px) {
+    :root {
+        --spacing-xl: 1.5rem;
+        --spacing-xxl: 2rem;
+    }
+
+    .heading-fancy {
+        font-size: 1.5rem;
+        letter-spacing: 1px;
+    }
+}
+
+/* ==================== Print Styles ==================== */
+
+@media print {
+    body {
+        background: var(--white) !important;
+    }
+
+    .navbar-distantlove,
+    .btn-distantlove,
+    .btn-outline-distantlove {
+        display: none;
+    }
+}

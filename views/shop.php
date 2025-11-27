@@ -13,7 +13,8 @@ require_once '../settings/core.php';
     <title>Shop - DistantLove</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/distantlove-theme.css">
     <style>
         :root {
             --primary: #d72660;
@@ -121,74 +122,220 @@ require_once '../settings/core.php';
 
         .product-card {
             background: white;
-            border: 1px solid #dee2e6;
-            border-radius: 10px;
+            border: none;
+            border-radius: var(--radius-lg);
             overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all var(--transition-normal);
             cursor: pointer;
+            box-shadow: var(--shadow-md);
+            position: relative;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-soft-pink);
+            opacity: 0;
+            transition: opacity var(--transition-normal);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .product-card:hover::before {
+            opacity: 0.1;
         }
 
         .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--shadow-hover);
         }
 
         .product-image {
             width: 100%;
-            height: 200px;
-            background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
+            height: 220px;
+            background: var(--gradient-soft-pink);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 3rem;
+            color: var(--primary-pink);
+            font-size: 3.5rem;
             overflow: hidden;
+            position: relative;
         }
 
         .product-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform var(--transition-slow);
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--gradient-rose);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            box-shadow: var(--shadow-sm);
+            z-index: 2;
         }
 
         .product-info {
-            padding: 15px;
+            padding: 18px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .product-category {
+            color: var(--primary-pink-dark);
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
         }
 
         .product-title {
             font-weight: 600;
-            color: #333;
-            margin-bottom: 8px;
-            font-size: 0.95rem;
+            color: var(--darker-gray);
+            margin-bottom: 10px;
+            font-size: 1rem;
+            min-height: 48px;
+            line-height: 1.4;
+        }
+
+        .product-description {
+            color: var(--dark-gray);
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            line-height: 1.5;
+            max-height: 40px;
+            overflow: hidden;
         }
 
         .product-price {
-            color: var(--primary);
+            color: var(--primary-pink);
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            text-shadow: 0 1px 3px rgba(215, 38, 96, 0.1);
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
             margin-bottom: 10px;
+            font-size: 0.85rem;
+        }
+
+        .product-rating .stars {
+            color: var(--accent-gold);
+            margin-right: 5px;
         }
 
         .add-to-cart-btn {
             width: 100%;
-            background: linear-gradient(135deg, #d72660 0%, #a8325e 100%);
+            background: var(--gradient-rose);
             color: white;
             border: none;
-            padding: 8px;
-            border-radius: 6px;
+            padding: 12px;
+            border-radius: var(--radius-md);
             cursor: pointer;
-            font-size: 0.9rem;
-            transition: opacity 0.3s;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all var(--transition-normal);
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .add-to-cart-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .add-to-cart-btn:hover::before {
+            width: 300px;
+            height: 300px;
         }
 
         .add-to-cart-btn:hover {
-            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .add-to-cart-btn:active {
+            transform: translateY(0);
         }
 
         .no-products {
             text-align: center;
-            padding: 40px 20px;
-            color: #999;
+            padding: 60px 20px;
+            color: var(--dark-gray);
+        }
+
+        .no-products i {
+            font-size: 4rem;
+            color: var(--primary-pink-lighter);
+            margin-bottom: 20px;
+        }
+
+        .quick-view-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transform: scale(0);
+            transition: all var(--transition-normal);
+            z-index: 2;
+            box-shadow: var(--shadow-md);
+        }
+
+        .quick-view-btn i {
+            color: var(--primary-pink);
+            font-size: 1.1rem;
+        }
+
+        .product-card:hover .quick-view-btn {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .quick-view-btn:hover {
+            background: var(--primary-pink);
+        }
+
+        .quick-view-btn:hover i {
+            color: white;
         }
     </style>
 </head>
@@ -278,6 +425,9 @@ require_once '../settings/core.php';
             </div>
         </div>
     </div>
+
+    <!-- Include Product Modal -->
+    <?php include 'product_modal.php'; ?>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

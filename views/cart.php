@@ -11,7 +11,8 @@ requireLogin();
     <title>Cart - DistantLove</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/distantlove-theme.css">
     <style>
         :root {
             --primary: #d72660;
@@ -72,83 +73,144 @@ requireLogin();
         }
         
         .cart-item {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 15px;
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin-bottom: 20px;
             display: flex;
-            gap: 15px;
+            gap: 20px;
             align-items: center;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-normal);
+            border: 2px solid transparent;
+            animation: fadeInUp 0.5s ease-out;
         }
-        
+
+        .cart-item:hover {
+            border-color: var(--primary-pink-lightest);
+            box-shadow: var(--shadow-lg);
+            transform: translateX(5px);
+        }
+
         .cart-item-image {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
-            border-radius: 8px;
+            width: 100px;
+            height: 100px;
+            background: var(--gradient-soft-pink);
+            border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 2rem;
+            color: var(--primary-pink);
+            font-size: 2.5rem;
             flex-shrink: 0;
             overflow: hidden;
+            box-shadow: var(--shadow-sm);
         }
-        
+
         .cart-item-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        
+
         .cart-item-details {
             flex: 1;
         }
-        
+
         .cart-item-title {
             font-weight: 600;
-            color: #333;
-            margin-bottom: 5px;
+            color: var(--darker-gray);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
         }
-        
+
+        .cart-item-category {
+            color: var(--primary-pink-dark);
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
         .cart-item-price {
-            color: var(--primary);
+            color: var(--primary-pink);
             font-weight: 700;
+            font-size: 1.3rem;
         }
-        
+
+        .cart-item-subtotal {
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .cart-item-subtotal strong {
+            color: var(--primary-pink-dark);
+        }
+
         .quantity-control {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 0;
             margin: 10px 0;
+            width: fit-content;
+            border: 2px solid var(--gray);
+            border-radius: var(--radius-md);
+            overflow: hidden;
         }
-        
+
         .quantity-control button {
-            background: #d72660;
-            color: white;
+            background: white;
+            color: var(--primary-pink);
             border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
+            padding: 8px 14px;
             cursor: pointer;
-            font-size: 0.85rem;
+            font-size: 1rem;
+            transition: all var(--transition-fast);
+            font-weight: 600;
         }
-        
+
+        .quantity-control button:hover {
+            background: var(--primary-pink);
+            color: white;
+        }
+
         .quantity-control input {
-            width: 50px;
-            padding: 5px;
-            border: 1px solid #dee2e6;
-            border-radius: 4px;
+            width: 60px;
+            padding: 8px;
+            border: none;
+            border-left: 1px solid var(--gray);
+            border-right: 1px solid var(--gray);
             text-align: center;
+            font-weight: 600;
+            color: var(--darker-gray);
         }
-        
+
+        .quantity-control input:focus {
+            outline: none;
+        }
+
         .remove-btn {
-            background: var(--danger);
+            background: var(--gradient-rose);
             color: white;
             border: none;
-            padding: 6px 12px;
-            border-radius: 4px;
+            padding: 8px 16px;
+            border-radius: var(--radius-md);
             cursor: pointer;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all var(--transition-normal);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .remove-btn:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .remove-btn:active {
+            transform: translateY(0);
         }
         
         .cart-summary {
@@ -199,8 +261,30 @@ requireLogin();
         
         .empty-cart {
             text-align: center;
-            padding: 40px;
-            color: #999;
+            padding: 60px 40px;
+            color: var(--dark-gray);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .empty-cart i {
+            font-size: 5rem;
+            color: var(--primary-pink-lighter);
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .empty-cart h3 {
+            color: var(--primary-pink-dark);
+            margin-bottom: 15px;
+        }
+
+        .empty-cart p {
+            color: var(--dark-gray);
+            margin-bottom: 25px;
+        }
+
+        .empty-cart .btn {
+            margin-top: 10px;
         }
         
         .modal-header {

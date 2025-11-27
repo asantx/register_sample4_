@@ -11,7 +11,8 @@ requireLogin();
     <title>My Orders - DistantLove</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/distantlove-theme.css">
     <style>
         :root {
             --primary: #d72660;
@@ -72,11 +73,31 @@ requireLogin();
         }
         
         .order-card {
-            background: #f8f9fa;
-            border-left: 4px solid #d72660;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
+            background: white;
+            border: none;
+            border-radius: var(--radius-lg);
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-normal);
+            animation: fadeInUp 0.5s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .order-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 5px;
+            background: var(--gradient-rose);
+        }
+
+        .order-card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateX(5px);
         }
         
         .order-header {
@@ -98,31 +119,111 @@ requireLogin();
         }
         
         .status-badge {
-            padding: 6px 12px;
-            border-radius: 20px;
+            padding: 8px 16px;
+            border-radius: 25px;
             font-size: 0.85rem;
             font-weight: 600;
             color: white;
+            box-shadow: var(--shadow-sm);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
-        
+
         .status-pending {
-            background: #ffc107;
+            background: linear-gradient(135deg, #ffc107 0%, #ff8800 100%);
         }
-        
+
         .status-confirmed {
-            background: #28a745;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
         }
-        
+
         .status-shipped {
-            background: #17a2b8;
+            background: linear-gradient(135deg, #17a2b8 0%, #00bcd4 100%);
         }
-        
+
         .status-delivered {
-            background: #6c757d;
+            background: linear-gradient(135deg, #48dbfb 0%, #00d2ff 100%);
         }
-        
+
         .status-cancelled {
-            background: #dc3545;
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        }
+
+        /* Order Tracking Timeline */
+        .order-tracking {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            padding: 20px 0;
+            margin: 20px 0;
+        }
+
+        .tracking-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .tracking-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--light-gray);
+            border: 3px solid var(--gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 1.2rem;
+            color: var(--dark-gray);
+            transition: all var(--transition-normal);
+        }
+
+        .tracking-step.completed .tracking-icon {
+            background: var(--gradient-rose);
+            border-color: var(--primary-pink);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .tracking-step.active .tracking-icon {
+            background: var(--gradient-soft-pink);
+            border-color: var(--primary-pink);
+            color: var(--primary-pink);
+            animation: pulse-glow 2s infinite;
+        }
+
+        .tracking-label {
+            font-size: 0.85rem;
+            color: var(--dark-gray);
+            font-weight: 500;
+        }
+
+        .tracking-step.completed .tracking-label {
+            color: var(--primary-pink-dark);
+            font-weight: 600;
+        }
+
+        .tracking-line {
+            position: absolute;
+            top: 25px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gray);
+            z-index: 1;
+        }
+
+        .tracking-line-progress {
+            position: absolute;
+            top: 25px;
+            left: 0;
+            height: 3px;
+            background: var(--gradient-rose);
+            z-index: 1;
+            transition: width 0.5s ease;
         }
         
         .order-items {
@@ -196,8 +297,60 @@ requireLogin();
         
         .no-orders {
             text-align: center;
-            padding: 60px 20px;
-            color: #999;
+            padding: 80px 20px;
+            color: var(--dark-gray);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .no-orders i {
+            font-size: 5rem;
+            color: var(--primary-pink-lighter);
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .no-orders h3 {
+            color: var(--primary-pink-dark);
+            margin-bottom: 15px;
+        }
+
+        .no-orders p {
+            color: var(--dark-gray);
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .view-details-btn {
+            background: var(--gradient-rose);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .view-details-btn:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .order-tracking {
+                flex-wrap: wrap;
+            }
+
+            .tracking-step {
+                flex: 0 0 50%;
+                margin-bottom: 20px;
+            }
+
+            .tracking-line {
+                display: none;
+            }
         }
     </style>
 </head>
