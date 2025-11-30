@@ -486,7 +486,7 @@ require_once '../settings/core.php';
                 </div>
 
                 <button class="premium-btn" onclick="showSubscriptionModal()">
-                    <i class="fas fa-crown"></i> Subscribe Now - $19.99/month
+                    <i class="fas fa-crown"></i> Subscribe Now - GH₵ 320/month
                 </button>
             </div>
         </div>
@@ -502,7 +502,7 @@ require_once '../settings/core.php';
                 </div>
                 <div class="modal-body" style="padding: 2rem;">
                     <div class="text-center mb-4">
-                        <h3 style="color: var(--primary-pink); font-weight: 700;">$19.99/month</h3>
+                        <h3 style="color: var(--primary-pink); font-weight: 700;">GH₵ 320/month</h3>
                         <p style="color: var(--dark-gray);">Cancel anytime, no commitment</p>
                     </div>
 

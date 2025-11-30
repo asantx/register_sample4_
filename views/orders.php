@@ -493,7 +493,7 @@ requireLogin();
                         <span class="detail-label">
                             <i class="fas fa-clock"></i> Time
                         </span>
-                        <span class="detail-value">2:00 PM EST</span>
+                        <span class="detail-value">2:00 PM GMT</span>
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">
@@ -510,7 +510,7 @@ requireLogin();
                 </div>
 
                 <div class="order-footer">
-                    <div class="order-total">$120.00</div>
+                    <div class="order-total">GH₵ 1,920.00</div>
                     <div class="action-buttons">
                         <button class="secondary-btn">
                             <i class="fas fa-calendar-alt"></i> Reschedule
@@ -552,7 +552,7 @@ requireLogin();
                         <span class="detail-label">
                             <i class="fas fa-clock"></i> Time
                         </span>
-                        <span class="detail-value">4:00 PM PST</span>
+                        <span class="detail-value">4:00 PM GMT</span>
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">
@@ -569,7 +569,7 @@ requireLogin();
                 </div>
 
                 <div class="order-footer">
-                    <div class="order-total">$95.00</div>
+                    <div class="order-total">GH₵ 1,520.00</div>
                     <div class="action-buttons">
                         <button class="secondary-btn">
                             <i class="fas fa-redo"></i> Book Again

@@ -439,17 +439,17 @@ require_once '../settings/core.php';
                         <span>Video & Phone Sessions</span>
                     </div>
                     <div class="contact-item">
-                        <i class="fas fa-dollar-sign"></i>
-                        <span>$120/hour</span>
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>GH₵ 1,920/hour</span>
                     </div>
                 </div>
 
                 <div class="counselor-availability">
                     <h5><i class="fas fa-calendar-alt"></i> Availability</h5>
-                    <p class="availability-info">Monday - Friday: 9:00 AM - 6:00 PM EST<br>Saturday: 10:00 AM - 2:00 PM EST</p>
+                    <p class="availability-info">Monday - Friday: 9:00 AM - 6:00 PM GMT<br>Saturday: 10:00 AM - 2:00 PM GMT</p>
                 </div>
 
-                <button class="book-btn" onclick="openBookingModal('Dr. Sarah Mitchell', 120)">
+                <button class="book-btn" onclick="openBookingModal('Dr. Sarah Mitchell', 1920)">
                     <i class="fas fa-calendar-check"></i> Book a Session
                 </button>
             </div>
@@ -505,17 +505,17 @@ require_once '../settings/core.php';
                         <span>Video Sessions Only</span>
                     </div>
                     <div class="contact-item">
-                        <i class="fas fa-dollar-sign"></i>
-                        <span>$95/hour</span>
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>GH₵ 1,520/hour</span>
                     </div>
                 </div>
 
                 <div class="counselor-availability">
                     <h5><i class="fas fa-calendar-alt"></i> Availability</h5>
-                    <p class="availability-info">Tuesday - Saturday: 12:00 PM - 8:00 PM PST<br>Flexible scheduling for international clients</p>
+                    <p class="availability-info">Tuesday - Saturday: 12:00 PM - 8:00 PM GMT<br>Flexible scheduling for international clients</p>
                 </div>
 
-                <button class="book-btn" onclick="openBookingModal('James Rodriguez, LMFT', 95)">
+                <button class="book-btn" onclick="openBookingModal('James Rodriguez, LMFT', 1520)">
                     <i class="fas fa-calendar-check"></i> Book a Session
                 </button>
             </div>
@@ -571,17 +571,17 @@ require_once '../settings/core.php';
                         <span>Video, Phone & Chat</span>
                     </div>
                     <div class="contact-item">
-                        <i class="fas fa-dollar-sign"></i>
-                        <span>$110/hour</span>
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>GH₵ 1,760/hour</span>
                     </div>
                 </div>
 
                 <div class="counselor-availability">
                     <h5><i class="fas fa-calendar-alt"></i> Availability</h5>
-                    <p class="availability-info">Monday - Thursday: 2:00 PM - 10:00 PM EST<br>Sunday: 11:00 AM - 5:00 PM EST</p>
+                    <p class="availability-info">Monday - Thursday: 2:00 PM - 10:00 PM GMT<br>Sunday: 11:00 AM - 5:00 PM GMT</p>
                 </div>
 
-                <button class="book-btn" onclick="openBookingModal('Dr. Emily Chen', 110)">
+                <button class="book-btn" onclick="openBookingModal('Dr. Emily Chen', 1760)">
                     <i class="fas fa-calendar-check"></i> Book a Session
                 </button>
             </div>
@@ -684,7 +684,7 @@ require_once '../settings/core.php';
             document.getElementById('counselorName').value = counselorName;
             document.getElementById('displayCounselor').value = counselorName;
             document.getElementById('sessionCost').value = cost;
-            document.getElementById('displayCost').textContent = '$' + cost;
+            document.getElementById('displayCost').textContent = 'GH₵ ' + cost.toLocaleString();
 
             // Set minimum date to tomorrow
             const tomorrow = new Date();
@@ -742,7 +742,7 @@ require_once '../settings/core.php';
                         <p><strong>Date:</strong> ${date}</p>
                         <p><strong>Time:</strong> ${timeSlot}</p>
                         <p><strong>Type:</strong> ${sessionType}</p>
-                        <p><strong>Cost:</strong> $${cost}</p>
+                        <p><strong>Cost:</strong> GH₵ ${parseFloat(cost).toLocaleString()}</p>
                         <br>
                         <p>A confirmation email has been sent to you with session details and a link to join.</p>
                     `,

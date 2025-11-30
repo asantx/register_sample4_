@@ -819,7 +819,7 @@ $isPremium = false; // This would come from database in production
                 html: '<p>Get unlimited access to all community posts and exclusive content!</p><br><p><strong>Premium Benefits:</strong></p><ul style="text-align: left; margin-left: 2rem;"><li>Read all premium stories and advice</li><li>Access exclusive discussion threads</li><li>Priority support from counselors</li><li>Weekly expert relationship tips</li><li>20% off counseling sessions</li></ul>',
                 icon: 'info',
                 showCancelButton: true,
-                confirmButtonText: '<i class="fas fa-crown"></i> Upgrade for $19.99/month',
+                confirmButtonText: '<i class="fas fa-crown"></i> Upgrade for GH₵ 320/month',
                 cancelButtonText: 'Maybe Later',
                 confirmButtonColor: '#d72660',
                 cancelButtonColor: '#6c757d'

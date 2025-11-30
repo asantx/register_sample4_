@@ -504,7 +504,7 @@ $isPremium = false; // This would come from database in production
                         </p>
                         <div class="idea-meta">
                             <span class="meta-item"><i class="fas fa-clock"></i> 30 min</span>
-                            <span class="meta-item"><i class="fas fa-dollar-sign"></i> $5-10</span>
+                            <span class="meta-item"><i class="fas fa-money-bill-wave"></i> GH₵ 80-160</span>
                         </div>
                         <div class="idea-tags">
                             <span class="idea-tag">Romantic</span>
@@ -530,7 +530,7 @@ $isPremium = false; // This would come from database in production
                         </p>
                         <div class="idea-meta">
                             <span class="meta-item"><i class="fas fa-clock"></i> 1-2 hours</span>
-                            <span class="meta-item"><i class="fas fa-dollar-sign"></i> $10-30</span>
+                            <span class="meta-item"><i class="fas fa-money-bill-wave"></i> GH₵ 160-480</span>
                         </div>
                         <div class="idea-tags">
                             <span class="idea-tag">Creative</span>
@@ -556,7 +556,7 @@ $isPremium = false; // This would come from database in production
                         </p>
                         <div class="idea-meta">
                             <span class="meta-item"><i class="fas fa-clock"></i> 1 hour</span>
-                            <span class="meta-item"><i class="fas fa-dollar-sign"></i> $20-50</span>
+                            <span class="meta-item"><i class="fas fa-money-bill-wave"></i> GH₵ 320-800</span>
                         </div>
                         <div class="idea-tags">
                             <span class="idea-tag">Thoughtful</span>
@@ -583,7 +583,7 @@ $isPremium = false; // This would come from database in production
                         </p>
                         <div class="idea-meta">
                             <span class="meta-item"><i class="fas fa-clock"></i> 1-2 hours</span>
-                            <span class="meta-item"><i class="fas fa-dollar-sign"></i> $30-60</span>
+                            <span class="meta-item"><i class="fas fa-money-bill-wave"></i> GH₵ 480-960</span>
                         </div>
                         <div class="idea-tags">
                             <span class="idea-tag">Team Building</span>
@@ -609,7 +609,7 @@ $isPremium = false; // This would come from database in production
                         </p>
                         <div class="idea-meta">
                             <span class="meta-item"><i class="fas fa-clock"></i> 2-3 hours</span>
-                            <span class="meta-item"><i class="fas fa-dollar-sign"></i> $15-40</span>
+                            <span class="meta-item"><i class="fas fa-money-bill-wave"></i> GH₵ 240-640</span>
                         </div>
                         <div class="idea-tags">
                             <span class="idea-tag">Romantic</span>
@@ -635,7 +635,7 @@ $isPremium = false; // This would come from database in production
                         </p>
                         <div class="idea-meta">
                             <span class="meta-item"><i class="fas fa-clock"></i> 2-3 hours</span>
-                            <span class="meta-item"><i class="fas fa-dollar-sign"></i> $20-100</span>
+                            <span class="meta-item"><i class="fas fa-money-bill-wave"></i> GH₵ 320-1,600</span>
                         </div>
                         <div class="idea-tags">
                             <span class="idea-tag">Cultural</span>
@@ -774,7 +774,7 @@ $isPremium = false; // This would come from database in production
         function showPremiumPrompt() {
             Swal.fire({
                 title: 'Premium Content',
-                html: '<p>Upgrade to DistantLove Premium to unlock exclusive date ideas and detailed guides!</p><br><p><strong>Premium Benefits:</strong></p><ul style="text-align: left; margin-left: 2rem;"><li>50+ exclusive date ideas</li><li>Detailed step-by-step guides</li><li>Printable date planning worksheets</li><li>20% off counseling sessions</li></ul>',
+                html: '<p>Upgrade to DistantLove Premium to unlock exclusive date ideas and detailed guides!</p><br><p><strong>Premium Benefits:</strong></p><ul style="text-align: left; margin-left: 2rem;"><li>50+ exclusive date ideas</li><li>Detailed step-by-step guides</li><li>Printable date planning worksheets</li><li>20% off counseling sessions</li></ul><br><p><strong>Only GH₵ 320/month</strong></p>',
                 icon: 'info',
                 showCancelButton: true,
                 confirmButtonText: '<i class="fas fa-crown"></i> Upgrade to Premium',
