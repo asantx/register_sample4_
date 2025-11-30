@@ -1,8 +1,6 @@
 <?php
 session_start();
 require_once '../settings/core.php';
-// Backend/data loading is performed by controllers/actions and fetched
-// client-side via AJAX (keep view clean and MVC-compliant).
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,128 +8,125 @@ require_once '../settings/core.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop - DistantLove</title>
+    <title>DistantLove - Your Long Distance Relationship Hub</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/distantlove-theme.css">
     <style>
-        :root {
-            --primary: #d72660;
-            --secondary: #a8325e;
-            --success: #48dbfb;
-            --danger: #ff6b6b;
-        }
-
         * {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Inter', 'Roboto', sans-serif;
         }
 
         body {
             background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
             min-height: 100vh;
+            margin: 0;
+            padding: 0;
         }
 
-        .navbar {
-            background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        /* Modern Navigation */
+        .navbar-modern {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(215, 38, 96, 0.1);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
-        .navbar-brand {
+        .navbar-brand-modern {
             font-family: 'Pacifico', cursive;
             font-size: 1.8rem;
-            color: white !important;
+            background: var(--gradient-rose);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 400;
         }
 
-        .navbar-nav .nav-link {
-            color: rgba(255, 255, 255, 0.8) !important;
-            margin: 0 10px;
-            transition: color 0.3s;
+        .navbar-brand-modern .love-heart {
+            color: #d72660;
+            -webkit-text-fill-color: #d72660;
+            animation: heartbeat 1.5s ease-in-out infinite;
         }
 
-        .navbar-nav .nav-link:hover {
-            color: white !important;
-        }
-
-        .cart-badge {
-            background: var(--danger);
-            border-radius: 50%;
-            padding: 2px 6px;
-            font-size: 0.75rem;
-            font-weight: bold;
-        }
-
-        .shop-container {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            margin-top: 30px;
-            margin-bottom: 30px;
-        }
-
-        .sidebar {
-            background: #f8f9fa;
-            padding: 20px;
-            border-right: 1px solid #dee2e6;
-        }
-
-        .sidebar-section {
-            margin-bottom: 25px;
-        }
-
-        .sidebar-section h6 {
-            color: var(--primary);
-            font-weight: 600;
-            margin-bottom: 12px;
-        }
-
-        .sidebar-section input,
-        .sidebar-section select {
-            width: 100%;
-            padding: 8px 12px;
-            border: 1px solid #dee2e6;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            margin-bottom: 8px;
-        }
-
-        .sidebar-section label {
+        .nav-links-modern {
             display: flex;
+            gap: 2rem;
             align-items: center;
-            margin-bottom: 8px;
-            cursor: pointer;
-            font-size: 0.9rem;
         }
 
-        .sidebar-section input[type="checkbox"] {
-            width: auto;
-            margin-right: 8px;
-            cursor: pointer;
-        }
-
-        .products-area {
-            padding: 20px;
-        }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-        }
-
-        .product-card {
-            background: white;
-            border: none;
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            transition: all var(--transition-normal);
-            cursor: pointer;
-            box-shadow: var(--shadow-md);
+        .nav-link-modern {
+            color: var(--dark-gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
             position: relative;
         }
 
-        .product-card::before {
+        .nav-link-modern::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-rose);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link-modern:hover::after {
+            width: 100%;
+        }
+
+        .nav-link-modern:hover {
+            color: var(--primary-pink);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-family: 'Pacifico', cursive;
+            font-size: 3.5rem;
+            background: var(--gradient-rose);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: white;
+            margin-bottom: 2rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Services Grid */
+        .services-container {
+            padding: 3rem 0;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        .service-card::before {
             content: '';
             position: absolute;
             top: 0;
@@ -140,299 +135,455 @@ require_once '../settings/core.php';
             bottom: 0;
             background: var(--gradient-soft-pink);
             opacity: 0;
-            transition: opacity var(--transition-normal);
-            z-index: 0;
-            pointer-events: none;
+            transition: opacity 0.4s ease;
         }
 
-        .product-card:hover::before {
-            opacity: 0.1;
+        .service-card:hover::before {
+            opacity: 0.15;
         }
 
-        .product-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: var(--shadow-hover);
+        .service-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 60px rgba(215, 38, 96, 0.2);
         }
 
-        .product-image {
-            width: 100%;
-            height: 220px;
+        .service-icon {
+            width: 100px;
+            height: 100px;
             background: var(--gradient-soft-pink);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            margin: 0 auto 2rem;
+            font-size: 3rem;
             color: var(--primary-pink);
-            font-size: 3.5rem;
-            overflow: hidden;
             position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
         }
 
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform var(--transition-slow);
-        }
-
-        .product-card:hover .product-image img {
-            transform: scale(1.1);
-        }
-
-        .product-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
+        .service-card:hover .service-icon {
+            transform: scale(1.1) rotate(5deg);
             background: var(--gradient-rose);
             color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            box-shadow: var(--shadow-sm);
-            z-index: 2;
         }
 
-        .product-info {
-            padding: 18px;
+        .service-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-pink);
+            margin-bottom: 1rem;
             position: relative;
             z-index: 1;
         }
 
-        .product-category {
-            color: var(--primary-pink-dark);
-            font-size: 0.8rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-        }
-
-        .product-title {
-            font-weight: 600;
-            color: var(--darker-gray);
-            margin-bottom: 10px;
-            font-size: 1rem;
-            min-height: 48px;
-            line-height: 1.4;
-        }
-
-        .product-description {
+        .service-description {
             color: var(--dark-gray);
-            font-size: 0.85rem;
-            margin-bottom: 10px;
-            line-height: 1.5;
-            max-height: 40px;
-            overflow: hidden;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
         }
 
-        .product-price {
-            color: var(--primary-pink);
-            font-weight: 700;
-            font-size: 1.3rem;
-            margin-bottom: 12px;
-            text-shadow: 0 1px 3px rgba(215, 38, 96, 0.1);
-        }
-
-        .product-rating {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-            font-size: 0.85rem;
-        }
-
-        .product-rating .stars {
-            color: var(--accent-gold);
-            margin-right: 5px;
-        }
-
-        .add-to-cart-btn {
-            width: 100%;
+        .service-btn {
             background: var(--gradient-rose);
             color: white;
             border: none;
-            padding: 12px;
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            font-size: 0.95rem;
+            padding: 12px 30px;
+            border-radius: 25px;
             font-weight: 600;
-            transition: all var(--transition-normal);
-            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(215, 38, 96, 0.3);
+            position: relative;
+            z-index: 1;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .service-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(215, 38, 96, 0.4);
+            color: white;
+        }
+
+        /* Premium Banner */
+        .premium-banner {
+            background: linear-gradient(135deg, #d72660 0%, #a8325e 100%);
+            padding: 4rem 2rem;
+            margin: 4rem 0;
+            border-radius: 30px;
+            box-shadow: 0 15px 50px rgba(215, 38, 96, 0.3);
             position: relative;
             overflow: hidden;
         }
 
-        .add-to-cart-btn::before {
-            content: '';
+        .premium-banner::before {
+            content: '💕';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
+            font-size: 15rem;
+            opacity: 0.1;
+            top: -50px;
+            right: -50px;
+            animation: float 6s ease-in-out infinite;
         }
 
-        .add-to-cart-btn:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-
-        .add-to-cart-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .add-to-cart-btn:active {
-            transform: translateY(0);
-        }
-
-        .no-products {
+        .premium-content {
+            position: relative;
+            z-index: 1;
             text-align: center;
-            padding: 60px 20px;
-            color: var(--dark-gray);
         }
 
-        .no-products i {
-            font-size: 4rem;
-            color: var(--primary-pink-lighter);
-            margin-bottom: 20px;
+        .premium-title {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 1rem;
         }
 
-        .quick-view-btn {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+        .premium-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+        }
+
+        .premium-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+            text-align: left;
+        }
+
+        .premium-feature {
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+        }
+
+        .premium-feature i {
+            color: white;
+            font-size: 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            width: 50px;
+            height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            opacity: 0;
-            transform: scale(0);
-            transition: all var(--transition-normal);
-            z-index: 2;
-            box-shadow: var(--shadow-md);
+            border-radius: 12px;
         }
 
-        .quick-view-btn i {
-            color: var(--primary-pink);
-            font-size: 1.1rem;
-        }
-
-        .product-card:hover .quick-view-btn {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .quick-view-btn:hover {
-            background: var(--primary-pink);
-        }
-
-        .quick-view-btn:hover i {
+        .premium-feature-content h4 {
             color: white;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .premium-feature-content p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .premium-btn {
+            background: white;
+            color: var(--primary-pink);
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .premium-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .service-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .premium-title {
+                font-size: 2rem;
+            }
+
+            .nav-links-modern {
+                flex-direction: column;
+                gap: 1rem;
+            }
         }
     </style>
 </head>
 
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="index.php">DistantLove</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+    <!-- Modern Navigation -->
+    <nav class="navbar-modern">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center w-100">
+                <a href="shop.php" class="navbar-brand-modern">
+                    <span class="love-heart">❤️</span> DistantLove
+                </a>
+                <div class="nav-links-modern">
                     <?php if (isUserLoggedIn()): ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="cart.php">
-                                <i class="fas fa-shopping-cart"></i> Cart <span class="cart-badge" id="cart-count">0</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="orders.php">
-                                <i class="fas fa-box"></i> Orders
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../login/logout.php">
-                                <i class="fas fa-sign-out-alt"></i> Logout
-                            </a>
-                        </li>
+                        <a href="shop.php" class="nav-link-modern">
+                            <i class="fas fa-heart"></i> Home
+                        </a>
+                        <a href="orders.php" class="nav-link-modern">
+                            <i class="fas fa-box"></i> My Bookings
+                        </a>
+                        <a href="../login/logout.php" class="nav-link-modern">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
                     <?php else: ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../login/login.php">
-                                <i class="fas fa-sign-in-alt"></i> Login
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../login/register.php">
-                                <i class="fas fa-user-plus"></i> Register
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="cart.php">
-                                <i class="fas fa-shopping-cart"></i> Cart <span class="cart-badge" id="cart-count">0</span>
-                            </a>
-                        </li>
+                        <a href="../login/login.php" class="nav-link-modern">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                        <a href="../login/register.php" class="nav-link-modern">
+                            <i class="fas fa-user-plus"></i> Join Us
+                        </a>
                     <?php endif; ?>
-                </ul>
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- Shop Container -->
-    <div class="container shop-container">
-        <div class="row g-0">
-            <!-- Sidebar -->
-            <div class="col-md-3 sidebar">
-                <div class="sidebar-section">
-                    <h6><i class="fas fa-search"></i> Search</h6>
-                    <input type="text" id="search" placeholder="Search products..." class="form-control">
-                </div>
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">Welcome to DistantLove</h1>
+            <p class="hero-subtitle">Your Complete Hub for Thriving Long Distance Relationships</p>
+        </div>
+    </div>
 
-                <div class="sidebar-section">
-                    <h6><i class="fas fa-tag"></i> Categories</h6>
-                    <select id="category" class="form-select">
-                        <option value="">All Categories</option>
-                    </select>
-                </div>
-
-                <div class="sidebar-section">
-                    <h6><i class="fas fa-trademark"></i> Brands</h6>
-                    <select id="brand" class="form-select">
-                        <option value="">All Brands</option>
-                    </select>
+    <!-- Services Container -->
+    <div class="container services-container">
+        <div class="row g-4">
+            <!-- Counseling Sessions -->
+            <div class="col-md-4">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3 class="service-title">Counseling Sessions</h3>
+                    <p class="service-description">
+                        Connect with experienced relationship counselors who specialize in long-distance relationships. Book one-on-one sessions tailored to your unique needs.
+                    </p>
+                    <a href="counseling.php" class="service-btn">
+                        <i class="fas fa-calendar-check"></i> Book a Session
+                    </a>
                 </div>
             </div>
 
-            <!-- Products Area -->
-            <div class="col-md-9 products-area">
-                <div class="product-grid" id="product-grid">
-                    <div class="text-center w-100" style="padding: 40px;">
-                        <div class="spinner-border text-primary" role="status">
-                            <span class="visually-hidden">Loading...</span>
+            <!-- Date Ideas -->
+            <div class="col-md-4">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3 class="service-title">Date Ideas</h3>
+                    <p class="service-description">
+                        Discover creative and fun date ideas perfect for couples separated by distance. Keep the spark alive with virtual dates, surprises, and shared experiences.
+                    </p>
+                    <a href="date_ideas.php" class="service-btn">
+                        <i class="fas fa-heart"></i> Explore Ideas
+                    </a>
+                </div>
+            </div>
+
+            <!-- Community -->
+            <div class="col-md-4">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="service-title">Community</h3>
+                    <p class="service-description">
+                        Join a supportive community of couples in long-distance relationships. Share experiences, tips, and learn from others who understand your journey.
+                    </p>
+                    <a href="community.php" class="service-btn">
+                        <i class="fas fa-user-friends"></i> Join Community
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Premium Subscription Banner -->
+        <div class="premium-banner">
+            <div class="premium-content">
+                <h2 class="premium-title">Upgrade to DistantLove Premium</h2>
+                <p class="premium-subtitle">Unlock exclusive features and take your relationship to the next level</p>
+
+                <div class="premium-features">
+                    <div class="premium-feature">
+                        <i class="fas fa-star"></i>
+                        <div class="premium-feature-content">
+                            <h4>Unlimited Community Access</h4>
+                            <p>Full access to all community posts, stories, and exclusive discussions</p>
                         </div>
                     </div>
+                    <div class="premium-feature">
+                        <i class="fas fa-envelope"></i>
+                        <div class="premium-feature-content">
+                            <h4>Weekly Expert Advice</h4>
+                            <p>Personalized relationship tips from counselors delivered to your inbox</p>
+                        </div>
+                    </div>
+                    <div class="premium-feature">
+                        <i class="fas fa-percent"></i>
+                        <div class="premium-feature-content">
+                            <h4>20% Off Sessions</h4>
+                            <p>Exclusive discount on all counseling sessions and consultations</p>
+                        </div>
+                    </div>
+                    <div class="premium-feature">
+                        <i class="fas fa-gift"></i>
+                        <div class="premium-feature-content">
+                            <h4>Premium Date Ideas</h4>
+                            <p>Access to exclusive, creative date ideas and relationship challenges</p>
+                        </div>
+                    </div>
+                    <div class="premium-feature">
+                        <i class="fas fa-calendar-alt"></i>
+                        <div class="premium-feature-content">
+                            <h4>Priority Booking</h4>
+                            <p>Get first access to counselor schedules and premium time slots</p>
+                        </div>
+                    </div>
+                    <div class="premium-feature">
+                        <i class="fas fa-headset"></i>
+                        <div class="premium-feature-content">
+                            <h4>24/7 Support</h4>
+                            <p>Round-the-clock priority support for any questions or concerns</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="premium-btn" onclick="showSubscriptionModal()">
+                    <i class="fas fa-crown"></i> Subscribe Now - $19.99/month
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Subscription Modal -->
+    <div class="modal fade" id="subscriptionModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius: 20px; border: none;">
+                <div class="modal-header" style="background: var(--gradient-rose); color: white; border-radius: 20px 20px 0 0;">
+                    <h5 class="modal-title"><i class="fas fa-crown"></i> Subscribe to Premium</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" style="padding: 2rem;">
+                    <div class="text-center mb-4">
+                        <h3 style="color: var(--primary-pink); font-weight: 700;">$19.99/month</h3>
+                        <p style="color: var(--dark-gray);">Cancel anytime, no commitment</p>
+                    </div>
+
+                    <form id="subscriptionForm">
+                        <div class="mb-3">
+                            <label class="form-label" style="color: var(--dark-gray); font-weight: 600;">Card Number</label>
+                            <input type="text" class="form-control" placeholder="1234 5678 9012 3456" style="border-radius: 10px; padding: 12px;">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" style="color: var(--dark-gray); font-weight: 600;">Expiry Date</label>
+                                <input type="text" class="form-control" placeholder="MM/YY" style="border-radius: 10px; padding: 12px;">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" style="color: var(--dark-gray); font-weight: 600;">CVV</label>
+                                <input type="text" class="form-control" placeholder="123" style="border-radius: 10px; padding: 12px;">
+                            </div>
+                        </div>
+                        <button type="submit" class="service-btn w-100" style="padding: 15px;">
+                            <i class="fas fa-lock"></i> Complete Subscription
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Include Product Modal -->
-    <?php include 'product_modal.php'; ?>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../js/shop.js"></script>
+    <script>
+        function showSubscriptionModal() {
+            <?php if (isUserLoggedIn()): ?>
+                const modal = new bootstrap.Modal(document.getElementById('subscriptionModal'));
+                modal.show();
+            <?php else: ?>
+                Swal.fire({
+                    title: 'Login Required',
+                    text: 'Please login or register to subscribe to premium',
+                    icon: 'info',
+                    showCancelButton: true,
+                    confirmButtonText: 'Login',
+                    cancelButtonText: 'Register',
+                    confirmButtonColor: '#d72660',
+                    cancelButtonColor: '#a8325e'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '../login/login.php';
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        window.location.href = '../login/register.php';
+                    }
+                });
+            <?php endif; ?>
+        }
+
+        // Handle subscription form
+        document.getElementById('subscriptionForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: 'Processing...',
+                text: 'Please wait while we process your subscription',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            // Simulate payment processing
+            setTimeout(() => {
+                Swal.fire({
+                    title: 'Welcome to Premium!',
+                    text: 'Your subscription has been activated successfully',
+                    icon: 'success',
+                    confirmButtonColor: '#d72660'
+                }).then(() => {
+                    location.reload();
+                });
+            }, 2000);
+        });
+    </script>
 </body>
 
 </html>
