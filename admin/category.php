@@ -393,24 +393,28 @@ requireAdmin('../login/login.php');
                             <span>Dashboard</span>
                         </a>
                         <a class="nav-item-modern active" href="category.php">
-                            <i class="fa fa-list"></i>
-                            <span>Categories</span>
+                            <i class="fa fa-heart"></i>
+                            <span>Date Ideas</span>
                         </a>
-                        <a class="nav-item-modern" href="brand.php">
-                            <i class="fa fa-tag"></i>
-                            <span>Brands</span>
+                        <a class="nav-item-modern" href="#">
+                            <i class="fa fa-comments"></i>
+                            <span>Counseling Sessions</span>
                         </a>
-                        <a class="nav-item-modern" href="product.php">
-                            <i class="fa fa-box"></i>
-                            <span>Products</span>
+                        <a class="nav-item-modern" href="#">
+                            <i class="fa fa-users-heart"></i>
+                            <span>Community Posts</span>
                         </a>
                         <a class="nav-item-modern" href="#">
                             <i class="fa fa-shopping-cart"></i>
-                            <span>Orders</span>
+                            <span>Bookings</span>
                         </a>
                         <a class="nav-item-modern" href="#">
                             <i class="fa fa-users"></i>
                             <span>Users</span>
+                        </a>
+                        <a class="nav-item-modern" href="#">
+                            <i class="fa fa-crown"></i>
+                            <span>Premium Members</span>
                         </a>
                     </nav>
                 </div>
@@ -420,47 +424,211 @@ requireAdmin('../login/login.php');
             <div class="col-lg-9 col-md-8">
                 <!-- Page Header -->
                 <div class="page-header">
-                    <h1 class="page-title">Category Management</h1>
-                    <p class="page-subtitle">Organize your products with love ❤️</p>
+                    <h1 class="page-title">Date Ideas Management</h1>
+                    <p class="page-subtitle">Create amazing date experiences for long-distance couples ❤️</p>
                 </div>
 
-                <!-- Add Category Card -->
-                <div class="add-category-card">
-                    <form id="add-category-form" class="row g-3 align-items-end">
-                        <div class="col-md-8">
-                            <label for="category-name" class="form-label fw-semibold" style="color: var(--primary-pink);">
-                                <i class="fa fa-list me-2"></i>Category Name
-                            </label>
-                            <input 
-                                id="category-name" 
-                                name="name" 
-                                class="form-control form-control-modern" 
-                                placeholder="Enter category name..." 
-                                required 
-                            />
+                <!-- Date Idea Categories Overview -->
+                <div class="add-category-card mb-4">
+                    <h4 style="color: var(--primary-pink); margin-bottom: 1.5rem;">
+                        <i class="fa fa-heart me-2"></i>Date Idea Categories
+                    </h4>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6 mb-3">
+                            <div class="p-3" style="background: var(--gradient-soft-pink); border-radius: 12px; text-align: center;">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎬</div>
+                                <h6 style="color: var(--primary-pink); font-weight: 600;">Free Ideas</h6>
+                                <p class="mb-0 text-muted small">Budget-friendly dates</p>
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <button id="add-category-btn" class="btn btn-add-modern w-100" type="submit">
-                                <i class="fa fa-plus me-2"></i>Add Category
-                            </button>
+                        <div class="col-md-3 col-sm-6 mb-3">
+                            <div class="p-3" style="background: var(--gradient-soft-pink); border-radius: 12px; text-align: center;">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">📹</div>
+                                <h6 style="color: var(--primary-pink); font-weight: 600;">Video Dates</h6>
+                                <p class="mb-0 text-muted small">Virtual connection</p>
+                            </div>
                         </div>
-                    </form>
+                        <div class="col-md-3 col-sm-6 mb-3">
+                            <div class="p-3" style="background: var(--gradient-soft-pink); border-radius: 12px; text-align: center;">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎨</div>
+                                <h6 style="color: var(--primary-pink); font-weight: 600;">Creative</h6>
+                                <p class="mb-0 text-muted small">Artistic activities</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-3">
+                            <div class="p-3" style="background: var(--gradient-soft-pink); border-radius: 12px; text-align: center;">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎁</div>
+                                <h6 style="color: var(--primary-pink); font-weight: 600;">Surprises</h6>
+                                <p class="mb-0 text-muted small">Special moments</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Categories Table -->
+                <!-- Current Date Ideas -->
                 <div class="table-card">
-                    <table class="table table-modern" id="categories-table">
-                        <thead>
+                    <div class="p-4" style="background: var(--gradient-rose); color: white;">
+                        <h4 class="mb-0"><i class="fa fa-heart me-2"></i>Active Date Ideas</h4>
+                    </div>
+                    <table class="table table-modern" id="date-ideas-table">
+                        <thead style="background: white; color: var(--primary-pink);">
                             <tr>
-                                <th style="width: 80px;">ID</th>
-                                <th>Category Name</th>
+                                <th style="width: 60px;">ID</th>
+                                <th>Date Idea Title</th>
+                                <th>Category</th>
+                                <th>Type</th>
+                                <th>Cost</th>
                                 <th style="width: 200px;">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <!-- Free Ideas -->
                             <tr>
-                                <td colspan="3" class="loading-row">
-                                    <i class="fa fa-spinner fa-spin me-2"></i>Loading categories...
+                                <td>1</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <i class="fa fa-film me-2" style="color: var(--primary-pink);"></i>
+                                        <strong>Virtual Movie Night</strong>
+                                    </div>
+                                </td>
+                                <td><span class="badge" style="background: #e3f2fd; color: #1976d2;">Free</span></td>
+                                <td><span class="badge" style="background: #f3e5f5; color: #7b1fa2;">Video</span></td>
+                                <td><strong style="color: #4caf50;">Free</strong></td>
+                                <td>
+                                    <button class="btn-edit-modern me-2"><i class="fa fa-edit me-1"></i>Edit</button>
+                                    <button class="btn-delete-modern"><i class="fa fa-trash me-1"></i>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <i class="fa fa-gamepad me-2" style="color: var(--primary-pink);"></i>
+                                        <strong>Online Gaming Session</strong>
+                                    </div>
+                                </td>
+                                <td><span class="badge" style="background: #e3f2fd; color: #1976d2;">Free</span></td>
+                                <td><span class="badge" style="background: #fff3e0; color: #e65100;">Creative</span></td>
+                                <td><strong style="color: #4caf50;">Free</strong></td>
+                                <td>
+                                    <button class="btn-edit-modern me-2"><i class="fa fa-edit me-1"></i>Edit</button>
+                                    <button class="btn-delete-modern"><i class="fa fa-trash me-1"></i>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <i class="fa fa-utensils me-2" style="color: var(--primary-pink);"></i>
+                                        <strong>Cook Together</strong>
+                                    </div>
+                                </td>
+                                <td><span class="badge" style="background: #e3f2fd; color: #1976d2;">Free</span></td>
+                                <td><span class="badge" style="background: #f3e5f5; color: #7b1fa2;">Video</span></td>
+                                <td><strong style="color: #4caf50;">Free</strong></td>
+                                <td>
+                                    <button class="btn-edit-modern me-2"><i class="fa fa-edit me-1"></i>Edit</button>
+                                    <button class="btn-delete-modern"><i class="fa fa-trash me-1"></i>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <i class="fa fa-envelope-open-text me-2" style="color: var(--primary-pink);"></i>
+                                        <strong>Love Letter Exchange</strong>
+                                    </div>
+                                </td>
+                                <td><span class="badge" style="background: #fff3e0; color: #e65100;">Creative</span></td>
+                                <td><span class="badge" style="background: #fce4ec; color: #c2185b;">Surprise</span></td>
+                                <td><strong style="color: #ff9800;">GH₵ 80-160</strong></td>
+                                <td>
+                                    <button class="btn-edit-modern me-2"><i class="fa fa-edit me-1"></i>Edit</button>
+                                    <button class="btn-delete-modern"><i class="fa fa-trash me-1"></i>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <i class="fa fa-palette me-2" style="color: var(--primary-pink);"></i>
+                                        <strong>Virtual Art Class</strong>
+                                    </div>
+                                </td>
+                                <td><span class="badge" style="background: #fff3e0; color: #e65100;">Creative</span></td>
+                                <td><span class="badge" style="background: #f3e5f5; color: #7b1fa2;">Video</span></td>
+                                <td><strong style="color: #ff9800;">GH₵ 160-480</strong></td>
+                                <td>
+                                    <button class="btn-edit-modern me-2"><i class="fa fa-edit me-1"></i>Edit</button>
+                                    <button class="btn-delete-modern"><i class="fa fa-trash me-1"></i>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <i class="fa fa-gift me-2" style="color: var(--primary-pink);"></i>
+                                        <strong>Care Package Surprise</strong>
+                                    </div>
+                                </td>
+                                <td><span class="badge" style="background: #fce4ec; color: #c2185b;">Surprise</span></td>
+                                <td><span class="badge" style="background: #fce4ec; color: #c2185b;">Surprise</span></td>
+                                <td><strong style="color: #ff9800;">GH₵ 320-800</strong></td>
+                                <td>
+                                    <button class="btn-edit-modern me-2"><i class="fa fa-edit me-1"></i>Edit</button>
+                                    <button class="btn-delete-modern"><i class="fa fa-trash me-1"></i>Delete</button>
+                                </td>
+                            </tr>
+                            <!-- Premium Ideas -->
+                            <tr style="background: #fff9e6;">
+                                <td>7</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <i class="fa fa-crown me-2" style="color: #ffa500;"></i>
+                                        <strong>Virtual Escape Room</strong>
+                                        <span class="badge ms-2" style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: white;"><i class="fa fa-crown me-1"></i>Premium</span>
+                                    </div>
+                                </td>
+                                <td><span class="badge" style="background: #fff3e0; color: #e65100;">Creative</span></td>
+                                <td><span class="badge" style="background: #f3e5f5; color: #7b1fa2;">Video</span></td>
+                                <td><strong style="color: #ff9800;">GH₵ 480-960</strong></td>
+                                <td>
+                                    <button class="btn-edit-modern me-2"><i class="fa fa-edit me-1"></i>Edit</button>
+                                    <button class="btn-delete-modern"><i class="fa fa-trash me-1"></i>Delete</button>
+                                </td>
+                            </tr>
+                            <tr style="background: #fff9e6;">
+                                <td>8</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <i class="fa fa-crown me-2" style="color: #ffa500;"></i>
+                                        <strong>Personalized Scavenger Hunt</strong>
+                                        <span class="badge ms-2" style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: white;"><i class="fa fa-crown me-1"></i>Premium</span>
+                                    </div>
+                                </td>
+                                <td><span class="badge" style="background: #fce4ec; color: #c2185b;">Surprise</span></td>
+                                <td><span class="badge" style="background: #fff3e0; color: #e65100;">Creative</span></td>
+                                <td><strong style="color: #ff9800;">GH₵ 240-640</strong></td>
+                                <td>
+                                    <button class="btn-edit-modern me-2"><i class="fa fa-edit me-1"></i>Edit</button>
+                                    <button class="btn-delete-modern"><i class="fa fa-trash me-1"></i>Delete</button>
+                                </td>
+                            </tr>
+                            <tr style="background: #fff9e6;">
+                                <td>9</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <i class="fa fa-crown me-2" style="color: #ffa500;"></i>
+                                        <strong>Virtual Theater Experience</strong>
+                                        <span class="badge ms-2" style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: white;"><i class="fa fa-crown me-1"></i>Premium</span>
+                                    </div>
+                                </td>
+                                <td><span class="badge" style="background: #f3e5f5; color: #7b1fa2;">Video</span></td>
+                                <td><span class="badge" style="background: #f3e5f5; color: #7b1fa2;">Video</span></td>
+                                <td><strong style="color: #ff9800;">GH₵ 320-1,600</strong></td>
+                                <td>
+                                    <button class="btn-edit-modern me-2"><i class="fa fa-edit me-1"></i>Edit</button>
+                                    <button class="btn-delete-modern"><i class="fa fa-trash me-1"></i>Delete</button>
                                 </td>
                             </tr>
                         </tbody>
