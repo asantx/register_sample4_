@@ -609,7 +609,7 @@ require_once '../settings/core.php';
 
                         <div class="booking-form-group">
                             <label><i class="fas fa-calendar"></i> Select Date</label>
-                            <input type="date" class="booking-form-control" id="sessionDate" required>
+                            <input type="date" class="booking-form-control" id="sessionDate" name="sessionDate" required>
                         </div>
 
                         <div class="booking-form-group">
@@ -628,7 +628,7 @@ require_once '../settings/core.php';
 
                         <div class="booking-form-group">
                             <label><i class="fas fa-video"></i> Session Type</label>
-                            <select class="booking-form-control" id="sessionType" required>
+                            <select class="booking-form-control" id="sessionType" name="sessionType" required>
                                 <option value="">Select session type</option>
                                 <option value="video">Video Call</option>
                                 <option value="phone">Phone Call</option>
@@ -638,7 +638,7 @@ require_once '../settings/core.php';
 
                         <div class="booking-form-group">
                             <label><i class="fas fa-comment"></i> What would you like to discuss? (Optional)</label>
-                            <textarea class="booking-form-control" rows="4" id="sessionNotes" placeholder="Share any specific topics or concerns you'd like to address..."></textarea>
+                            <textarea class="booking-form-control" rows="4" id="sessionNotes" name="sessionNotes" placeholder="Share any specific topics or concerns you'd like to address..."></textarea>
                         </div>
 
                         <div style="background: var(--gradient-soft-pink); padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem;">
