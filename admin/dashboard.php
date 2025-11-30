@@ -346,24 +346,28 @@ requireAdmin('../login/login.php');
                             <span>Dashboard</span>
                         </a>
                         <a class="nav-item-modern" href="category.php">
-                            <i class="fa fa-list"></i>
-                            <span>Categories</span>
+                            <i class="fa fa-heart"></i>
+                            <span>Date Ideas</span>
                         </a>
                         <a class="nav-item-modern" href="brand.php">
-                            <i class="fa fa-tag"></i>
-                            <span>Brands</span>
+                            <i class="fa fa-user-md"></i>
+                            <span>Counselors</span>
                         </a>
                         <a class="nav-item-modern" href="product.php">
-                            <i class="fa fa-box"></i>
-                            <span>Products</span>
+                            <i class="fa fa-comments"></i>
+                            <span>Sessions</span>
                         </a>
                         <a class="nav-item-modern" href="#">
-                            <i class="fa fa-shopping-cart"></i>
-                            <span>Orders</span>
+                            <i class="fa fa-calendar-check"></i>
+                            <span>Bookings</span>
                         </a>
                         <a class="nav-item-modern" href="#">
                             <i class="fa fa-users"></i>
                             <span>Users</span>
+                        </a>
+                        <a class="nav-item-modern" href="#">
+                            <i class="fa fa-crown"></i>
+                            <span>Premium Members</span>
                         </a>
                     </nav>
                 </div>
@@ -375,7 +379,7 @@ requireAdmin('../login/login.php');
                     <!-- Welcome Section -->
                     <div class="welcome-section">
                         <h1 class="welcome-title">Welcome to DistantLove Admin</h1>
-                        <p class="welcome-subtitle">Manage your online store with love and care ❤️</p>
+                        <p class="welcome-subtitle">Helping couples stay connected across any distance ❤️</p>
                     </div>
 
                     <!-- Widget Cards -->
@@ -383,28 +387,28 @@ requireAdmin('../login/login.php');
                         <div class="col-md-4">
                             <a href="category.php" class="widget-card">
                                 <div class="widget-icon">
-                                    <i class="fa fa-list"></i>
+                                    <i class="fa fa-heart"></i>
                                 </div>
-                                <h3 class="widget-title">Categories</h3>
-                                <p class="widget-description">Organize your products with love</p>
+                                <h3 class="widget-title">Date Ideas</h3>
+                                <p class="widget-description">Create magical moments</p>
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="brand.php" class="widget-card">
+                                <div class="widget-icon">
+                                    <i class="fa fa-user-md"></i>
+                                </div>
+                                <h3 class="widget-title">Counselors</h3>
+                                <p class="widget-description">Manage expert therapists</p>
                             </a>
                         </div>
                         <div class="col-md-4">
                             <a href="product.php" class="widget-card">
                                 <div class="widget-icon">
-                                    <i class="fa fa-box"></i>
+                                    <i class="fa fa-comments"></i>
                                 </div>
-                                <h3 class="widget-title">Products</h3>
-                                <p class="widget-description">Curate your special offerings</p>
-                            </a>
-                        </div>
-                        <div class="col-md-4">
-                            <a href="#" class="widget-card">
-                                <div class="widget-icon">
-                                    <i class="fa fa-shopping-cart"></i>
-                                </div>
-                                <h3 class="widget-title">Orders</h3>
-                                <p class="widget-description">Manage customer happiness</p>
+                                <h3 class="widget-title">Sessions</h3>
+                                <p class="widget-description">Track counseling sessions</p>
                             </a>
                         </div>
                     </div>
@@ -414,37 +418,37 @@ requireAdmin('../login/login.php');
                         <div class="col-md-3 col-sm-6">
                             <div class="stat-card">
                                 <div class="stat-icon">
-                                    <i class="fa fa-users"></i>
+                                    <i class="fa fa-users-heart"></i>
                                 </div>
                                 <div class="stat-number">1,247</div>
-                                <div class="stat-label">Total Users</div>
+                                <div class="stat-label">Active Couples</div>
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="stat-card">
                                 <div class="stat-icon">
-                                    <i class="fa fa-box"></i>
+                                    <i class="fa fa-calendar-check"></i>
                                 </div>
                                 <div class="stat-number">342</div>
-                                <div class="stat-label">Products</div>
+                                <div class="stat-label">Bookings This Month</div>
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="stat-card">
                                 <div class="stat-icon">
-                                    <i class="fa fa-shopping-cart"></i>
+                                    <i class="fa fa-heart"></i>
                                 </div>
                                 <div class="stat-number">89</div>
-                                <div class="stat-label">Pending Orders</div>
+                                <div class="stat-label">Date Ideas</div>
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <div class="stat-card">
                                 <div class="stat-icon">
-                                    <i class="fa fa-chart-line"></i>
+                                    <i class="fa fa-crown"></i>
                                 </div>
-                                <div class="stat-number">GH₵ 45K</div>
-                                <div class="stat-label">Monthly Revenue</div>
+                                <div class="stat-number">156</div>
+                                <div class="stat-label">Premium Members</div>
                             </div>
                         </div>
                     </div>
