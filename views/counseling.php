@@ -724,6 +724,14 @@ require_once '../settings/core.php';
             const sessionType = document.getElementById('sessionType').value;
             const cost = document.getElementById('sessionCost').value;
 
+            // Debug logging
+            console.log('Form values before submission:');
+            console.log('Counselor:', counselor);
+            console.log('Date:', date);
+            console.log('Time:', timeSlot);
+            console.log('Type:', sessionType);
+            console.log('Cost:', cost);
+
             Swal.fire({
                 title: 'Processing Booking...',
                 text: 'Please wait while we confirm your session',
@@ -735,6 +743,12 @@ require_once '../settings/core.php';
 
             // Submit booking to server
             const formData = new FormData(this);
+
+            // Log FormData contents
+            console.log('FormData contents:');
+            for (let pair of formData.entries()) {
+                console.log(pair[0] + ': ' + pair[1]);
+            }
 
             fetch('../actions/book_counseling_action.php', {
                 method: 'POST',
