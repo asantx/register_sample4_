@@ -274,6 +274,7 @@ $isPremium = false; // This would come from database in production
 
         .premium-overlay {
             position: relative;
+            cursor: pointer;
         }
 
         .premium-overlay::after {
@@ -291,6 +292,24 @@ $isPremium = false; // This would come from database in production
             font-weight: 700;
             color: var(--primary-pink);
             backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            flex-direction: column;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .premium-overlay:hover::after {
+            content: '✨ Unlock Premium\A\AGet access to exclusive date ideas and features\A\AClick to upgrade now!';
+            white-space: pre-wrap;
+            background: linear-gradient(135deg, rgba(215, 38, 96, 0.95) 0%, rgba(244, 105, 144, 0.95) 100%);
+            color: white;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .premium-overlay:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 50px rgba(215, 38, 96, 0.4);
         }
 
         /* Details Modal */
@@ -780,19 +799,66 @@ $isPremium = false; // This would come from database in production
             modal.show();
         }
 
+        // Add click handlers to premium overlay cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const premiumCards = document.querySelectorAll('.premium-overlay');
+            premiumCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showPremiumPrompt();
+                });
+            });
+        });
+
         function showPremiumPrompt() {
             Swal.fire({
-                title: 'Premium Content',
-                html: '<p>Upgrade to DistantLove Premium to unlock exclusive date ideas and detailed guides!</p><br><p><strong>Premium Benefits:</strong></p><ul style="text-align: left; margin-left: 2rem;"><li>50+ exclusive date ideas</li><li>Detailed step-by-step guides</li><li>Printable date planning worksheets</li><li>20% off counseling sessions</li></ul><br><p><strong>Only GH₵ 320/month</strong></p>',
-                icon: 'info',
+                title: '✨ Unlock Premium Access',
+                html: `
+                    <div style="text-align: left; padding: 1rem;">
+                        <p style="text-align: center; font-size: 1.1rem; margin-bottom: 1.5rem;">
+                            Upgrade to <strong>DistantLove Premium</strong> to unlock exclusive date ideas and detailed guides!
+                        </p>
+
+                        <div style="background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 20%); padding: 1.5rem; border-radius: 15px; margin-bottom: 1.5rem;">
+                            <h4 style="color: #d72660; margin-bottom: 1rem;">
+                                <i class="fas fa-crown"></i> Premium Benefits:
+                            </h4>
+                            <ul style="margin-left: 1.5rem; line-height: 2;">
+                                <li><i class="fas fa-check-circle" style="color: #d72660;"></i> 50+ exclusive date ideas</li>
+                                <li><i class="fas fa-check-circle" style="color: #d72660;"></i> Detailed step-by-step guides</li>
+                                <li><i class="fas fa-check-circle" style="color: #d72660;"></i> Printable date planning worksheets</li>
+                                <li><i class="fas fa-check-circle" style="color: #d72660;"></i> 20% off counseling sessions</li>
+                                <li><i class="fas fa-check-circle" style="color: #d72660;"></i> Priority customer support</li>
+                                <li><i class="fas fa-check-circle" style="color: #d72660;"></i> Monthly relationship tips newsletter</li>
+                            </ul>
+                        </div>
+
+                        <p style="text-align: center; font-size: 1.3rem; font-weight: 700; color: #d72660;">
+                            Only <span style="font-size: 1.5rem;">GH₵ 320</span>/month
+                        </p>
+                        <p style="text-align: center; color: #666; font-size: 0.9rem;">
+                            Cancel anytime. No hidden fees.
+                        </p>
+                    </div>
+                `,
+                icon: 'question',
                 showCancelButton: true,
                 confirmButtonText: '<i class="fas fa-crown"></i> Upgrade to Premium',
                 cancelButtonText: 'Maybe Later',
                 confirmButtonColor: '#d72660',
-                cancelButtonColor: '#6c757d'
+                cancelButtonColor: '#6c757d',
+                width: '600px'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = 'shop.php#premium';
+                    Swal.fire({
+                        title: 'Redirecting...',
+                        text: 'Taking you to our premium plans',
+                        icon: 'success',
+                        timer: 1500,
+                        showConfirmButton: false
+                    }).then(() => {
+                        window.location.href = 'shop.php#premium';
+                    });
                 }
             });
         }
