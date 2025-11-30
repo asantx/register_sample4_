@@ -558,6 +558,289 @@ $bookings = get_user_counseling_bookings_ctr($user_id);
             </div>
             <?php endforeach; ?>
             <?php endif; ?>
+
+            <!-- Default Sample Sessions (for demonstration) -->
+
+            <!-- Upcoming Session 1 - Dr. Akosua Mensah -->
+            <div class="order-card" data-status="confirmed">
+                <div class="order-header">
+                    <div class="order-info">
+                        <h3><i class="fas fa-comments"></i> Counseling Session</h3>
+                        <div class="order-reference">Booking #DL-2025-001234</div>
+                        <div class="order-date"><i class="fas fa-calendar-alt"></i> Booked on Nov 25, 2025</div>
+                    </div>
+                    <span class="status-badge status-confirmed">
+                        <i class="fas fa-check-circle"></i> Confirmed
+                    </span>
+                </div>
+
+                <div class="session-details">
+                    <div class="detail-row">
+                        <span class="detail-label">
+                            <i class="fas fa-user-md"></i> Counselor
+                        </span>
+                        <span class="detail-value">Dr. Akosua Mensah</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">
+                            <i class="fas fa-calendar"></i> Session Date
+                        </span>
+                        <span class="detail-value">December 5, 2025</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">
+                            <i class="fas fa-clock"></i> Time
+                        </span>
+                        <span class="detail-value">2:00 PM GMT</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">
+                            <i class="fas fa-video"></i> Session Type
+                        </span>
+                        <span class="detail-value">Video</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">
+                            <i class="fas fa-comment"></i> Notes
+                        </span>
+                        <span class="detail-value">Need help with communication and trust building in our long-distance relationship</span>
+                    </div>
+                </div>
+
+                <div class="order-footer">
+                    <div class="order-total">GH₵ 1,920.00</div>
+                    <div class="action-buttons">
+                        <button class="view-details-btn">
+                            <i class="fas fa-video"></i> Join Session
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upcoming Session 2 - Kwame Asante -->
+            <div class="order-card" data-status="confirmed">
+                <div class="order-header">
+                    <div class="order-info">
+                        <h3><i class="fas fa-comments"></i> Counseling Session</h3>
+                        <div class="order-reference">Booking #DL-2025-001567</div>
+                        <div class="order-date"><i class="fas fa-calendar-alt"></i> Booked on Nov 28, 2025</div>
+                    </div>
+                    <span class="status-badge status-confirmed">
+                        <i class="fas fa-check-circle"></i> Confirmed
+                    </span>
+                </div>
+
+                <div class="session-details">
+                    <div class="detail-row">
+                        <span class="detail-label">
+                            <i class="fas fa-user-md"></i> Counselor
+                        </span>
+                        <span class="detail-value">Kwame Asante, LMFT</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">
+                            <i class="fas fa-calendar"></i> Session Date
+                        </span>
+                        <span class="detail-value">December 10, 2025</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">
+                            <i class="fas fa-clock"></i> Time
+                        </span>
+                        <span class="detail-value">4:00 PM GMT</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">
+                            <i class="fas fa-video"></i> Session Type
+                        </span>
+                        <span class="detail-value">Phone</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">
+                            <i class="fas fa-comment"></i> Notes
+                        </span>
+                        <span class="detail-value">Dealing with time zone differences and planning our future together</span>
+                    </div>
+                </div>
+
+                <div class="order-footer">
+                    <div class="order-total">GH₵ 1,520.00</div>
+                    <div class="action-buttons">
+                        <button class="view-details-btn">
+                            <i class="fas fa-video"></i> Join Session
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cancelled Session - Dr. Sarah Mitchell -->
+            <div class="order-card" data-status="cancelled">
+                <div class="order-header">
+                    <div class="order-info">
+                        <h3><i class="fas fa-comments"></i> Counseling Session</h3>
+                        <div class="order-reference">Booking #DL-2025-000891</div>
+                        <div class="order-date"><i class="fas fa-calendar-alt"></i> Booked on Nov 20, 2025</div>
+                    </div>
+                    <span class="status-badge status-cancelled">
+                        <i class="fas fa-times-circle"></i> Cancelled
+                    </span>
+                </div>
+
+                <div class="session-details">
+                    <div class="detail-row">
+                        <span class="detail-label">
+                            <i class="fas fa-user-md"></i> Counselor
+                        </span>
+                        <span class="detail-value">Dr. Sarah Mitchell</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">
+                            <i class="fas fa-calendar"></i> Session Date
+                        </span>
+                        <span class="detail-value">November 28, 2025</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">
+                            <i class="fas fa-clock"></i> Time
+                        </span>
+                        <span class="detail-value">10:00 AM GMT</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">
+                            <i class="fas fa-video"></i> Session Type
+                        </span>
+                        <span class="detail-value">Video</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">
+                            <i class="fas fa-comment"></i> Notes
+                        </span>
+                        <span class="detail-value">Had to reschedule due to emergency - will book again soon</span>
+                    </div>
+                </div>
+
+                <div class="order-footer">
+                    <div class="order-total">GH₵ 1,760.00</div>
+                    <div class="action-buttons">
+                        <button class="secondary-btn">
+                            <i class="fas fa-redo"></i> Book Again
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Completed Session 1 - Dr. Akosua Mensah -->
+            <div class="order-card" data-status="completed">
+                <div class="order-header">
+                    <div class="order-info">
+                        <h3><i class="fas fa-comments"></i> Counseling Session</h3>
+                        <div class="order-reference">Booking #DL-2025-000456</div>
+                        <div class="order-date"><i class="fas fa-calendar-alt"></i> Booked on Nov 10, 2025</div>
+                    </div>
+                    <span class="status-badge status-completed">
+                        <i class="fas fa-heart"></i> Completed
+                    </span>
+                </div>
+
+                <div class="session-details">
+                    <div class="detail-row">
+                        <span class="detail-label">
+                            <i class="fas fa-user-md"></i> Counselor
+                        </span>
+                        <span class="detail-value">Dr. Akosua Mensah</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">
+                            <i class="fas fa-calendar"></i> Session Date
+                        </span>
+                        <span class="detail-value">November 18, 2025</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">
+                            <i class="fas fa-clock"></i> Time
+                        </span>
+                        <span class="detail-value">11:00 AM GMT</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">
+                            <i class="fas fa-video"></i> Session Type
+                        </span>
+                        <span class="detail-value">Video</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">
+                            <i class="fas fa-comment"></i> Notes
+                        </span>
+                        <span class="detail-value">First session - getting to know each other and setting relationship goals</span>
+                    </div>
+                </div>
+
+                <div class="order-footer">
+                    <div class="order-total">GH₵ 1,920.00</div>
+                    <div class="action-buttons">
+                        <button class="secondary-btn" disabled>
+                            <i class="fas fa-check"></i> Completed
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Completed Session 2 - Kwame Asante -->
+            <div class="order-card" data-status="completed">
+                <div class="order-header">
+                    <div class="order-info">
+                        <h3><i class="fas fa-comments"></i> Counseling Session</h3>
+                        <div class="order-reference">Booking #DL-2025-000123</div>
+                        <div class="order-date"><i class="fas fa-calendar-alt"></i> Booked on Nov 5, 2025</div>
+                    </div>
+                    <span class="status-badge status-completed">
+                        <i class="fas fa-heart"></i> Completed
+                    </span>
+                </div>
+
+                <div class="session-details">
+                    <div class="detail-row">
+                        <span class="detail-label">
+                            <i class="fas fa-user-md"></i> Counselor
+                        </span>
+                        <span class="detail-value">Kwame Asante, LMFT</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">
+                            <i class="fas fa-calendar"></i> Session Date
+                        </span>
+                        <span class="detail-value">November 12, 2025</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">
+                            <i class="fas fa-clock"></i> Time
+                        </span>
+                        <span class="detail-value">5:00 PM GMT</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">
+                            <i class="fas fa-video"></i> Session Type
+                        </span>
+                        <span class="detail-value">Chat</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">
+                            <i class="fas fa-comment"></i> Notes
+                        </span>
+                        <span class="detail-value">Working on conflict resolution strategies and improving our communication</span>
+                    </div>
+                </div>
+
+                <div class="order-footer">
+                    <div class="order-total">GH₵ 1,520.00</div>
+                    <div class="action-buttons">
+                        <button class="secondary-btn" disabled>
+                            <i class="fas fa-check"></i> Completed
+                        </button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
