@@ -468,18 +468,10 @@ $bookings = get_user_counseling_bookings_ctr($user_id);
 
         <!-- Orders List -->
         <div id="orders-list">
-            <?php if (empty($bookings)): ?>
-                <!-- No Bookings Message -->
-                <div class="no-orders" style="text-align: center; padding: 4rem 2rem; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);">
-                    <i class="fas fa-heart-broken" style="font-size: 5rem; color: var(--primary-pink); margin-bottom: 1.5rem;"></i>
-                    <h3 style="color: var(--primary-pink); font-size: 2rem; margin-bottom: 1rem;">Your Journey Awaits</h3>
-                    <p style="color: var(--dark-gray); font-size: 1.1rem; margin-bottom: 2rem;">You haven't booked any sessions yet. Start your journey to a stronger relationship today!</p>
-                    <a href="shop.php" class="btn btn-lg" style="background: var(--gradient-rose); color: white; padding: 15px 40px; border-radius: 50px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 10px;">
-                        <i class="fas fa-heart"></i> Explore Our Services
-                    </a>
-                </div>
-            <?php else: ?>
-                <?php foreach ($bookings as $booking):
+            <?php
+            // Display database bookings if any exist
+            if (!empty($bookings)):
+                foreach ($bookings as $booking):
                     // Determine status badge class
                     $statusClass = 'status-' . strtolower($booking['status']);
                     $statusIcon = $booking['status'] === 'confirmed' ? 'fa-check-circle' :
