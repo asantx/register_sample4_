@@ -740,8 +740,15 @@ require_once '../settings/core.php';
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.json())
-            .then(data => {
+            .then(response => {
+                console.log('Response status:', response.status);
+                return response.text();
+            })
+            .then(text => {
+                console.log('Raw response:', text);
+                const data = JSON.parse(text);
+                console.log('Parsed data:', data);
+
                 if (data.status === 'success') {
                     Swal.fire({
                         title: 'Booking Confirmed!',
@@ -774,7 +781,7 @@ require_once '../settings/core.php';
                 console.error('Booking error:', error);
                 Swal.fire({
                     title: 'Error',
-                    text: 'An error occurred. Please try again.',
+                    text: 'Network error: ' + error.message,
                     icon: 'error',
                     confirmButtonColor: '#d72660'
                 });

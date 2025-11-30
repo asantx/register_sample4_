@@ -24,13 +24,25 @@ try {
     $session_notes = $_POST['sessionNotes'] ?? '';
     $user_id = $_SESSION['user_id'];
 
+    // Debug logging - log received data
+    error_log("Booking attempt - User: $user_id, Counselor: $counselor_name, Date: $session_date, Time: $session_time, Type: $session_type, Cost: $cost");
+
     // Validate inputs
-    if (empty($counselor_name) || empty($session_date) || empty($session_time) || empty($session_type)) {
-        throw new Exception('Please fill in all required fields');
+    if (empty($counselor_name)) {
+        throw new Exception('Counselor name is missing');
+    }
+    if (empty($session_date)) {
+        throw new Exception('Session date is missing');
+    }
+    if (empty($session_time)) {
+        throw new Exception('Session time is missing');
+    }
+    if (empty($session_type)) {
+        throw new Exception('Session type is missing');
     }
 
     if ($cost <= 0) {
-        throw new Exception('Invalid session cost');
+        throw new Exception('Invalid session cost: ' . $cost);
     }
 
     // Create booking
@@ -44,16 +56,19 @@ try {
         $session_notes
     );
 
+    error_log("Booking result: " . print_r($booking_result, true));
+
     if ($booking_result && isset($booking_result['booking_reference'])) {
         $response['status'] = 'success';
         $response['message'] = 'Session booked successfully';
         $response['booking_reference'] = $booking_result['booking_reference'];
         $response['order_id'] = $booking_result['order_id'];
     } else {
-        throw new Exception('Failed to create booking. Please try again.');
+        throw new Exception('Failed to create booking. Database operation returned false.');
     }
 
 } catch (Exception $e) {
+    error_log("Booking error: " . $e->getMessage());
     $response['status'] = 'error';
     $response['message'] = $e->getMessage();
 }
