@@ -128,6 +128,12 @@ if ($account_type === 'couple' && !empty($partner_email)) {
 $customer_id = register_customer_ctr($name, $email, $password, $country, $city, $phone_number, $role, $image);
 
 if ($customer_id) {
+    // Automatically log in the user after successful registration
+    $_SESSION['user_id'] = $customer_id;
+    $_SESSION['user_role'] = $role;
+    $_SESSION['user_name'] = $name;
+    $_SESSION['user_email'] = $email;
+
     // If couple account, create partner account and link them
     if ($account_type === 'couple') {
         // Create partner account with role 2 (customer)
@@ -140,18 +146,21 @@ if ($customer_id) {
             $response['customer_id'] = $customer_id;
             $response['partner_id'] = $partner_id;
             $response['account_type'] = 'couple';
+            $response['redirect'] = $role === '1' ? '../admin/dashboard.php' : '../views/shop.php';
         } else {
             // If partner registration fails, you might want to delete the main account
             // For now, we'll just return success for the main account
             $response['status'] = 'success';
             $response['message'] = 'Account registered, but partner account creation failed';
             $response['customer_id'] = $customer_id;
+            $response['redirect'] = $role === '1' ? '../admin/dashboard.php' : '../views/shop.php';
         }
     } else {
         $response['status'] = 'success';
         $response['message'] = $role === '1' ? 'Admin account registered successfully' : 'Registered successfully';
         $response['customer_id'] = $customer_id;
         $response['account_type'] = $role === '1' ? 'admin' : 'individual';
+        $response['redirect'] = $role === '1' ? '../admin/dashboard.php' : '../views/shop.php';
     }
 } else {
     $response['status'] = 'error';

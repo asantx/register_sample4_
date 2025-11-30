@@ -1056,6 +1056,9 @@
                             const overlay = document.getElementById('loadingOverlay');
                             overlay.classList.add('active');
 
+                            // Determine redirect URL
+                            const redirectUrl = response.redirect || '../views/shop.php';
+
                             // Show success message then redirect
                             setTimeout(function() {
                                 const accountTypeText = accountType === 'couple' ? 'couple account' :
@@ -1068,7 +1071,7 @@
                                     timer: 2000,
                                     showConfirmButton: false
                                 }).then(function() {
-                                    window.location.href = 'login.php';
+                                    window.location.href = redirectUrl;
                                 });
                             }, 1000);
                         } else {
