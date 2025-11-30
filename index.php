@@ -25,6 +25,18 @@ if (isUserLoggedIn()) {
 	<link rel="stylesheet" href="css/distantlove-theme.css">
 
 	<style>
+		* {
+			font-family: 'Inter', 'Roboto', sans-serif;
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
+			min-height: 100vh;
+		}
+
 		/* Hero Section */
 		.hero-section {
 			min-height: 100vh;
@@ -33,19 +45,21 @@ if (isUserLoggedIn()) {
 			justify-content: center;
 			position: relative;
 			overflow: hidden;
+			padding-top: 80px;
 		}
 
 		.hero-content {
 			text-align: center;
 			z-index: 2;
 			padding: 2rem;
+			max-width: 900px;
 		}
 
 		.hero-title {
 			font-family: 'Pacifico', cursive;
 			color: var(--white);
-			font-size: 4.5rem;
-			margin-bottom: 1rem;
+			font-size: 5rem;
+			margin-bottom: 1.5rem;
 			letter-spacing: 3px;
 			text-shadow: 0 4px 20px rgba(215, 38, 96, 0.4);
 			animation: fadeInDown 1s ease-out;
@@ -53,22 +67,62 @@ if (isUserLoggedIn()) {
 
 		.hero-subtitle {
 			color: var(--white);
-			font-size: 1.5rem;
-			font-weight: 300;
-			margin-bottom: 2rem;
+			font-size: 1.8rem;
+			font-weight: 400;
+			margin-bottom: 1rem;
 			text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 			animation: fadeInUp 1s ease-out 0.3s both;
 		}
 
+		.hero-description {
+			color: rgba(255, 255, 255, 0.95);
+			font-size: 1.2rem;
+			font-weight: 300;
+			margin-bottom: 3rem;
+			text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+			animation: fadeInUp 1s ease-out 0.5s both;
+		}
+
 		.hero-cta {
-			animation: scaleIn 0.8s ease-out 0.6s both;
+			animation: scaleIn 0.8s ease-out 0.8s both;
+			display: flex;
+			gap: 1.5rem;
+			justify-content: center;
+			flex-wrap: wrap;
 		}
 
 		.hero-cta .btn {
-			margin: 0 10px;
-			padding: 15px 40px;
-			font-size: 1.1rem;
+			padding: 18px 45px;
+			font-size: 1.2rem;
 			font-weight: 600;
+			border-radius: 50px;
+			transition: all 0.3s ease;
+			box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+		}
+
+		.btn-primary-hero {
+			background: white;
+			color: var(--primary-pink);
+			border: none;
+		}
+
+		.btn-primary-hero:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
+			color: var(--primary-pink-dark);
+		}
+
+		.btn-secondary-hero {
+			background: transparent;
+			color: white;
+			border: 3px solid white;
+		}
+
+		.btn-secondary-hero:hover {
+			background: white;
+			color: var(--primary-pink);
+			transform: translateY(-5px);
+			box-shadow: 0 10px 35px rgba(255, 255, 255, 0.3);
 		}
 
 		/* Floating Hearts Background */
@@ -83,7 +137,7 @@ if (isUserLoggedIn()) {
 		.floating-heart {
 			position: absolute;
 			font-size: 2rem;
-			color: rgba(255, 255, 255, 0.3);
+			color: rgba(255, 255, 255, 0.25);
 			animation: float-up 10s infinite ease-in;
 		}
 
@@ -113,70 +167,6 @@ if (isUserLoggedIn()) {
 		.floating-heart:nth-child(8) { left: 80%; animation-duration: 10s; animation-delay: 2.5s; font-size: 2.2rem; }
 		.floating-heart:nth-child(9) { left: 90%; animation-duration: 12s; animation-delay: 4.5s; }
 
-		/* Features Section */
-		.features-section {
-			padding: 5rem 0;
-			background: var(--white);
-		}
-
-		.feature-card {
-			text-align: center;
-			padding: 2rem;
-			border-radius: var(--radius-lg);
-			transition: all var(--transition-normal);
-			background: var(--gradient-soft-pink);
-			margin-bottom: 2rem;
-		}
-
-		.feature-card:hover {
-			transform: translateY(-10px);
-			box-shadow: var(--shadow-hover);
-		}
-
-		.feature-icon {
-			font-size: 3rem;
-			color: var(--primary-pink);
-			margin-bottom: 1rem;
-			animation: float 3s ease-in-out infinite;
-		}
-
-		.feature-title {
-			font-size: 1.5rem;
-			font-weight: 600;
-			color: var(--primary-pink-dark);
-			margin-bottom: 0.5rem;
-		}
-
-		.feature-description {
-			color: var(--dark-gray);
-			line-height: 1.6;
-		}
-
-		/* Stats Section */
-		.stats-section {
-			background: var(--gradient-primary);
-			padding: 4rem 0;
-			color: var(--white);
-		}
-
-		.stat-item {
-			text-align: center;
-			padding: 2rem;
-		}
-
-		.stat-number {
-			font-size: 3rem;
-			font-weight: 700;
-			color: var(--white);
-			text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-		}
-
-		.stat-label {
-			font-size: 1.2rem;
-			color: rgba(255, 255, 255, 0.9);
-			margin-top: 0.5rem;
-		}
-
 		/* Navigation Bar */
 		.navbar-distantlove-main {
 			position: fixed;
@@ -185,7 +175,7 @@ if (isUserLoggedIn()) {
 			right: 0;
 			background: rgba(255, 255, 255, 0.95);
 			backdrop-filter: blur(20px);
-			z-index: var(--z-sticky);
+			z-index: 1000;
 			padding: 1rem 0;
 			box-shadow: 0 2px 20px rgba(215, 38, 96, 0.1);
 			animation: slideInDown 0.6s ease-out;
@@ -201,7 +191,7 @@ if (isUserLoggedIn()) {
 		}
 
 		.navbar-brand-main {
-			font-family: var(--font-heading);
+			font-family: 'Pacifico', cursive;
 			font-size: 2rem;
 			color: var(--primary-pink);
 			text-decoration: none;
@@ -263,6 +253,251 @@ if (isUserLoggedIn()) {
 			box-shadow: var(--shadow-hover);
 		}
 
+		/* Services Preview Section */
+		.services-preview {
+			padding: 6rem 0;
+			background: white;
+		}
+
+		.section-header {
+			text-align: center;
+			margin-bottom: 4rem;
+		}
+
+		.section-title {
+			font-family: 'Pacifico', cursive;
+			font-size: 3rem;
+			background: var(--gradient-rose);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			background-clip: text;
+			margin-bottom: 1rem;
+		}
+
+		.section-subtitle {
+			font-size: 1.2rem;
+			color: var(--dark-gray);
+			max-width: 700px;
+			margin: 0 auto;
+		}
+
+		.service-preview-card {
+			background: white;
+			border-radius: 20px;
+			padding: 3rem 2rem;
+			text-align: center;
+			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+			transition: all 0.4s ease;
+			height: 100%;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.service-preview-card::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: var(--gradient-soft-pink);
+			opacity: 0;
+			transition: opacity 0.4s ease;
+		}
+
+		.service-preview-card:hover::before {
+			opacity: 0.15;
+		}
+
+		.service-preview-card:hover {
+			transform: translateY(-15px);
+			box-shadow: 0 20px 60px rgba(215, 38, 96, 0.2);
+		}
+
+		.service-preview-icon {
+			width: 100px;
+			height: 100px;
+			background: var(--gradient-soft-pink);
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin: 0 auto 2rem;
+			font-size: 3rem;
+			color: var(--primary-pink);
+			position: relative;
+			z-index: 1;
+			transition: all 0.4s ease;
+		}
+
+		.service-preview-card:hover .service-preview-icon {
+			transform: scale(1.1) rotate(5deg);
+			background: var(--gradient-rose);
+			color: white;
+		}
+
+		.service-preview-title {
+			font-size: 1.8rem;
+			font-weight: 700;
+			color: var(--primary-pink);
+			margin-bottom: 1rem;
+			position: relative;
+			z-index: 1;
+		}
+
+		.service-preview-description {
+			color: var(--dark-gray);
+			font-size: 1rem;
+			line-height: 1.6;
+			margin-bottom: 2rem;
+			position: relative;
+			z-index: 1;
+		}
+
+		/* Stats Section */
+		.stats-section {
+			background: var(--gradient-primary);
+			padding: 5rem 0;
+			color: var(--white);
+		}
+
+		.stat-item {
+			text-align: center;
+			padding: 2rem;
+		}
+
+		.stat-number {
+			font-size: 3.5rem;
+			font-weight: 700;
+			color: var(--white);
+			text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+		}
+
+		.stat-label {
+			font-size: 1.3rem;
+			color: rgba(255, 255, 255, 0.95);
+			margin-top: 0.5rem;
+			font-weight: 500;
+		}
+
+		/* Testimonials Section */
+		.testimonials-section {
+			padding: 6rem 0;
+			background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
+		}
+
+		.testimonial-card {
+			background: white;
+			border-radius: 20px;
+			padding: 2.5rem;
+			margin-bottom: 1.5rem;
+			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+			position: relative;
+			transition: all 0.3s ease;
+		}
+
+		.testimonial-card:hover {
+			transform: translateY(-10px);
+			box-shadow: 0 15px 50px rgba(215, 38, 96, 0.2);
+		}
+
+		.testimonial-quote {
+			font-size: 3.5rem;
+			color: var(--primary-pink);
+			opacity: 0.2;
+			position: absolute;
+			top: 15px;
+			left: 25px;
+			font-family: 'Georgia', serif;
+		}
+
+		.testimonial-text {
+			color: var(--dark-gray);
+			font-style: italic;
+			line-height: 1.8;
+			margin-bottom: 1.5rem;
+			padding-left: 2rem;
+			font-size: 1.05rem;
+		}
+
+		.testimonial-author {
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+			padding-left: 2rem;
+		}
+
+		.author-avatar {
+			width: 55px;
+			height: 55px;
+			border-radius: 50%;
+			background: var(--gradient-rose);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: white;
+			font-weight: 700;
+			font-size: 1.3rem;
+		}
+
+		.author-info h5 {
+			margin: 0;
+			color: var(--primary-pink);
+			font-weight: 700;
+		}
+
+		.author-info p {
+			margin: 0;
+			font-size: 0.95rem;
+			color: var(--dark-gray);
+		}
+
+		/* CTA Section */
+		.cta-section {
+			background: white;
+			padding: 6rem 0;
+			text-align: center;
+		}
+
+		.cta-title {
+			font-family: 'Pacifico', cursive;
+			font-size: 3rem;
+			background: var(--gradient-rose);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			background-clip: text;
+			margin-bottom: 1.5rem;
+		}
+
+		.cta-text {
+			font-size: 1.3rem;
+			color: var(--dark-gray);
+			margin-bottom: 3rem;
+			max-width: 700px;
+			margin-left: auto;
+			margin-right: auto;
+		}
+
+		.cta-button {
+			padding: 18px 50px;
+			font-size: 1.3rem;
+			background: var(--gradient-rose);
+			color: white;
+			border: none;
+			border-radius: 50px;
+			font-weight: 700;
+			box-shadow: 0 6px 25px rgba(215, 38, 96, 0.3);
+			transition: all var(--transition-normal);
+			text-decoration: none;
+			display: inline-block;
+		}
+
+		.cta-button:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 10px 35px rgba(215, 38, 96, 0.4);
+			color: white;
+		}
+
 		/* Scroll Down Indicator */
 		.scroll-indicator {
 			position: absolute;
@@ -274,168 +509,89 @@ if (isUserLoggedIn()) {
 		}
 
 		.scroll-indicator i {
-			font-size: 2rem;
+			font-size: 2.5rem;
 			color: var(--white);
 			text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 		}
 
-		/* Product Preview Section */
-		.preview-section {
-			padding: 5rem 0;
-			background: white;
+		/* Animations */
+		@keyframes fadeInDown {
+			from {
+				opacity: 0;
+				transform: translateY(-30px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
 		}
 
-		.preview-card {
-			background: white;
-			border-radius: var(--radius-lg);
-			overflow: hidden;
-			box-shadow: var(--shadow-md);
-			transition: all var(--transition-normal);
-			animation: fadeInUp 0.6s ease-out;
+		@keyframes fadeInUp {
+			from {
+				opacity: 0;
+				transform: translateY(30px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
 		}
 
-		.preview-card:hover {
-			transform: translateY(-10px);
-			box-shadow: var(--shadow-hover);
+		@keyframes scaleIn {
+			from {
+				opacity: 0;
+				transform: scale(0.9);
+			}
+			to {
+				opacity: 1;
+				transform: scale(1);
+			}
 		}
 
-		.preview-image {
-			width: 100%;
-			height: 250px;
-			background: var(--gradient-soft-pink);
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			font-size: 4rem;
-			color: var(--primary-pink);
-			position: relative;
-			overflow: hidden;
+		@keyframes slideInDown {
+			from {
+				transform: translateY(-100%);
+			}
+			to {
+				transform: translateY(0);
+			}
 		}
 
-		.preview-image i {
-			transition: transform var(--transition-slow);
+		@keyframes heartbeat {
+			0%, 100% { transform: scale(1); }
+			25% { transform: scale(1.15); }
+			50% { transform: scale(1); }
 		}
 
-		.preview-card:hover .preview-image i {
-			transform: scale(1.2) rotate(10deg);
-		}
-
-		.preview-badge {
-			position: absolute;
-			top: 15px;
-			right: 15px;
-			background: var(--gradient-rose);
-			color: white;
-			padding: 8px 16px;
-			border-radius: 25px;
-			font-size: 0.85rem;
-			font-weight: 600;
-			box-shadow: var(--shadow-md);
-		}
-
-		.preview-info {
-			padding: 1.5rem;
-		}
-
-		.preview-category {
-			color: var(--primary-pink-dark);
-			font-size: 0.85rem;
-			font-weight: 600;
-			text-transform: uppercase;
-			letter-spacing: 1px;
-			margin-bottom: 0.5rem;
-		}
-
-		.preview-title {
-			font-size: 1.2rem;
-			font-weight: 700;
-			color: var(--darker-gray);
-			margin-bottom: 0.5rem;
-		}
-
-		.preview-description {
-			color: var(--dark-gray);
-			font-size: 0.9rem;
-			line-height: 1.6;
-			margin-bottom: 1rem;
-		}
-
-		.preview-price {
-			font-size: 1.5rem;
-			font-weight: 700;
-			color: var(--primary-pink);
-			margin-bottom: 1rem;
-		}
-
-		.preview-rating {
-			display: flex;
-			align-items: center;
-			gap: 5px;
-			color: var(--accent-gold);
-			margin-bottom: 1rem;
-		}
-
-		.cta-section {
-			background: var(--gradient-primary);
-			padding: 4rem 0;
-			text-align: center;
-			color: white;
-		}
-
-		.cta-title {
-			font-family: var(--font-heading);
-			font-size: 2.5rem;
-			margin-bottom: 1rem;
-			color: white;
-		}
-
-		.cta-text {
-			font-size: 1.2rem;
-			margin-bottom: 2rem;
-			opacity: 0.95;
-		}
-
-		.cta-button {
-			padding: 15px 50px;
-			font-size: 1.2rem;
-			background: white;
-			color: var(--primary-pink);
-			border: none;
-			border-radius: 50px;
-			font-weight: 700;
-			box-shadow: var(--shadow-xl);
-			transition: all var(--transition-normal);
-			text-decoration: none;
-			display: inline-block;
-		}
-
-		.cta-button:hover {
-			transform: translateY(-5px);
-			box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
-			color: var(--primary-pink-dark);
+		@keyframes float {
+			0%, 100% { transform: translateY(0) translateX(-50%); }
+			50% { transform: translateY(-15px) translateX(-50%); }
 		}
 
 		/* Responsive */
 		@media (max-width: 768px) {
 			.hero-title {
-				font-size: 3rem;
+				font-size: 3.5rem;
 			}
 
 			.hero-subtitle {
-				font-size: 1.2rem;
+				font-size: 1.4rem;
+			}
+
+			.hero-description {
+				font-size: 1.1rem;
 			}
 
 			.hero-cta .btn {
-				padding: 12px 30px;
-				font-size: 1rem;
-				margin: 5px;
+				padding: 15px 35px;
+				font-size: 1.1rem;
 			}
 
 			.stat-number {
-				font-size: 2rem;
+				font-size: 2.5rem;
 			}
 
-			.feature-icon {
+			.section-title {
 				font-size: 2.5rem;
 			}
 
@@ -455,12 +611,26 @@ if (isUserLoggedIn()) {
 
 		@media (max-width: 576px) {
 			.hero-title {
-				font-size: 2rem;
+				font-size: 2.5rem;
 				letter-spacing: 1px;
 			}
 
 			.hero-subtitle {
+				font-size: 1.2rem;
+			}
+
+			.hero-description {
 				font-size: 1rem;
+			}
+
+			.hero-cta {
+				flex-direction: column;
+				gap: 1rem;
+			}
+
+			.hero-cta .btn {
+				width: 100%;
+				max-width: 300px;
 			}
 
 			.navbar-brand-main {
@@ -476,12 +646,16 @@ if (isUserLoggedIn()) {
 				font-size: 0.8rem;
 			}
 
-			.cta-title {
+			.section-title {
 				font-size: 2rem;
 			}
 
+			.cta-title {
+				font-size: 2.2rem;
+			}
+
 			.cta-text {
-				font-size: 1rem;
+				font-size: 1.1rem;
 			}
 		}
 	</style>
@@ -492,7 +666,7 @@ if (isUserLoggedIn()) {
 	<nav class="navbar-distantlove-main">
 		<div class="navbar-content">
 			<a href="index.php" class="navbar-brand-main">
-				<span class="love-heart">&#10084;&#65039;</span>
+				<span class="love-heart">❤️</span>
 				<span>DistantLove</span>
 			</a>
 			<div class="navbar-links">
@@ -512,24 +686,30 @@ if (isUserLoggedIn()) {
 	<section class="hero-section">
 		<!-- Floating Hearts Background -->
 		<div class="floating-hearts">
-			<div class="floating-heart">&#10084;&#65039;</div>
-			<div class="floating-heart">&#10084;&#65039;</div>
-			<div class="floating-heart">&#10084;&#65039;</div>
-			<div class="floating-heart">&#10084;&#65039;</div>
-			<div class="floating-heart">&#10084;&#65039;</div>
-			<div class="floating-heart">&#10084;&#65039;</div>
-			<div class="floating-heart">&#10084;&#65039;</div>
-			<div class="floating-heart">&#10084;&#65039;</div>
-			<div class="floating-heart">&#10084;&#65039;</div>
+			<div class="floating-heart">❤️</div>
+			<div class="floating-heart">❤️</div>
+			<div class="floating-heart">❤️</div>
+			<div class="floating-heart">❤️</div>
+			<div class="floating-heart">❤️</div>
+			<div class="floating-heart">❤️</div>
+			<div class="floating-heart">❤️</div>
+			<div class="floating-heart">❤️</div>
+			<div class="floating-heart">❤️</div>
 		</div>
 
 		<!-- Hero Content -->
 		<div class="hero-content">
 			<h1 class="hero-title">DistantLove</h1>
-			<p class="hero-subtitle">"Love knows no distance, it has no boundaries."</p>
+			<p class="hero-subtitle">Your Complete Hub for Thriving Long Distance Relationships</p>
+			<p class="hero-description">
+				Expert counseling, creative date ideas, and a supportive community to help your love flourish across any distance
+			</p>
 			<div class="hero-cta">
-				<a href="login/register.php" class="btn btn-distantlove btn-lg">
+				<a href="login/register.php" class="btn btn-primary-hero">
 					<i class="fas fa-heart me-2"></i>Start Your Journey
+				</a>
+				<a href="#services" class="btn btn-secondary-hero">
+					<i class="fas fa-info-circle me-2"></i>Learn More
 				</a>
 			</div>
 		</div>
@@ -540,119 +720,48 @@ if (isUserLoggedIn()) {
 		</div>
 	</section>
 
-	<!-- Features Section -->
-	<section class="features-section">
+	<!-- Services Preview Section -->
+	<section class="services-preview" id="services">
 		<div class="container">
-			<h2 class="text-center heading-fancy mb-5">Why Choose DistantLove?</h2>
-			<div class="row">
-				<div class="col-md-4">
-					<div class="feature-card">
-						<div class="feature-icon">
-							<i class="fas fa-heart"></i>
-						</div>
-						<h3 class="feature-title">Thoughtful Gifts</h3>
-						<p class="feature-description">Carefully curated products that speak the language of love, perfect for expressing your feelings across any distance.</p>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="feature-card">
-						<div class="feature-icon">
-							<i class="fas fa-shipping-fast"></i>
-						</div>
-						<h3 class="feature-title">Fast Delivery</h3>
-						<p class="feature-description">Swift and reliable shipping to ensure your love reaches its destination on time, every time.</p>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="feature-card">
-						<div class="feature-icon">
-							<i class="fas fa-award"></i>
-						</div>
-						<h3 class="feature-title">Premium Quality</h3>
-						<p class="feature-description">Only the finest products that match the depth of your emotions and the strength of your bond.</p>
-					</div>
-				</div>
+			<div class="section-header">
+				<h2 class="section-title">What We Offer</h2>
+				<p class="section-subtitle">Everything you need to make your long-distance relationship stronger, happier, and more connected</p>
 			</div>
-		</div>
-	</section>
 
-	<!-- Product Preview Section -->
-	<section class="preview-section">
-		<div class="container">
-			<h2 class="text-center heading-fancy mb-5">Experience the Love</h2>
-			<p class="text-center" style="color: var(--dark-gray); font-size: 1.1rem; margin-bottom: 3rem; max-width: 700px; margin-left: auto; margin-right: auto;">
-				Discover thoughtfully curated gifts that speak the language of love. Each product is selected to help you express your feelings, no matter the distance.
-			</p>
 			<div class="row g-4">
-				<!-- Product Preview 1 -->
 				<div class="col-md-4">
-					<div class="preview-card">
-						<div class="preview-image">
-							<i class="fas fa-gift"></i>
-							<div class="preview-badge">Popular</div>
+					<div class="service-preview-card">
+						<div class="service-preview-icon">
+							<i class="fas fa-comments"></i>
 						</div>
-						<div class="preview-info">
-							<div class="preview-category">Gift Sets</div>
-							<h3 class="preview-title">Love Letter Bundle</h3>
-							<p class="preview-description">A beautiful collection of handcrafted items perfect for expressing your deepest feelings.</p>
-							<div class="preview-rating">
-								<i class="fas fa-star"></i>
-								<i class="fas fa-star"></i>
-								<i class="fas fa-star"></i>
-								<i class="fas fa-star"></i>
-								<i class="fas fa-star"></i>
-								<span style="color: var(--dark-gray); margin-left: 8px;">(5.0)</span>
-							</div>
-							<div class="preview-price">₦12,500</div>
-						</div>
+						<h3 class="service-preview-title">Expert Counseling</h3>
+						<p class="service-preview-description">
+							Connect with licensed relationship therapists who specialize in long-distance relationships. Get personalized guidance and support.
+						</p>
 					</div>
 				</div>
 
-				<!-- Product Preview 2 -->
 				<div class="col-md-4">
-					<div class="preview-card">
-						<div class="preview-image">
-							<i class="fas fa-heart"></i>
-							<div class="preview-badge">Trending</div>
+					<div class="service-preview-card">
+						<div class="service-preview-icon">
+							<i class="fas fa-lightbulb"></i>
 						</div>
-						<div class="preview-info">
-							<div class="preview-category">Personalized</div>
-							<h3 class="preview-title">Custom Photo Frame</h3>
-							<p class="preview-description">Capture your favorite memories in our premium handcrafted frames with personalized engravings.</p>
-							<div class="preview-rating">
-								<i class="fas fa-star"></i>
-								<i class="fas fa-star"></i>
-								<i class="fas fa-star"></i>
-								<i class="fas fa-star"></i>
-								<i class="fas fa-star-half-alt"></i>
-								<span style="color: var(--dark-gray); margin-left: 8px;">(4.8)</span>
-							</div>
-							<div class="preview-price">₦8,900</div>
-						</div>
+						<h3 class="service-preview-title">Creative Date Ideas</h3>
+						<p class="service-preview-description">
+							Discover 50+ fun and romantic virtual date ideas. Keep the spark alive with activities designed for couples separated by distance.
+						</p>
 					</div>
 				</div>
 
-				<!-- Product Preview 3 -->
 				<div class="col-md-4">
-					<div class="preview-card">
-						<div class="preview-image">
-							<i class="fas fa-rose"></i>
-							<div class="preview-badge">New</div>
+					<div class="service-preview-card">
+						<div class="service-preview-icon">
+							<i class="fas fa-users"></i>
 						</div>
-						<div class="preview-info">
-							<div class="preview-category">Premium</div>
-							<h3 class="preview-title">Eternal Rose Bouquet</h3>
-							<p class="preview-description">Preserved roses that last forever, symbolizing everlasting love and commitment.</p>
-							<div class="preview-rating">
-								<i class="fas fa-star"></i>
-								<i class="fas fa-star"></i>
-								<i class="fas fa-star"></i>
-								<i class="fas fa-star"></i>
-								<i class="fas fa-star"></i>
-								<span style="color: var(--dark-gray); margin-left: 8px;">(5.0)</span>
-							</div>
-							<div class="preview-price">₦15,750</div>
-						</div>
+						<h3 class="service-preview-title">Supportive Community</h3>
+						<p class="service-preview-description">
+							Join thousands of couples sharing their journeys. Find inspiration, advice, and support from people who truly understand.
+						</p>
 					</div>
 				</div>
 			</div>
@@ -665,26 +774,102 @@ if (isUserLoggedIn()) {
 			<div class="row">
 				<div class="col-md-3 col-6">
 					<div class="stat-item">
-						<div class="stat-number"><span class="counter" data-target="10000">0</span>+</div>
-						<div class="stat-label">Happy Customers</div>
+						<div class="stat-number"><span class="counter" data-target="12000">0</span>+</div>
+						<div class="stat-label">Happy Couples</div>
 					</div>
 				</div>
 				<div class="col-md-3 col-6">
 					<div class="stat-item">
-						<div class="stat-number"><span class="counter" data-target="5000">0</span>+</div>
-						<div class="stat-label">Products Delivered</div>
+						<div class="stat-number"><span class="counter" data-target="1247">0</span></div>
+						<div class="stat-label">Success Stories</div>
 					</div>
 				</div>
 				<div class="col-md-3 col-6">
 					<div class="stat-item">
-						<div class="stat-number"><span class="counter" data-target="50">0</span>+</div>
-						<div class="stat-label">Countries Reached</div>
+						<div class="stat-number"><span class="counter" data-target="87">0</span>+</div>
+						<div class="stat-label">Countries</div>
 					</div>
 				</div>
 				<div class="col-md-3 col-6">
 					<div class="stat-item">
-						<div class="stat-number"><span class="counter" data-target="99">0</span>%</div>
-						<div class="stat-label">Satisfaction Rate</div>
+						<div class="stat-number">24/7</div>
+						<div class="stat-label">Support Available</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Testimonials Section -->
+	<section class="testimonials-section">
+		<div class="container">
+			<div class="section-header">
+				<h2 class="section-title" style="color: white;">Real Stories, Real Love</h2>
+				<p class="section-subtitle" style="color: rgba(255, 255, 255, 0.95);">Hear from couples who've strengthened their bond with DistantLove</p>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6">
+					<div class="testimonial-card">
+						<div class="testimonial-quote">"</div>
+						<p class="testimonial-text">
+							The counseling sessions saved our relationship. We learned how to communicate better and now we're stronger than ever. Can't wait to close the distance next year!
+						</p>
+						<div class="testimonial-author">
+							<div class="author-avatar">AK</div>
+							<div class="author-info">
+								<h5>Ama & Kwame</h5>
+								<p>Ghana 🇬🇭 - UK 🇬🇧 • 2 years LDR</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="testimonial-card">
+						<div class="testimonial-quote">"</div>
+						<p class="testimonial-text">
+							The date ideas are so creative! We've tried virtual cooking together and online gaming nights. It makes the distance feel so much smaller. Highly recommend!
+						</p>
+						<div class="testimonial-author">
+							<div class="author-avatar">FJ</div>
+							<div class="author-info">
+								<h5>Fifi & Joel</h5>
+								<p>Accra 🇬🇭 - Toronto 🇨🇦 • 1 year LDR</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="testimonial-card">
+						<div class="testimonial-quote">"</div>
+						<p class="testimonial-text">
+							Being part of the community has been amazing. Reading other couples' stories and knowing we're not alone makes such a difference. Worth every cedi!
+						</p>
+						<div class="testimonial-author">
+							<div class="author-avatar">EK</div>
+							<div class="author-info">
+								<h5>Efua & Kofi</h5>
+								<p>Kumasi 🇬🇭 - Dubai 🇦🇪 • 3 years LDR</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="testimonial-card">
+						<div class="testimonial-quote">"</div>
+						<p class="testimonial-text">
+							Dr. Sarah helped us navigate time zones and cultural differences. We're now engaged and planning our wedding! DistantLove was a game-changer for us.
+						</p>
+						<div class="testimonial-author">
+							<div class="author-avatar">AB</div>
+							<div class="author-info">
+								<h5>Abena & Ben</h5>
+								<p>Ghana 🇬🇭 - USA 🇺🇸 • Closed the distance!</p>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -694,10 +879,10 @@ if (isUserLoggedIn()) {
 	<!-- CTA Section -->
 	<section class="cta-section">
 		<div class="container">
-			<h2 class="cta-title">Ready to Spread the Love?</h2>
-			<p class="cta-text">Join thousands of happy customers who trust DistantLove to deliver their heartfelt messages.</p>
+			<h2 class="cta-title">Ready to Strengthen Your Bond?</h2>
+			<p class="cta-text">Join thousands of couples making long-distance love work. Start your journey with DistantLove today.</p>
 			<a href="login/register.php" class="cta-button">
-				<i class="fas fa-heart me-2"></i>Create Your Account
+				<i class="fas fa-heart me-2"></i>Create Your Free Account
 			</a>
 		</div>
 	</section>
@@ -709,14 +894,26 @@ if (isUserLoggedIn()) {
 
 	<!-- Counter Animation & Smooth Scroll -->
 	<script>
-		// Smooth scroll for scroll indicator
+		// Smooth scroll for scroll indicator and learn more button
 		document.addEventListener('DOMContentLoaded', () => {
 			const scrollIndicator = document.querySelector('.scroll-indicator');
+			const learnMoreBtn = document.querySelector('a[href="#services"]');
+
 			if (scrollIndicator) {
 				scrollIndicator.addEventListener('click', () => {
-					const featuresSection = document.querySelector('.features-section');
-					if (featuresSection) {
-						featuresSection.scrollIntoView({ behavior: 'smooth' });
+					const servicesSection = document.querySelector('.services-preview');
+					if (servicesSection) {
+						servicesSection.scrollIntoView({ behavior: 'smooth' });
+					}
+				});
+			}
+
+			if (learnMoreBtn) {
+				learnMoreBtn.addEventListener('click', (e) => {
+					e.preventDefault();
+					const servicesSection = document.querySelector('.services-preview');
+					if (servicesSection) {
+						servicesSection.scrollIntoView({ behavior: 'smooth' });
 					}
 				});
 			}
@@ -759,9 +956,9 @@ if (isUserLoggedIn()) {
 				observer.observe(statsSection);
 			}
 
-			// Fade in preview cards on scroll
-			const previewCards = document.querySelectorAll('.preview-card');
-			if (previewCards.length > 0) {
+			// Fade in service cards on scroll
+			const serviceCards = document.querySelectorAll('.service-preview-card');
+			if (serviceCards.length > 0) {
 				const cardObserver = new IntersectionObserver((entries) => {
 					entries.forEach((entry, index) => {
 						if (entry.isIntersecting) {
@@ -774,11 +971,34 @@ if (isUserLoggedIn()) {
 					});
 				}, { threshold: 0.1 });
 
-				previewCards.forEach(card => {
+				serviceCards.forEach(card => {
 					card.style.opacity = '0';
 					card.style.transform = 'translateY(30px)';
 					card.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
 					cardObserver.observe(card);
+				});
+			}
+
+			// Fade in testimonial cards on scroll
+			const testimonialCards = document.querySelectorAll('.testimonial-card');
+			if (testimonialCards.length > 0) {
+				const testimonialObserver = new IntersectionObserver((entries) => {
+					entries.forEach((entry, index) => {
+						if (entry.isIntersecting) {
+							setTimeout(() => {
+								entry.target.style.opacity = '1';
+								entry.target.style.transform = 'translateY(0)';
+							}, index * 150);
+							testimonialObserver.unobserve(entry.target);
+						}
+					});
+				}, { threshold: 0.1 });
+
+				testimonialCards.forEach(card => {
+					card.style.opacity = '0';
+					card.style.transform = 'translateY(30px)';
+					card.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+					testimonialObserver.observe(card);
 				});
 			}
 		});
