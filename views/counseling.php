@@ -733,26 +733,52 @@ require_once '../settings/core.php';
                 }
             });
 
-            // Simulate booking process
-            setTimeout(() => {
+            // Submit booking to server
+            const formData = new FormData(this);
+
+            fetch('../actions/book_counseling_action.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    Swal.fire({
+                        title: 'Booking Confirmed!',
+                        html: `
+                            <p><strong>Booking Reference:</strong> ${data.booking_reference}</p>
+                            <p><strong>Counselor:</strong> ${counselor}</p>
+                            <p><strong>Date:</strong> ${date}</p>
+                            <p><strong>Time:</strong> ${timeSlot}</p>
+                            <p><strong>Type:</strong> ${sessionType}</p>
+                            <p><strong>Cost:</strong> GH₵ ${parseFloat(cost).toLocaleString()}</p>
+                            <br>
+                            <p>Your booking has been confirmed! You can view it in <a href="orders.php" style="color: #d72660; font-weight: bold;">My Journey</a>.</p>
+                        `,
+                        icon: 'success',
+                        confirmButtonColor: '#d72660'
+                    }).then(() => {
+                        bookingModal.hide();
+                        document.getElementById('bookingForm').reset();
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Booking Failed',
+                        text: data.message || 'An error occurred while booking your session',
+                        icon: 'error',
+                        confirmButtonColor: '#d72660'
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Booking error:', error);
                 Swal.fire({
-                    title: 'Booking Confirmed!',
-                    html: `
-                        <p><strong>Counselor:</strong> ${counselor}</p>
-                        <p><strong>Date:</strong> ${date}</p>
-                        <p><strong>Time:</strong> ${timeSlot}</p>
-                        <p><strong>Type:</strong> ${sessionType}</p>
-                        <p><strong>Cost:</strong> GH₵ ${parseFloat(cost).toLocaleString()}</p>
-                        <br>
-                        <p>A confirmation email has been sent to you with session details and a link to join.</p>
-                    `,
-                    icon: 'success',
+                    title: 'Error',
+                    text: 'An error occurred. Please try again.',
+                    icon: 'error',
                     confirmButtonColor: '#d72660'
-                }).then(() => {
-                    bookingModal.hide();
-                    document.getElementById('bookingForm').reset();
                 });
-            }, 2000);
+            });
         });
     </script>
 </body>

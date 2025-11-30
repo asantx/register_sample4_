@@ -1,7 +1,12 @@
 <?php
 session_start();
 require_once '../settings/core.php';
+require_once '../controllers/order_controller.php';
 requireLogin();
+
+// Get user's counseling bookings
+$user_id = $_SESSION['user_id'];
+$bookings = get_user_counseling_bookings_ctr($user_id);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -463,16 +468,41 @@ requireLogin();
 
         <!-- Orders List -->
         <div id="orders-list">
-            <!-- Sample Counseling Session Booking -->
-            <div class="order-card" data-status="confirmed">
+            <?php if (empty($bookings)): ?>
+                <!-- No Bookings Message -->
+                <div class="no-orders" style="text-align: center; padding: 4rem 2rem; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);">
+                    <i class="fas fa-heart-broken" style="font-size: 5rem; color: var(--primary-pink); margin-bottom: 1.5rem;"></i>
+                    <h3 style="color: var(--primary-pink); font-size: 2rem; margin-bottom: 1rem;">Your Journey Awaits</h3>
+                    <p style="color: var(--dark-gray); font-size: 1.1rem; margin-bottom: 2rem;">You haven't booked any sessions yet. Start your journey to a stronger relationship today!</p>
+                    <a href="shop.php" class="btn btn-lg" style="background: var(--gradient-rose); color: white; padding: 15px 40px; border-radius: 50px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-heart"></i> Explore Our Services
+                    </a>
+                </div>
+            <?php else: ?>
+                <?php foreach ($bookings as $booking):
+                    // Determine status badge class
+                    $statusClass = 'status-' . strtolower($booking['status']);
+                    $statusIcon = $booking['status'] === 'confirmed' ? 'fa-check-circle' :
+                                 ($booking['status'] === 'completed' ? 'fa-heart' : 'fa-times-circle');
+
+                    // Format date
+                    $sessionDate = date('F j, Y', strtotime($booking['session_date']));
+                    $bookedDate = date('M j, Y', strtotime($booking['order_date']));
+
+                    // Check if session is upcoming or past
+                    $isPast = strtotime($booking['session_date']) < time();
+                    $dataStatus = $isPast ? 'completed' : $booking['status'];
+                ?>
+            <!-- Counseling Session Booking -->
+            <div class="order-card" data-status="<?php echo htmlspecialchars($dataStatus); ?>">
                 <div class="order-header">
                     <div class="order-info">
                         <h3><i class="fas fa-comments"></i> Counseling Session</h3>
-                        <div class="order-reference">Booking #DL-2025-001</div>
-                        <div class="order-date"><i class="fas fa-calendar-alt"></i> Booked on Jan 15, 2025</div>
+                        <div class="order-reference">Booking #<?php echo htmlspecialchars($booking['order_reference']); ?></div>
+                        <div class="order-date"><i class="fas fa-calendar-alt"></i> Booked on <?php echo $bookedDate; ?></div>
                     </div>
-                    <span class="status-badge status-confirmed">
-                        <i class="fas fa-check-circle"></i> Confirmed
+                    <span class="status-badge <?php echo $statusClass; ?>">
+                        <i class="fas <?php echo $statusIcon; ?>"></i> <?php echo ucfirst($booking['status']); ?>
                     </span>
                 </div>
 
@@ -481,115 +511,53 @@ requireLogin();
                         <span class="detail-label">
                             <i class="fas fa-user-md"></i> Counselor
                         </span>
-                        <span class="detail-value">Dr. Sarah Mitchell</span>
+                        <span class="detail-value"><?php echo htmlspecialchars($booking['counselor_name']); ?></span>
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">
                             <i class="fas fa-calendar"></i> Session Date
                         </span>
-                        <span class="detail-value">January 25, 2025</span>
+                        <span class="detail-value"><?php echo $sessionDate; ?></span>
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">
                             <i class="fas fa-clock"></i> Time
                         </span>
-                        <span class="detail-value">2:00 PM GMT</span>
+                        <span class="detail-value"><?php echo htmlspecialchars($booking['session_time']); ?> GMT</span>
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">
                             <i class="fas fa-video"></i> Session Type
                         </span>
-                        <span class="detail-value">Video Call</span>
+                        <span class="detail-value"><?php echo ucfirst(htmlspecialchars($booking['session_type'])); ?></span>
                     </div>
+                    <?php if (!empty($booking['session_notes'])): ?>
                     <div class="detail-row">
                         <span class="detail-label">
-                            <i class="fas fa-comment"></i> Focus Area
+                            <i class="fas fa-comment"></i> Notes
                         </span>
-                        <span class="detail-value">Communication & Trust Building</span>
+                        <span class="detail-value"><?php echo htmlspecialchars($booking['session_notes']); ?></span>
                     </div>
+                    <?php endif; ?>
                 </div>
 
                 <div class="order-footer">
-                    <div class="order-total">GH₵ 1,920.00</div>
+                    <div class="order-total">GH₵ <?php echo number_format($booking['total_amount'], 2); ?></div>
                     <div class="action-buttons">
-                        <button class="secondary-btn">
-                            <i class="fas fa-calendar-alt"></i> Reschedule
-                        </button>
+                        <?php if (!$isPast): ?>
                         <button class="view-details-btn">
                             <i class="fas fa-video"></i> Join Session
                         </button>
+                        <?php else: ?>
+                        <button class="secondary-btn" disabled>
+                            <i class="fas fa-check"></i> Completed
+                        </button>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
-
-            <!-- Sample Completed Session -->
-            <div class="order-card" data-status="completed">
-                <div class="order-header">
-                    <div class="order-info">
-                        <h3><i class="fas fa-comments"></i> Counseling Session</h3>
-                        <div class="order-reference">Booking #DL-2025-002</div>
-                        <div class="order-date"><i class="fas fa-calendar-alt"></i> Booked on Jan 5, 2025</div>
-                    </div>
-                    <span class="status-badge status-completed">
-                        <i class="fas fa-heart"></i> Completed
-                    </span>
-                </div>
-
-                <div class="session-details">
-                    <div class="detail-row">
-                        <span class="detail-label">
-                            <i class="fas fa-user-tie"></i> Counselor
-                        </span>
-                        <span class="detail-value">James Rodriguez, LMFT</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">
-                            <i class="fas fa-calendar"></i> Session Date
-                        </span>
-                        <span class="detail-value">January 10, 2025</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">
-                            <i class="fas fa-clock"></i> Time
-                        </span>
-                        <span class="detail-value">4:00 PM GMT</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">
-                            <i class="fas fa-star"></i> Your Rating
-                        </span>
-                        <span class="detail-value" style="color: var(--accent-gold);">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </span>
-                    </div>
-                </div>
-
-                <div class="order-footer">
-                    <div class="order-total">GH₵ 1,520.00</div>
-                    <div class="action-buttons">
-                        <button class="secondary-btn">
-                            <i class="fas fa-redo"></i> Book Again
-                        </button>
-                        <button class="view-details-btn">
-                            <i class="fas fa-file-alt"></i> View Summary
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- No Orders State (uncomment to show) -->
-            <!-- <div class="no-orders">
-                <i class="fas fa-heart-broken"></i>
-                <h3>Your Journey Awaits</h3>
-                <p>You haven't booked any sessions yet. Start your journey to a stronger relationship today!</p>
-                <a href="shop.php" class="start-journey-btn">
-                    <i class="fas fa-heart"></i> Explore Our Services
-                </a>
-            </div> -->
+            <?php endforeach; ?>
+            <?php endif; ?>
         </div>
     </div>
 
@@ -620,39 +588,6 @@ requireLogin();
                 }
             });
         }
-
-        // Load orders via AJAX (if you have the backend)
-        // $(document).ready(function() {
-        //     $.ajax({
-        //         url: '../actions/get_user_orders.php',
-        //         method: 'GET',
-        //         dataType: 'json',
-        //         success: function(response) {
-        //             if (response.success && response.orders.length > 0) {
-        //                 displayOrders(response.orders);
-        //             } else {
-        //                 showNoOrders();
-        //             }
-        //         }
-        //     });
-        // });
-
-        // function displayOrders(orders) {
-        //     // Render orders dynamically
-        // }
-
-        // function showNoOrders() {
-        //     $('#orders-list').html(`
-        //         <div class="no-orders">
-        //             <i class="fas fa-heart-broken"></i>
-        //             <h3>Your Journey Awaits</h3>
-        //             <p>You haven't booked any sessions yet. Start your journey to a stronger relationship today!</p>
-        //             <a href="shop.php" class="start-journey-btn">
-        //                 <i class="fas fa-heart"></i> Explore Our Services
-        //             </a>
-        //         </div>
-        //     `);
-        // }
     </script>
 </body>
 </html>

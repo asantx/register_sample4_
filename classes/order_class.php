@@ -139,4 +139,71 @@ class Order extends db_connection {
             return false;
         }
     }
+
+    // Counseling Session Methods
+    public function createCounselingBooking($user_id, $counselor_name, $session_date, $session_time, $session_type, $cost, $session_notes = '') {
+        try {
+            $booking_reference = 'DL-' . date('Y') . '-' . str_pad(rand(1, 999999), 6, '0', STR_PAD_LEFT);
+            $status = 'confirmed';
+
+            $sql = "INSERT INTO orders (user_id, order_reference, total_amount, status, customer_name, customer_email, order_type, session_date, session_time, session_type, counselor_name, session_notes)
+                    VALUES (?, ?, ?, ?, ?, ?, 'counseling', ?, ?, ?, ?, ?)";
+
+            $stmt = $this->db->prepare($sql);
+
+            // Get user details
+            $user_sql = "SELECT customer_name, customer_email FROM customer WHERE customer_id = ?";
+            $user_stmt = $this->db->prepare($user_sql);
+            $user_stmt->bind_param("i", $user_id);
+            $user_stmt->execute();
+            $user_result = $user_stmt->get_result();
+            $user = $user_result->fetch_assoc();
+
+            $customer_name = $user['customer_name'];
+            $customer_email = $user['customer_email'];
+
+            $stmt->bind_param("isdssssssss",
+                $user_id,
+                $booking_reference,
+                $cost,
+                $status,
+                $customer_name,
+                $customer_email,
+                $session_date,
+                $session_time,
+                $session_type,
+                $counselor_name,
+                $session_notes
+            );
+
+            if ($stmt->execute()) {
+                return [
+                    'order_id' => $this->db->insert_id,
+                    'booking_reference' => $booking_reference
+                ];
+            }
+            return false;
+        } catch (Exception $e) {
+            error_log("Counseling booking error: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function getUserCounselingBookings($user_id) {
+        try {
+            $sql = "SELECT * FROM orders WHERE user_id = ? AND order_type = 'counseling' ORDER BY session_date DESC, session_time DESC";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param("i", $user_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $bookings = [];
+            while ($row = $result->fetch_assoc()) {
+                $bookings[] = $row;
+            }
+            return $bookings;
+        } catch (Exception $e) {
+            error_log("Get bookings error: " . $e->getMessage());
+            return [];
+        }
+    }
 }

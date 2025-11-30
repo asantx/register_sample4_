@@ -40,3 +40,13 @@ function get_order_payment_ctr($order_id) {
     $order = new Order();
     return $order->getOrderPayment($order_id);
 }
+
+function create_counseling_booking_ctr($user_id, $counselor_name, $session_date, $session_time, $session_type, $cost, $session_notes = '') {
+    $order = new Order();
+    return $order->createCounselingBooking($user_id, $counselor_name, $session_date, $session_time, $session_type, $cost, $session_notes);
+}
+
+function get_user_counseling_bookings_ctr($user_id) {
+    $order = new Order();
+    return $order->getUserCounselingBookings($user_id);
+}
