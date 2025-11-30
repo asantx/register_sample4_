@@ -87,8 +87,20 @@ require_once '../settings/core.php';
 
         /* Hero Section */
         .hero-section {
-            padding: 4rem 0;
+            padding: 4rem 0 3rem;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '💕';
+            position: absolute;
+            font-size: 20rem;
+            opacity: 0.05;
+            top: -80px;
+            right: -50px;
+            animation: float 6s ease-in-out infinite;
         }
 
         .hero-title {
@@ -99,6 +111,7 @@ require_once '../settings/core.php';
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 1rem;
+            position: relative;
         }
 
         .hero-subtitle {
@@ -108,9 +121,57 @@ require_once '../settings/core.php';
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--gradient-rose);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: white;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
         /* Services Grid */
         .services-container {
             padding: 3rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.5rem;
+            background: var(--gradient-rose);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            color: white;
+            font-size: 1.1rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .service-card {
@@ -187,6 +248,26 @@ require_once '../settings/core.php';
             z-index: 1;
         }
 
+        .service-features {
+            text-align: left;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            color: var(--dark-gray);
+        }
+
+        .feature-item i {
+            color: var(--primary-pink);
+            font-size: 1.1rem;
+        }
+
         .service-btn {
             background: var(--gradient-rose);
             color: white;
@@ -207,6 +288,120 @@ require_once '../settings/core.php';
             transform: translateY(-3px);
             box-shadow: 0 6px 25px rgba(215, 38, 96, 0.4);
             color: white;
+        }
+
+        /* Testimonials Section */
+        .testimonials-section {
+            padding: 4rem 0;
+            background: white;
+            margin: 4rem 0;
+            border-radius: 30px;
+            box-shadow: 0 15px 50px rgba(215, 38, 96, 0.15);
+        }
+
+        .testimonial-card {
+            background: var(--gradient-soft-pink);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .testimonial-quote {
+            font-size: 3rem;
+            color: var(--primary-pink);
+            opacity: 0.3;
+            position: absolute;
+            top: 10px;
+            left: 20px;
+        }
+
+        .testimonial-text {
+            color: var(--dark-gray);
+            font-style: italic;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding-left: 2rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient-rose);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .author-info h5 {
+            margin: 0;
+            color: var(--primary-pink);
+            font-weight: 700;
+        }
+
+        .author-info p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--dark-gray);
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            padding: 4rem 0;
+        }
+
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-rose);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
+            box-shadow: 0 5px 20px rgba(215, 38, 96, 0.3);
+        }
+
+        .step-title {
+            color: var(--primary-pink);
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .step-description {
+            color: var(--dark-gray);
+            line-height: 1.6;
         }
 
         /* Premium Banner */
@@ -305,6 +500,69 @@ require_once '../settings/core.php';
             box-shadow: 0 8px 35px rgba(0, 0, 0, 0.3);
         }
 
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .cta-title {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn-primary {
+            background: var(--gradient-rose);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 25px rgba(215, 38, 96, 0.3);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 35px rgba(215, 38, 96, 0.4);
+            color: white;
+        }
+
+        .cta-btn-secondary {
+            background: white;
+            color: var(--primary-pink);
+            border: 2px solid white;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-btn-secondary:hover {
+            background: transparent;
+            color: white;
+            transform: translateY(-3px);
+        }
+
         @keyframes heartbeat {
             0%, 100% { transform: scale(1); }
             25% { transform: scale(1.1); }
@@ -338,6 +596,14 @@ require_once '../settings/core.php';
                 flex-direction: column;
                 gap: 1rem;
             }
+
+            .hero-stats {
+                gap: 1.5rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
@@ -356,7 +622,7 @@ require_once '../settings/core.php';
                             <i class="fas fa-heart"></i> Home
                         </a>
                         <a href="orders.php" class="nav-link-modern">
-                            <i class="fas fa-box"></i> My Bookings
+                            <i class="fas fa-box"></i> My Journey
                         </a>
                         <a href="../login/logout.php" class="nav-link-modern">
                             <i class="fas fa-sign-out-alt"></i> Logout
@@ -379,11 +645,35 @@ require_once '../settings/core.php';
         <div class="container">
             <h1 class="hero-title">Welcome to DistantLove</h1>
             <p class="hero-subtitle">Your Complete Hub for Thriving Long Distance Relationships</p>
+
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number">12K+</div>
+                    <div class="stat-label">Happy Couples</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">1,247</div>
+                    <div class="stat-label">Success Stories</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">87</div>
+                    <div class="stat-label">Countries</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Support</div>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Services Container -->
     <div class="container services-container">
+        <div class="section-header">
+            <h2 class="section-title">Our Services</h2>
+            <p class="section-subtitle">Everything you need to make your long-distance love flourish</p>
+        </div>
+
         <div class="row g-4">
             <!-- Counseling Sessions -->
             <div class="col-md-4">
@@ -391,10 +681,28 @@ require_once '../settings/core.php';
                     <div class="service-icon">
                         <i class="fas fa-comments"></i>
                     </div>
-                    <h3 class="service-title">Counseling Sessions</h3>
+                    <h3 class="service-title">Expert Counseling</h3>
                     <p class="service-description">
-                        Connect with experienced relationship counselors who specialize in long-distance relationships. Book one-on-one sessions tailored to your unique needs.
+                        Connect with experienced relationship counselors who specialize in long-distance relationships.
                     </p>
+                    <div class="service-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Licensed therapists</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Video & phone sessions</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Flexible scheduling</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>From GH₵ 1,520/hour</span>
+                        </div>
+                    </div>
                     <a href="counseling.php" class="service-btn">
                         <i class="fas fa-calendar-check"></i> Book a Session
                     </a>
@@ -407,10 +715,28 @@ require_once '../settings/core.php';
                     <div class="service-icon">
                         <i class="fas fa-lightbulb"></i>
                     </div>
-                    <h3 class="service-title">Date Ideas</h3>
+                    <h3 class="service-title">Creative Date Ideas</h3>
                     <p class="service-description">
-                        Discover creative and fun date ideas perfect for couples separated by distance. Keep the spark alive with virtual dates, surprises, and shared experiences.
+                        Discover fun and romantic date ideas perfect for couples separated by distance.
                     </p>
+                    <div class="service-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>50+ unique ideas</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Step-by-step guides</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Free & premium options</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Budget-friendly</span>
+                        </div>
+                    </div>
                     <a href="date_ideas.php" class="service-btn">
                         <i class="fas fa-heart"></i> Explore Ideas
                     </a>
@@ -423,18 +749,158 @@ require_once '../settings/core.php';
                     <div class="service-icon">
                         <i class="fas fa-users"></i>
                     </div>
-                    <h3 class="service-title">Community</h3>
+                    <h3 class="service-title">Supportive Community</h3>
                     <p class="service-description">
-                        Join a supportive community of couples in long-distance relationships. Share experiences, tips, and learn from others who understand your journey.
+                        Join thousands of couples sharing experiences, tips, and lessons learned the hard way.
                     </p>
+                    <div class="service-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Real success stories</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Expert advice</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Safe & supportive space</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Free to join</span>
+                        </div>
+                    </div>
                     <a href="community.php" class="service-btn">
                         <i class="fas fa-user-friends"></i> Join Community
                     </a>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Premium Subscription Banner -->
+    <!-- How It Works Section -->
+    <div class="container how-it-works">
+        <div class="section-header">
+            <h2 class="section-title">How It Works</h2>
+            <p class="section-subtitle">Start your journey to a stronger relationship in 4 simple steps</p>
+        </div>
+
+        <div class="steps-container">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <h4 class="step-title">Create Your Account</h4>
+                <p class="step-description">
+                    Sign up for free in less than a minute. No credit card required to get started.
+                </p>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <h4 class="step-title">Choose Your Service</h4>
+                <p class="step-description">
+                    Browse our counseling sessions, date ideas, or join the community to connect with others.
+                </p>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <h4 class="step-title">Book & Connect</h4>
+                <p class="step-description">
+                    Schedule sessions with expert counselors or start exploring creative date ideas instantly.
+                </p>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">4</div>
+                <h4 class="step-title">Grow Together</h4>
+                <p class="step-description">
+                    Build stronger communication, deeper trust, and create lasting memories across any distance.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials Section -->
+    <div class="container">
+        <div class="testimonials-section">
+            <div class="section-header">
+                <h2 class="section-title">Love Stories</h2>
+                <p class="section-subtitle" style="color: var(--dark-gray);">Hear from couples who've strengthened their bond with DistantLove</p>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="testimonial-card">
+                            <div class="testimonial-quote">"</div>
+                            <p class="testimonial-text">
+                                "The counseling sessions saved our relationship. We learned how to communicate better and now we're stronger than ever. Can't wait to close the distance next year!"
+                            </p>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">AK</div>
+                                <div class="author-info">
+                                    <h5>Ama & Kwame</h5>
+                                    <p>Ghana 🇬🇭 - UK 🇬🇧 • 2 years LDR</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="testimonial-card">
+                            <div class="testimonial-quote">"</div>
+                            <p class="testimonial-text">
+                                "The date ideas are so creative! We've tried virtual cooking together and online gaming nights. It makes the distance feel so much smaller. Highly recommend!"
+                            </p>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">FJ</div>
+                                <div class="author-info">
+                                    <h5>Fifi & Joel</h5>
+                                    <p>Accra 🇬🇭 - Toronto 🇨🇦 • 1 year LDR</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="testimonial-card">
+                            <div class="testimonial-quote">"</div>
+                            <p class="testimonial-text">
+                                "Being part of the community has been amazing. Reading other couples' stories and knowing we're not alone makes such a difference. Worth every cedi!"
+                            </p>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">EK</div>
+                                <div class="author-info">
+                                    <h5>Efua & Kofi</h5>
+                                    <p>Kumasi 🇬🇭 - Dubai 🇦🇪 • 3 years LDR</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="testimonial-card">
+                            <div class="testimonial-quote">"</div>
+                            <p class="testimonial-text">
+                                "Dr. Sarah helped us navigate time zones and cultural differences. We're now engaged and planning our wedding! DistantLove was a game-changer for us."
+                            </p>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">AB</div>
+                                <div class="author-info">
+                                    <h5>Abena & Ben</h5>
+                                    <p>Ghana 🇬🇭 - USA 🇺🇸 • Closed the distance!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Premium Subscription Banner -->
+    <div class="container">
         <div class="premium-banner">
             <div class="premium-content">
                 <h2 class="premium-title">Upgrade to DistantLove Premium</h2>
@@ -489,6 +955,29 @@ require_once '../settings/core.php';
                     <i class="fas fa-crown"></i> Subscribe Now - GH₵ 320/month
                 </button>
             </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="container cta-section">
+        <h2 class="cta-title">Ready to Strengthen Your Bond?</h2>
+        <p style="color: white; font-size: 1.2rem; margin-bottom: 2rem;">Join thousands of couples making long-distance love work</p>
+        <div class="cta-buttons">
+            <?php if (isUserLoggedIn()): ?>
+                <a href="counseling.php" class="cta-btn-primary">
+                    <i class="fas fa-calendar-check"></i> Book Your First Session
+                </a>
+                <a href="community.php" class="cta-btn-secondary">
+                    <i class="fas fa-users"></i> Explore Community
+                </a>
+            <?php else: ?>
+                <a href="../login/register.php" class="cta-btn-primary">
+                    <i class="fas fa-heart"></i> Get Started Free
+                </a>
+                <a href="../login/login.php" class="cta-btn-secondary">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </a>
+            <?php endif; ?>
         </div>
     </div>
 
