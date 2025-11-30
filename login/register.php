@@ -339,6 +339,147 @@
             text-decoration: underline;
         }
 
+        /* Account Type Selection */
+        .account-type-selector {
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .account-type-btn {
+            flex: 1;
+            padding: 15px 25px;
+            border: 2px solid var(--gray);
+            background: white;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+
+        .account-type-btn.active {
+            border-color: var(--primary-pink);
+            background: var(--gradient-soft-pink);
+            color: var(--primary-pink);
+        }
+
+        .account-type-btn:hover {
+            border-color: var(--primary-pink);
+            transform: translateY(-2px);
+        }
+
+        .account-type-btn i {
+            font-size: 1.3rem;
+        }
+
+        /* Partner Fields */
+        .partner-fields {
+            display: none;
+            padding: 1.5rem;
+            background: var(--gradient-soft-pink);
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+        }
+
+        .partner-fields.active {
+            display: block;
+            animation: fadeInUp 0.4s ease-out;
+        }
+
+        .partner-fields-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-pink);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Autocomplete Dropdown */
+        .autocomplete-wrapper {
+            position: relative;
+        }
+
+        .autocomplete-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 2px solid var(--primary-pink);
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .autocomplete-dropdown.active {
+            display: block;
+        }
+
+        .autocomplete-item {
+            padding: 12px 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--darker-gray);
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .autocomplete-item:last-child {
+            border-bottom: none;
+        }
+
+        .autocomplete-item:hover {
+            background: var(--gradient-soft-pink);
+            color: var(--primary-pink);
+        }
+
+        .autocomplete-item.highlighted {
+            background: var(--gradient-soft-pink);
+            color: var(--primary-pink);
+        }
+
+        .no-results {
+            padding: 12px 15px;
+            color: var(--dark-gray);
+            font-style: italic;
+            text-align: center;
+        }
+
+        /* Admin Code Field */
+        .admin-code-field {
+            display: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .admin-code-field.active {
+            display: block;
+            animation: fadeInUp 0.4s ease-out;
+        }
+
+        .admin-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 12px;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
         /* Loading Overlay */
         .loading-overlay {
             position: fixed;
@@ -432,7 +573,7 @@
             <div class="register-side-decoration">
                 <div class="decoration-content">
                     <h3>Join DistantLove</h3>
-                    <p>Start your journey with us and discover products that speak the language of love across any distance.</p>
+                    <p>Start your journey with us and strengthen your bond across any distance. Connect with counselors, explore date ideas, and join our community.</p>
                 </div>
                 <div class="decoration-hearts">
                     <i class="fas fa-heart"></i>
@@ -450,7 +591,20 @@
                     <p class="register-subtitle">Fill in your details to get started</p>
                 </div>
 
+                <!-- Account Type Selector -->
+                <div class="account-type-selector">
+                    <button type="button" class="account-type-btn active" data-type="individual">
+                        <i class="fas fa-user"></i>
+                        <span>Individual</span>
+                    </button>
+                    <button type="button" class="account-type-btn" data-type="couple">
+                        <i class="fas fa-heart"></i>
+                        <span>Couple</span>
+                    </button>
+                </div>
+
                 <form method="POST" action="" id="register-form">
+                    <input type="hidden" name="account_type" id="account_type" value="individual">
                     <div class="form-row">
                         <div class="form-group-modern">
                             <div class="input-wrapper">
@@ -481,22 +635,92 @@
                             </div>
                         </div>
 
-                        <div class="form-group-modern">
+                        <div class="form-group-modern autocomplete-wrapper">
                             <div class="input-wrapper">
                                 <i class="fas fa-map-marker-alt input-icon"></i>
-                                <input type="text" class="input-modern" id="country" name="customer_country" placeholder=" " required>
+                                <input type="text" class="input-modern" id="country" name="customer_country" placeholder=" " required autocomplete="off">
                                 <label for="country" class="label-modern">Country</label>
                                 <span class="input-border"></span>
+                            </div>
+                            <div class="autocomplete-dropdown" id="country-dropdown"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group-modern autocomplete-wrapper">
+                        <div class="input-wrapper">
+                            <i class="fas fa-home input-icon"></i>
+                            <input type="text" class="input-modern" id="city" name="customer_city" placeholder=" " required autocomplete="off" disabled>
+                            <label for="city" class="label-modern">City (Select country first)</label>
+                            <span class="input-border"></span>
+                        </div>
+                        <div class="autocomplete-dropdown" id="city-dropdown"></div>
+                    </div>
+
+                    <!-- Partner Fields (for Couple Registration) -->
+                    <div class="partner-fields" id="partner-fields">
+                        <div class="partner-fields-title">
+                            <i class="fas fa-user-friends"></i>
+                            <span>Partner's Information</span>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group-modern">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-user input-icon"></i>
+                                    <input type="text" class="input-modern" id="partner_name" name="partner_name" placeholder=" ">
+                                    <label for="partner_name" class="label-modern">Partner's Full Name</label>
+                                    <span class="input-border"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group-modern">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-envelope input-icon"></i>
+                                    <input type="email" class="input-modern" id="partner_email" name="partner_email" placeholder=" ">
+                                    <label for="partner_email" class="label-modern">Partner's Email</label>
+                                    <span class="input-border"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group-modern autocomplete-wrapper">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-map-marker-alt input-icon"></i>
+                                    <input type="text" class="input-modern" id="partner_country" name="partner_country" placeholder=" " autocomplete="off">
+                                    <label for="partner_country" class="label-modern">Partner's Country</label>
+                                    <span class="input-border"></span>
+                                </div>
+                                <div class="autocomplete-dropdown" id="partner-country-dropdown"></div>
+                            </div>
+
+                            <div class="form-group-modern autocomplete-wrapper">
+                                <div class="input-wrapper">
+                                    <i class="fas fa-home input-icon"></i>
+                                    <input type="text" class="input-modern" id="partner_city" name="partner_city" placeholder=" " autocomplete="off" disabled>
+                                    <label for="partner_city" class="label-modern">Partner's City</label>
+                                    <span class="input-border"></span>
+                                </div>
+                                <div class="autocomplete-dropdown" id="partner-city-dropdown"></div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="form-group-modern">
-                        <div class="input-wrapper">
-                            <i class="fas fa-home input-icon"></i>
-                            <input type="text" class="input-modern" id="city" name="customer_city" placeholder=" " required>
-                            <label for="city" class="label-modern">City</label>
-                            <span class="input-border"></span>
+                    <!-- Admin Secret Code Field -->
+                    <div class="admin-code-field" id="admin-code-field">
+                        <div class="form-group-modern">
+                            <div class="input-wrapper">
+                                <i class="fas fa-key input-icon"></i>
+                                <input type="password" class="input-modern" id="admin_code" name="admin_code" placeholder=" ">
+                                <label for="admin_code" class="label-modern">
+                                    Admin Secret Code
+                                    <span class="admin-badge"><i class="fas fa-shield-alt"></i> Admin Access</span>
+                                </label>
+                                <span class="input-border"></span>
+                                <button type="button" class="toggle-password" onclick="togglePassword('admin_code', 'toggleAdminIcon')">
+                                    <i class="fas fa-eye" id="toggleAdminIcon"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
 
@@ -552,9 +776,19 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../js/register.js"></script>
 
     <script>
+        // Countries and Cities Data
+        let countriesCitiesData = {};
+
+        // Load countries and cities data
+        fetch('../data/countries_cities.json')
+            .then(response => response.json())
+            .then(data => {
+                countriesCitiesData = data;
+            })
+            .catch(error => console.error('Error loading countries data:', error));
+
         // Toggle password visibility
         function togglePassword(inputId, iconId) {
             const passwordInput = document.getElementById(inputId);
@@ -571,13 +805,187 @@
             }
         }
 
-        // Override the register form submission
+        // Account Type Switcher
+        document.querySelectorAll('.account-type-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const type = this.getAttribute('data-type');
+
+                // Update active state
+                document.querySelectorAll('.account-type-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                // Update hidden input
+                document.getElementById('account_type').value = type;
+
+                // Show/hide partner fields
+                const partnerFields = document.getElementById('partner-fields');
+                if (type === 'couple') {
+                    partnerFields.classList.add('active');
+                    // Make partner fields required
+                    document.getElementById('partner_name').required = true;
+                    document.getElementById('partner_email').required = true;
+                    document.getElementById('partner_country').required = true;
+                    document.getElementById('partner_city').required = true;
+                } else {
+                    partnerFields.classList.remove('active');
+                    // Make partner fields optional
+                    document.getElementById('partner_name').required = false;
+                    document.getElementById('partner_email').required = false;
+                    document.getElementById('partner_country').required = false;
+                    document.getElementById('partner_city').required = false;
+                }
+            });
+        });
+
+        // Autocomplete functionality
+        function setupAutocomplete(inputId, dropdownId, dataSource, isCity = false, relatedInput = null) {
+            const input = document.getElementById(inputId);
+            const dropdown = document.getElementById(dropdownId);
+            let currentFocus = -1;
+
+            input.addEventListener('input', function() {
+                const value = this.value.trim();
+                dropdown.innerHTML = '';
+                currentFocus = -1;
+
+                if (value === '') {
+                    dropdown.classList.remove('active');
+                    return;
+                }
+
+                let matches = [];
+                if (isCity && relatedInput) {
+                    const selectedCountry = document.getElementById(relatedInput).value;
+                    if (selectedCountry && countriesCitiesData[selectedCountry]) {
+                        matches = countriesCitiesData[selectedCountry].filter(city =>
+                            city.toLowerCase().startsWith(value.toLowerCase())
+                        );
+                    }
+                } else {
+                    matches = dataSource.filter(item =>
+                        item.toLowerCase().startsWith(value.toLowerCase())
+                    );
+                }
+
+                if (matches.length === 0) {
+                    dropdown.innerHTML = '<div class="no-results">No matches found</div>';
+                    dropdown.classList.add('active');
+                    return;
+                }
+
+                matches.forEach(match => {
+                    const div = document.createElement('div');
+                    div.className = 'autocomplete-item';
+                    div.textContent = match;
+                    div.addEventListener('click', function() {
+                        input.value = match;
+                        dropdown.classList.remove('active');
+                        dropdown.innerHTML = '';
+
+                        // If this is a country selector, enable the city field
+                        if (!isCity) {
+                            const cityInput = inputId === 'country' ? document.getElementById('city') :
+                                             inputId === 'partner_country' ? document.getElementById('partner_city') : null;
+                            if (cityInput) {
+                                cityInput.disabled = false;
+                                cityInput.value = '';
+                                const cityLabel = cityInput.nextElementSibling;
+                                if (cityLabel && cityLabel.classList.contains('label-modern')) {
+                                    cityLabel.textContent = inputId === 'country' ? 'City' : "Partner's City";
+                                }
+                            }
+                        }
+                    });
+                    dropdown.appendChild(div);
+                });
+
+                dropdown.classList.add('active');
+            });
+
+            // Keyboard navigation
+            input.addEventListener('keydown', function(e) {
+                const items = dropdown.querySelectorAll('.autocomplete-item');
+                if (e.keyCode === 40) { // Down arrow
+                    currentFocus++;
+                    addActive(items);
+                } else if (e.keyCode === 38) { // Up arrow
+                    currentFocus--;
+                    addActive(items);
+                } else if (e.keyCode === 13) { // Enter
+                    e.preventDefault();
+                    if (currentFocus > -1 && items[currentFocus]) {
+                        items[currentFocus].click();
+                    }
+                }
+            });
+
+            function addActive(items) {
+                if (!items || items.length === 0) return false;
+                removeActive(items);
+                if (currentFocus >= items.length) currentFocus = 0;
+                if (currentFocus < 0) currentFocus = items.length - 1;
+                items[currentFocus].classList.add('highlighted');
+                items[currentFocus].scrollIntoView({ block: 'nearest' });
+            }
+
+            function removeActive(items) {
+                items.forEach(item => item.classList.remove('highlighted'));
+            }
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (e.target !== input) {
+                    dropdown.classList.remove('active');
+                }
+            });
+        }
+
+        // Initialize autocomplete when data is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                const countries = Object.keys(countriesCitiesData);
+
+                // Setup autocomplete for main user
+                setupAutocomplete('country', 'country-dropdown', countries, false);
+                setupAutocomplete('city', 'city-dropdown', [], true, 'country');
+
+                // Setup autocomplete for partner
+                setupAutocomplete('partner_country', 'partner-country-dropdown', countries, false);
+                setupAutocomplete('partner_city', 'partner-city-dropdown', [], true, 'partner_country');
+            }, 500);
+
+            // Check for admin code trigger (Ctrl + Shift + A)
+            let adminUnlocked = false;
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.shiftKey && e.keyCode === 65) { // Ctrl + Shift + A
+                    e.preventDefault();
+                    adminUnlocked = !adminUnlocked;
+                    const adminField = document.getElementById('admin-code-field');
+                    if (adminUnlocked) {
+                        adminField.classList.add('active');
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Admin Mode Activated',
+                            text: 'Enter the admin secret code to register as an administrator.',
+                            confirmButtonColor: '#d72660',
+                            timer: 3000
+                        });
+                    } else {
+                        adminField.classList.remove('active');
+                    }
+                }
+            });
+        });
+
+        // Form submission
         $(document).ready(function() {
             $('#register-form').on('submit', function(e) {
                 e.preventDefault();
 
                 const password = $('#password').val();
                 const confirmPassword = $('#confirm_password').val();
+                const accountType = $('#account_type').val();
+                const adminCode = $('#admin_code').val();
 
                 // Validate passwords match
                 if (password !== confirmPassword) {
@@ -601,6 +1009,36 @@
                     return;
                 }
 
+                // Validate couple registration
+                if (accountType === 'couple') {
+                    const partnerName = $('#partner_name').val();
+                    const partnerEmail = $('#partner_email').val();
+                    const partnerCountry = $('#partner_country').val();
+                    const partnerCity = $('#partner_city').val();
+
+                    if (!partnerName || !partnerEmail || !partnerCountry || !partnerCity) {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Incomplete Information',
+                            text: 'Please fill in all partner information for couple registration.',
+                            confirmButtonColor: '#d72660'
+                        });
+                        return;
+                    }
+                }
+
+                // Admin code validation
+                const ADMIN_SECRET_CODE = 'DISTANTLOVE2025ADMIN';
+                if (adminCode && adminCode !== ADMIN_SECRET_CODE) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Invalid Admin Code',
+                        text: 'The admin secret code you entered is incorrect.',
+                        confirmButtonColor: '#d72660'
+                    });
+                    return;
+                }
+
                 // Show loading state on button
                 const submitBtn = $('.btn-submit-modern');
                 const originalText = submitBtn.html();
@@ -613,17 +1051,19 @@
                     data: $(this).serialize(),
                     dataType: 'json',
                     success: function(response) {
-                        if (response.success) {
+                        if (response.success || response.status === 'success') {
                             // Show loading overlay
                             const overlay = document.getElementById('loadingOverlay');
                             overlay.classList.add('active');
 
                             // Show success message then redirect
                             setTimeout(function() {
+                                const accountTypeText = accountType === 'couple' ? 'couple account' :
+                                                       adminCode === ADMIN_SECRET_CODE ? 'admin account' : 'account';
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'Welcome to DistantLove!',
-                                    text: 'Your account has been created successfully.',
+                                    text: `Your ${accountTypeText} has been created successfully.`,
                                     confirmButtonColor: '#d72660',
                                     timer: 2000,
                                     showConfirmButton: false
