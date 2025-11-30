@@ -157,7 +157,7 @@ $isPremium = false; // This would come from database in production
         }
 
         .idea-image {
-            height: 200px;
+            height: 250px;
             background: var(--gradient-soft-pink);
             display: flex;
             align-items: center;
@@ -165,6 +165,15 @@ $isPremium = false; // This would come from database in production
             font-size: 4rem;
             position: relative;
             overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .idea-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .idea-badge {
@@ -416,7 +425,7 @@ $isPremium = false; // This would come from database in production
             <div class="col-md-6 col-lg-4 idea-item" data-category="free video">
                 <div class="idea-card">
                     <div class="idea-image">
-                        🍿
+                        <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800&h=600&fit=crop" alt="Virtual Movie Night">
                         <span class="idea-badge">Free</span>
                     </div>
                     <div class="idea-content">
@@ -442,7 +451,7 @@ $isPremium = false; // This would come from database in production
             <div class="col-md-6 col-lg-4 idea-item" data-category="free video creative">
                 <div class="idea-card">
                     <div class="idea-image">
-                        🎮
+                        <img src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=800&h=600&fit=crop" alt="Online Gaming Session">
                         <span class="idea-badge">Free</span>
                     </div>
                     <div class="idea-content">
@@ -468,7 +477,7 @@ $isPremium = false; // This would come from database in production
             <div class="col-md-6 col-lg-4 idea-item" data-category="free video">
                 <div class="idea-card">
                     <div class="idea-image">
-                        🍳
+                        <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&h=600&fit=crop" alt="Cook Together">
                         <span class="idea-badge">Free</span>
                     </div>
                     <div class="idea-content">
@@ -494,7 +503,7 @@ $isPremium = false; // This would come from database in production
             <div class="col-md-6 col-lg-4 idea-item" data-category="surprise creative">
                 <div class="idea-card">
                     <div class="idea-image">
-                        💌
+                        <img src="https://images.unsplash.com/photo-1516205651411-aef33a44f7c2?w=800&h=600&fit=crop" alt="Love Letter Exchange">
                         <span class="idea-badge">Surprise</span>
                     </div>
                     <div class="idea-content">
@@ -520,7 +529,7 @@ $isPremium = false; // This would come from database in production
             <div class="col-md-6 col-lg-4 idea-item" data-category="video creative">
                 <div class="idea-card">
                     <div class="idea-image">
-                        🎨
+                        <img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=800&h=600&fit=crop" alt="Virtual Art Class">
                         <span class="idea-badge">Creative</span>
                     </div>
                     <div class="idea-content">
@@ -546,7 +555,7 @@ $isPremium = false; // This would come from database in production
             <div class="col-md-6 col-lg-4 idea-item" data-category="surprise">
                 <div class="idea-card">
                     <div class="idea-image">
-                        📦
+                        <img src="https://images.unsplash.com/photo-1513885535751-8b9238bd345a?w=800&h=600&fit=crop" alt="Care Package Surprise">
                         <span class="idea-badge">Surprise</span>
                     </div>
                     <div class="idea-content">
@@ -573,7 +582,7 @@ $isPremium = false; // This would come from database in production
             <div class="col-md-6 col-lg-4 idea-item" data-category="video creative">
                 <div class="idea-card <?php echo !$isPremium ? 'premium-overlay' : ''; ?>">
                     <div class="idea-image">
-                        🌟
+                        <img src="https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?w=800&h=600&fit=crop" alt="Virtual Escape Room">
                         <span class="premium-badge"><i class="fas fa-crown"></i> Premium</span>
                     </div>
                     <div class="idea-content">
@@ -599,7 +608,7 @@ $isPremium = false; // This would come from database in production
             <div class="col-md-6 col-lg-4 idea-item" data-category="creative surprise">
                 <div class="idea-card <?php echo !$isPremium ? 'premium-overlay' : ''; ?>">
                     <div class="idea-image">
-                        ✨
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop" alt="Personalized Scavenger Hunt">
                         <span class="premium-badge"><i class="fas fa-crown"></i> Premium</span>
                     </div>
                     <div class="idea-content">
@@ -625,7 +634,7 @@ $isPremium = false; // This would come from database in production
             <div class="col-md-6 col-lg-4 idea-item" data-category="video">
                 <div class="idea-card <?php echo !$isPremium ? 'premium-overlay' : ''; ?>">
                     <div class="idea-image">
-                        🎭
+                        <img src="https://images.unsplash.com/photo-1503095396549-807759245b35?w=800&h=600&fit=crop" alt="Virtual Theater Experience">
                         <span class="premium-badge"><i class="fas fa-crown"></i> Premium</span>
                     </div>
                     <div class="idea-content">
