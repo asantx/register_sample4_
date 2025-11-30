@@ -389,14 +389,14 @@ require_once '../settings/core.php';
 
     <!-- Counselors Container -->
     <div class="container counselors-container">
-        <!-- Counselor 1 -->
+        <!-- Counselor 1 - Ghanaian -->
         <div class="counselor-card">
             <div class="counselor-header">
                 <div class="counselor-avatar">
                     <i class="fas fa-user-md"></i>
                 </div>
                 <div class="counselor-info">
-                    <h3>Dr. Sarah Mitchell</h3>
+                    <h3>Dr. Akosua Mensah</h3>
                     <p class="counselor-title">Licensed Relationship Therapist, Ph.D.</p>
                     <div class="counselor-rating">
                         <span class="stars">
@@ -406,13 +406,13 @@ require_once '../settings/core.php';
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                         </span>
-                        <span>5.0 (127 reviews)</span>
+                        <span>5.0 (142 reviews)</span>
                     </div>
                 </div>
             </div>
             <div class="counselor-body">
                 <p class="counselor-bio">
-                    With over 12 years of experience in couples therapy, Dr. Mitchell specializes in helping long-distance couples maintain strong emotional connections. She has helped hundreds of couples navigate the unique challenges of distance with evidence-based strategies and compassionate guidance.
+                    Based in Accra, Dr. Mensah has over 12 years of experience in couples therapy, specializing in helping long-distance couples maintain strong emotional connections. She has helped hundreds of Ghanaian and international couples navigate the unique challenges of distance with evidence-based strategies and compassionate guidance rooted in both Western and African relationship values.
                 </p>
 
                 <div class="counselor-specialties">
@@ -421,18 +421,18 @@ require_once '../settings/core.php';
                         <span class="specialty-tag">Communication Skills</span>
                         <span class="specialty-tag">Trust Building</span>
                         <span class="specialty-tag">Conflict Resolution</span>
-                        <span class="specialty-tag">Emotional Intimacy</span>
+                        <span class="specialty-tag">Cultural Adaptation</span>
                     </div>
                 </div>
 
                 <div class="counselor-contact">
                     <div class="contact-item">
                         <i class="fas fa-envelope"></i>
-                        <span>sarah.mitchell@distantlove.com</span>
+                        <span>akosua.mensah@distantlove.com</span>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-phone"></i>
-                        <span>+1 (555) 123-4567</span>
+                        <span>+233 24 567 8901</span>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-video"></i>
@@ -449,20 +449,20 @@ require_once '../settings/core.php';
                     <p class="availability-info">Monday - Friday: 9:00 AM - 6:00 PM GMT<br>Saturday: 10:00 AM - 2:00 PM GMT</p>
                 </div>
 
-                <button class="book-btn" onclick="openBookingModal('Dr. Sarah Mitchell', 1920)">
+                <button class="book-btn" onclick="openBookingModal('Dr. Akosua Mensah', 1920)">
                     <i class="fas fa-calendar-check"></i> Book a Session
                 </button>
             </div>
         </div>
 
-        <!-- Counselor 2 -->
+        <!-- Counselor 2 - Ghanaian -->
         <div class="counselor-card">
             <div class="counselor-header">
                 <div class="counselor-avatar">
                     <i class="fas fa-user-tie"></i>
                 </div>
                 <div class="counselor-info">
-                    <h3>James Rodriguez, LMFT</h3>
+                    <h3>Kwame Asante, LMFT</h3>
                     <p class="counselor-title">Licensed Marriage & Family Therapist</p>
                     <div class="counselor-rating">
                         <span class="stars">
@@ -472,33 +472,33 @@ require_once '../settings/core.php';
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star-half-alt"></i>
                         </span>
-                        <span>4.8 (94 reviews)</span>
+                        <span>4.9 (108 reviews)</span>
                     </div>
                 </div>
             </div>
             <div class="counselor-body">
                 <p class="counselor-bio">
-                    James brings a warm, practical approach to couples counseling, with special expertise in helping military families and international couples. His sessions focus on building sustainable routines and creating meaningful shared experiences despite the distance.
+                    Operating from Kumasi, Kwame brings a warm, practical approach to couples counseling, with special expertise in helping Ghanaian diaspora families and international couples. His sessions focus on building sustainable routines, respecting cultural values, and creating meaningful shared experiences despite the distance.
                 </p>
 
                 <div class="counselor-specialties">
                     <h5><i class="fas fa-star"></i> Specialties</h5>
                     <div class="specialty-tags">
-                        <span class="specialty-tag">Military Couples</span>
+                        <span class="specialty-tag">Diaspora Couples</span>
                         <span class="specialty-tag">International Relationships</span>
                         <span class="specialty-tag">Future Planning</span>
-                        <span class="specialty-tag">Routine Building</span>
+                        <span class="specialty-tag">Family Integration</span>
                     </div>
                 </div>
 
                 <div class="counselor-contact">
                     <div class="contact-item">
                         <i class="fas fa-envelope"></i>
-                        <span>james.rodriguez@distantlove.com</span>
+                        <span>kwame.asante@distantlove.com</span>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-phone"></i>
-                        <span>+1 (555) 234-5678</span>
+                        <span>+233 50 234 5678</span>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-video"></i>
@@ -515,21 +515,21 @@ require_once '../settings/core.php';
                     <p class="availability-info">Tuesday - Saturday: 12:00 PM - 8:00 PM GMT<br>Flexible scheduling for international clients</p>
                 </div>
 
-                <button class="book-btn" onclick="openBookingModal('James Rodriguez, LMFT', 1520)">
+                <button class="book-btn" onclick="openBookingModal('Kwame Asante, LMFT', 1520)">
                     <i class="fas fa-calendar-check"></i> Book a Session
                 </button>
             </div>
         </div>
 
-        <!-- Counselor 3 -->
+        <!-- Counselor 3 - International (British) -->
         <div class="counselor-card">
             <div class="counselor-header">
                 <div class="counselor-avatar">
                     <i class="fas fa-user-graduate"></i>
                 </div>
                 <div class="counselor-info">
-                    <h3>Dr. Emily Chen</h3>
-                    <p class="counselor-title">Clinical Psychologist, Psy.D.</p>
+                    <h3>Dr. Sarah Mitchell</h3>
+                    <p class="counselor-title">Clinical Psychologist, Psy.D. (UK)</p>
                     <div class="counselor-rating">
                         <span class="stars">
                             <i class="fas fa-star"></i>
@@ -538,13 +538,13 @@ require_once '../settings/core.php';
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                         </span>
-                        <span>5.0 (156 reviews)</span>
+                        <span>5.0 (189 reviews)</span>
                     </div>
                 </div>
             </div>
             <div class="counselor-body">
                 <p class="counselor-bio">
-                    Dr. Chen specializes in helping young couples and those in their first long-distance relationship. Her sessions incorporate modern communication tools and focus on building strong foundations for lasting connections across any distance.
+                    Based in London with extensive experience working with international couples, Dr. Mitchell specializes in helping young couples and those in their first long-distance relationship. Her sessions incorporate modern communication tools and focus on building strong foundations for lasting connections across any distance. She has a special interest in UK-Ghana relationships.
                 </p>
 
                 <div class="counselor-specialties">
@@ -553,18 +553,18 @@ require_once '../settings/core.php';
                         <span class="specialty-tag">Young Couples</span>
                         <span class="specialty-tag">Digital Communication</span>
                         <span class="specialty-tag">Anxiety Management</span>
-                        <span class="specialty-tag">Virtual Date Planning</span>
+                        <span class="specialty-tag">UK-Africa Relationships</span>
                     </div>
                 </div>
 
                 <div class="counselor-contact">
                     <div class="contact-item">
                         <i class="fas fa-envelope"></i>
-                        <span>emily.chen@distantlove.com</span>
+                        <span>sarah.mitchell@distantlove.com</span>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-phone"></i>
-                        <span>+1 (555) 345-6789</span>
+                        <span>+44 20 7123 4567</span>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-video"></i>
@@ -581,7 +581,7 @@ require_once '../settings/core.php';
                     <p class="availability-info">Monday - Thursday: 2:00 PM - 10:00 PM GMT<br>Sunday: 11:00 AM - 5:00 PM GMT</p>
                 </div>
 
-                <button class="book-btn" onclick="openBookingModal('Dr. Emily Chen', 1760)">
+                <button class="book-btn" onclick="openBookingModal('Dr. Sarah Mitchell', 1760)">
                     <i class="fas fa-calendar-check"></i> Book a Session
                 </button>
             </div>
