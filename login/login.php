@@ -9,203 +9,445 @@
     <link rel="stylesheet" href="../css/distantlove-theme.css">
     <style>
         body {
-            background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
+            background: var(--gradient-primary);
             min-height: 100vh;
-            font-family: 'Roboto', sans-serif;
+            font-family: var(--font-primary);
+            overflow-x: hidden;
         }
-        .love-header {
-            font-family: 'Pacifico', cursive;
-            color: #d72660;
-            font-size: 2.5rem;
-            margin-top: 40px;
-            letter-spacing: 2px;
-            text-shadow: 0 2px 8px #fff3f6;
-        }
-        .love-heart {
-            color: #d72660;
-            font-size: 2rem;
-            animation: heartbeat 1.2s infinite;
-        }
-        @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            20% { transform: scale(1.2); }
-            40% { transform: scale(0.95); }
-            60% { transform: scale(1.1); }
-            80% { transform: scale(0.98); }
-        }
-        .menu-tray-love {
+
+        /* Navigation */
+        .navbar-distantlove-main {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(255,255,255,0.97);
-            border: 2px solid #d72660;
-            border-radius: 16px;
-            padding: 10px 18px;
-            box-shadow: 0 6px 24px rgba(215,38,96,0.10);
-            z-index: 1000;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1030;
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(215, 38, 96, 0.1);
+        }
+
+        .navbar-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
             display: flex;
+            justify-content: space-between;
             align-items: center;
         }
-        .menu-tray-love a {
-            margin-left: 12px;
-            color: #d72660;
-            border-color: #d72660;
-            font-weight: 500;
+
+        .navbar-brand-main {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            color: var(--primary-pink);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all var(--transition-normal);
         }
-        .menu-tray-love a:hover {
-            background: #d72660;
-            color: #fff;
+
+        .navbar-brand-main .love-heart {
+            font-size: 1.8rem;
+            animation: heartbeat 1.2s infinite;
         }
+
+        .navbar-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all var(--transition-normal);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-btn-active {
+            background: var(--gradient-rose);
+            color: white;
+            border: 2px solid transparent;
+        }
+
+        .nav-btn-secondary {
+            background: white;
+            color: var(--primary-pink);
+            border: 2px solid var(--primary-pink);
+        }
+
+        .nav-btn-secondary:hover {
+            background: var(--gradient-soft-pink);
+        }
+        /* Login Container */
         .login-container {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem 1rem;
+            padding: 6rem 2rem 2rem;
         }
 
-        .card {
-            border: none;
+        .login-card {
+            max-width: 900px;
+            width: 100%;
+            background: white;
             border-radius: var(--radius-xl);
             box-shadow: var(--shadow-xl);
+            display: grid;
+            grid-template-columns: 300px 1fr;
             overflow: hidden;
             animation: scaleIn 0.6s ease-out;
         }
 
-        .card-header {
+        .login-side-decoration {
             background: var(--gradient-rose);
-            color: #fff;
-            padding: 2rem;
-            text-align: center;
+            padding: 3rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .card-header h4 {
-            margin: 0;
-            font-size: 1.8rem;
+        .decoration-hearts {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .decoration-hearts i {
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.3);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .decoration-hearts i:nth-child(1) { animation-delay: 0s; }
+        .decoration-hearts i:nth-child(2) { animation-delay: 0.6s; }
+        .decoration-hearts i:nth-child(3) { animation-delay: 1.2s; }
+        .decoration-hearts i:nth-child(4) { animation-delay: 1.8s; }
+        .decoration-hearts i:nth-child(5) { animation-delay: 2.4s; }
+
+        .login-content {
+            padding: 3rem 3rem;
+        }
+
+        .login-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .login-title {
+            font-size: 2rem;
             font-weight: 700;
-            color: white;
-        }
-
-        .card-body {
-            padding: 2.5rem;
-        }
-
-        .form-label {
-            font-weight: 600;
             color: var(--primary-pink-dark);
             margin-bottom: 0.5rem;
         }
 
-        .form-label i {
-            margin-left: 5px;
+        .login-subtitle {
+            color: var(--dark-gray);
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        /* Modern Input Fields */
+        .form-group-modern {
+            margin-bottom: 2rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--dark-gray);
+            font-size: 1.1rem;
+            transition: all var(--transition-normal);
+            z-index: 2;
+        }
+
+        .input-modern {
+            width: 100%;
+            padding: 15px 15px 15px 35px;
+            border: none;
+            border-bottom: 2px solid var(--gray);
+            background: transparent;
+            font-size: 1rem;
+            color: var(--darker-gray);
+            transition: all var(--transition-normal);
+            outline: none;
+        }
+
+        .input-modern:focus {
+            border-bottom-color: var(--primary-pink);
+        }
+
+        .input-modern:focus ~ .input-icon {
             color: var(--primary-pink);
         }
 
-        .form-control {
-            border: 2px solid var(--gray);
-            border-radius: var(--radius-md);
-            padding: 12px 16px;
+        .input-modern:focus ~ .label-modern,
+        .input-modern:not(:placeholder-shown) ~ .label-modern {
+            transform: translateY(-25px);
+            font-size: 0.85rem;
+            color: var(--primary-pink);
+        }
+
+        .label-modern {
+            position: absolute;
+            left: 35px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--dark-gray);
+            font-size: 1rem;
+            transition: all var(--transition-normal);
+            pointer-events: none;
+            font-weight: 500;
+        }
+
+        .input-border {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-rose);
+            transition: width var(--transition-normal);
+        }
+
+        .input-modern:focus ~ .input-border {
+            width: 100%;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--dark-gray);
+            cursor: pointer;
+            padding: 5px 10px;
             transition: all var(--transition-normal);
         }
 
-        .form-control:focus {
-            border-color: var(--primary-pink);
-            box-shadow: 0 0 0 0.2rem rgba(215, 38, 96, 0.15);
+        .toggle-password:hover {
+            color: var(--primary-pink);
         }
 
-        .btn-custom {
+        /* Modern Submit Button */
+        .btn-submit-modern {
+            width: 100%;
+            padding: 15px 30px;
             background: var(--gradient-rose);
+            color: white;
             border: none;
-            color: #fff;
-            padding: 12px;
-            border-radius: var(--radius-md);
-            font-weight: 600;
+            border-radius: 50px;
             font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
             transition: all var(--transition-normal);
             box-shadow: var(--shadow-md);
+            margin-top: 1rem;
         }
 
-        .btn-custom:hover {
+        .btn-submit-modern:hover {
             box-shadow: var(--shadow-hover);
             transform: translateY(-3px);
         }
 
-        .btn-custom:active {
+        .btn-submit-modern:active {
             transform: translateY(-1px);
         }
 
-        .highlight {
-            color: var(--primary-pink);
-            transition: color var(--transition-normal);
-            text-decoration: none;
-            font-weight: 600;
+        .btn-icon {
+            transition: transform var(--transition-normal);
         }
 
-        .highlight:hover {
+        .btn-submit-modern:hover .btn-icon {
+            transform: translateX(5px);
+        }
+
+        .login-footer {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .login-footer p {
+            color: var(--dark-gray);
+            margin: 0;
+        }
+
+        .link-accent {
+            color: var(--primary-pink);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all var(--transition-normal);
+        }
+
+        .link-accent:hover {
             color: var(--primary-pink-dark);
             text-decoration: underline;
         }
 
-        .card-footer {
-            background: var(--gradient-soft-pink);
-            padding: 1.5rem;
-            text-align: center;
-            border: none;
-        }
-
-        .divider {
-            display: flex;
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-primary);
+            display: none;
             align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .loading-content {
             text-align: center;
-            margin: 1.5rem 0;
         }
 
-        .divider::before,
-        .divider::after {
-            content: '';
-            flex: 1;
-            border-bottom: 2px solid var(--gray);
+        .loading-heart {
+            font-size: 5rem;
+            color: var(--primary-pink);
+            margin-bottom: 2rem;
+            animation: pulse-glow 1.5s infinite;
         }
 
-        .divider span {
-            padding: 0 10px;
-            color: var(--dark-gray);
+        .loading-text {
+            font-size: 1.3rem;
+            color: white;
             font-weight: 500;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .login-card {
+                grid-template-columns: 1fr;
+            }
+
+            .login-side-decoration {
+                display: none;
+            }
+
+            .login-content {
+                padding: 2rem 1.5rem;
+            }
+
+            .navbar-brand-main {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="menu-tray-love">
-        <span class="love-heart">&#10084;&#65039;</span>
-        <a href="register.php" class="btn btn-outline-danger btn-sm">Register</a>
-        <a href="login.php" class="btn btn-outline-danger btn-sm">Login</a>
-    </div>
-    <div class="container login-container">
-        <div class="row justify-content-center animate__animated animate__fadeInDown">
-            <div class="col-md-7 col-lg-6">
-                <div class="love-header text-center">DistantLove Login</div>
-                <div class="card animate__animated animate__zoomIn mt-3">
-                    <div class="card-header text-center highlight">
-                        <h4>Login</h4>
-                    </div>
-                    <div class="card-body">
-                        <form method="POST" action="" class="mt-4" id="login-form">
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email <i class="fa fa-envelope"></i></label>
-                                <input type="email" class="form-control animate__animated animate__fadeInUp" id="email" name="email" required>
-                            </div>
-                            <div class="mb-4">
-                                <label for="password" class="form-label">Password <i class="fa fa-lock"></i></label>
-                                <input type="password" class="form-control animate__animated animate__fadeInUp" id="password" name="password" required>
-                            </div>
-                            <button type="submit" class="btn btn-custom w-100 animate-pulse-custom">Login</button>
-                        </form>
-                    </div>
-                    <div class="card-footer text-center">
-                        Don't have an account? <a href="register.php" class="highlight">Register here</a>.
-                    </div>
+    <!-- Navigation -->
+    <nav class="navbar-distantlove-main">
+        <div class="navbar-content">
+            <a href="../index.php" class="navbar-brand-main">
+                <span class="love-heart">&#10084;&#65039;</span>
+                <span>DistantLove</span>
+            </a>
+            <div class="navbar-links">
+                <a href="login.php" class="nav-btn nav-btn-active">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Login</span>
+                </a>
+                <a href="register.php" class="nav-btn nav-btn-secondary">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Register</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Container -->
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-side-decoration">
+                <div class="decoration-hearts">
+                    <i class="fas fa-heart"></i>
+                    <i class="fas fa-heart"></i>
+                    <i class="fas fa-heart"></i>
+                    <i class="fas fa-heart"></i>
+                    <i class="fas fa-heart"></i>
                 </div>
             </div>
+
+            <div class="login-content">
+                <div class="login-header">
+                    <h2 class="login-title">Welcome Back!</h2>
+                    <p class="login-subtitle">Sign in to continue your journey with DistantLove</p>
+                </div>
+
+                <form method="POST" action="" id="login-form">
+                    <div class="form-group-modern">
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" class="input-modern" id="email" name="email" placeholder=" " required>
+                            <label for="email" class="label-modern">Email Address</label>
+                            <span class="input-border"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group-modern">
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" class="input-modern" id="password" name="password" placeholder=" " required>
+                            <label for="password" class="label-modern">Password</label>
+                            <span class="input-border"></span>
+                            <button type="button" class="toggle-password" onclick="togglePassword()">
+                                <i class="fas fa-eye" id="toggleIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit-modern">
+                        <span class="btn-text">Sign In</span>
+                        <i class="fas fa-arrow-right btn-icon"></i>
+                    </button>
+                </form>
+
+                <div class="login-footer">
+                    <p>Don't have an account? <a href="register.php" class="link-accent">Create one here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="loading-heart">
+                <i class="fas fa-heart"></i>
+            </div>
+            <p class="loading-text">Taking you to your shopping experience...</p>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -214,44 +456,89 @@
     <script src="../js/login.js"></script>
 
     <script>
-    // Page-specific session fetch and menu rendering (no app_root dependency)
-    $(function(){
-        function escapeHtml(s){ return $('<div>').text(s).html(); }
+        // Toggle password visibility
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('toggleIcon');
 
-        function renderMenu(data){
-            var tray = $('.menu-tray-love');
-            if (!tray.length) return;
-            if (data && data.logged_in){
-                var adminBtn = '';
-                if (String(data.user_role) === '2') {
-                    adminBtn = '<a href="../admin/dashboard.php" class="btn btn-sm btn-outline-info ms-2">Admin</a>';
-                }
-                tray.html('\n                    <span class="me-2">Welcome, <strong class="user-name">'+escapeHtml(data.user_name||'User')+'</strong>!</span>' + adminBtn + '\n                    <a href="#" id="logout-btn" class="btn btn-sm btn-outline-danger ms-2">Logout</a>\n                ');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
             } else {
-                tray.html('\n                    <a href="register.php" class="btn btn-sm btn-outline-primary">Register</a>' +
-                             '\n                    <a href="login.php" class="btn btn-sm btn-outline-secondary ms-2">Login</a>\n                ');
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
             }
         }
 
-        function fetchSession(){
-            $.getJSON('../actions/get_session_info.php').done(function(res){ renderMenu(res); }).fail(function(){ renderMenu({ logged_in:false }); });
-        }
+        // Override the login form submission to add smooth transition
+        $(document).ready(function() {
+            $('#login-form').on('submit', function(e) {
+                e.preventDefault();
 
-        // Delegate logout click on the dynamic element
-        $(document).on('click','#logout-btn', function(e){
-            e.preventDefault();
-            Swal.fire({
-                title: 'Logout?', text: 'Are you sure you want to logout?', icon: 'question', showCancelButton: true,
-                confirmButtonColor: '#d72660', confirmButtonText: 'Logout', cancelButtonText: 'Cancel'
-            }).then(function(result){
-                if (result.isConfirmed){
-                    $.post('../login/logout.php').always(function(){ fetchSession(); location.reload(); });
+                const email = $('#email').val();
+                const password = $('#password').val();
+
+                if (!email || !password) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Missing Information',
+                        text: 'Please fill in all fields.',
+                        confirmButtonColor: '#d72660'
+                    });
+                    return;
                 }
+
+                // Show loading state on button
+                const submitBtn = $('.btn-submit-modern');
+                const originalText = submitBtn.html();
+                submitBtn.html('<span class="spinner-border spinner-border-sm me-2"></span>Signing in...');
+                submitBtn.prop('disabled', true);
+
+                $.ajax({
+                    url: '../actions/login_customer_action.php',
+                    method: 'POST',
+                    data: { email, password },
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.success) {
+                            // Show loading overlay with smooth transition
+                            const overlay = document.getElementById('loadingOverlay');
+                            overlay.classList.add('active');
+
+                            // Wait for animation then redirect
+                            setTimeout(function() {
+                                if (response.role === '2') {
+                                    window.location.href = '../admin/dashboard.php';
+                                } else {
+                                    window.location.href = '../views/shop.php';
+                                }
+                            }, 1500);
+                        } else {
+                            submitBtn.html(originalText);
+                            submitBtn.prop('disabled', false);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Login Failed',
+                                text: response.message || 'Invalid email or password.',
+                                confirmButtonColor: '#d72660'
+                            });
+                        }
+                    },
+                    error: function() {
+                        submitBtn.html(originalText);
+                        submitBtn.prop('disabled', false);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'An error occurred. Please try again.',
+                            confirmButtonColor: '#d72660'
+                        });
+                    }
+                });
             });
         });
-
-        fetchSession();
-    });
     </script>
 </body>
 </html>
