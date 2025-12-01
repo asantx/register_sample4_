@@ -21,7 +21,7 @@ function isUserLoggedIn()
 /**
  * Check if current logged in user is admin.
  * Works with $_SESSION['user']['role'], $_SESSION['role'], or $_SESSION['user_role'].
- * Only users with role value 2 (numeric or string) are admins.
+ * Only users with role value 1 (numeric or string) are admins.
  */
 function isAdmin()
 {
@@ -37,8 +37,8 @@ function isAdmin()
         return false;
     }
 
-    // Only accept numeric 2 or string '2' as admin
-    if ($role === 2 || $role === '2') {
+    // Only accept numeric 1 or string '1' as admin (role 2 is regular user)
+    if ($role === 1 || $role === '1') {
         return true;
     }
     return false;
