@@ -732,72 +732,98 @@ require_once '../settings/core.php';
             console.log('Type:', sessionType);
             console.log('Cost:', cost);
 
+            // Prompt for email confirmation before payment
             Swal.fire({
-                title: 'Processing Booking...',
-                text: 'Please wait while we confirm your session',
-                allowOutsideClick: false,
-                didOpen: () => {
-                    Swal.showLoading();
+                title: 'Confirm Your Email',
+                html: `
+                    <p>Please confirm your email address for payment receipt:</p>
+                    <input type="email" id="payment-email" class="swal2-input" placeholder="Your email" value="<?php echo $_SESSION['user_email'] ?? ''; ?>">
+                `,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#d72660',
+                confirmButtonText: 'Proceed to Payment',
+                cancelButtonText: 'Cancel',
+                preConfirm: () => {
+                    const email = document.getElementById('payment-email').value;
+                    if (!email || !email.includes('@')) {
+                        Swal.showValidationMessage('Please enter a valid email');
+                        return false;
+                    }
+                    return email;
                 }
-            });
+            }).then((result) => {
+                if (!result.isConfirmed) return;
 
-            // Submit booking to server
-            const formData = new FormData(this);
+                const paymentEmail = result.value;
 
-            // Log FormData contents
-            console.log('FormData contents:');
-            for (let pair of formData.entries()) {
-                console.log(pair[0] + ': ' + pair[1]);
-            }
+                Swal.fire({
+                    title: 'Initializing Payment...',
+                    text: 'Redirecting to payment gateway',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
 
-            fetch('../actions/book_counseling_action.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                console.log('Response status:', response.status);
-                return response.text();
-            })
-            .then(text => {
-                console.log('Raw response:', text);
-                const data = JSON.parse(text);
-                console.log('Parsed data:', data);
+                // Prepare service data
+                const serviceData = {
+                    counselor_name: counselor,
+                    session_date: date,
+                    session_time: timeSlot,
+                    session_type: sessionType,
+                    session_notes: document.getElementById('sessionNotes').value
+                };
 
-                if (data.status === 'success') {
+                // Initialize Paystack payment
+                const paymentData = new FormData();
+                paymentData.append('email', paymentEmail);
+                paymentData.append('amount', cost);
+                paymentData.append('payment_type', 'counseling');
+                paymentData.append('service_data', JSON.stringify(serviceData));
+
+                fetch('../actions/paystack_init_transaction.php', {
+                    method: 'POST',
+                    body: paymentData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Payment initialization response:', data);
+
+                    if (data.status && data.data && data.data.authorization_url) {
+                        // Redirect to Paystack payment page
+                        Swal.fire({
+                            title: 'Redirecting to Payment',
+                            html: `
+                                <p><strong>Amount:</strong> GH₵ ${parseFloat(cost).toLocaleString()}</p>
+                                <p><strong>Counselor:</strong> ${counselor}</p>
+                                <p><strong>Session Date:</strong> ${date} at ${timeSlot}</p>
+                                <br>
+                                <p>You will be redirected to complete your payment securely...</p>
+                            `,
+                            icon: 'info',
+                            showConfirmButton: false,
+                            timer: 2000
+                        }).then(() => {
+                            window.location.href = data.data.authorization_url;
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Payment Initialization Failed',
+                            text: data.message || 'Unable to initialize payment. Please try again.',
+                            icon: 'error',
+                            confirmButtonColor: '#d72660'
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Payment error:', error);
                     Swal.fire({
-                        title: 'Booking Confirmed!',
-                        html: `
-                            <p><strong>Booking Reference:</strong> ${data.booking_reference}</p>
-                            <p><strong>Counselor:</strong> ${counselor}</p>
-                            <p><strong>Date:</strong> ${date}</p>
-                            <p><strong>Time:</strong> ${timeSlot}</p>
-                            <p><strong>Type:</strong> ${sessionType}</p>
-                            <p><strong>Cost:</strong> GH₵ ${parseFloat(cost).toLocaleString()}</p>
-                            <br>
-                            <p>Your booking has been confirmed! You can view it in <a href="orders.php" style="color: #d72660; font-weight: bold;">My Journey</a>.</p>
-                        `,
-                        icon: 'success',
-                        confirmButtonColor: '#d72660'
-                    }).then(() => {
-                        bookingModal.hide();
-                        document.getElementById('bookingForm').reset();
-                    });
-                } else {
-                    Swal.fire({
-                        title: 'Booking Failed',
-                        text: data.message || 'An error occurred while booking your session',
+                        title: 'Error',
+                        text: 'Unable to process payment. Please try again later.',
                         icon: 'error',
                         confirmButtonColor: '#d72660'
                     });
-                }
-            })
-            .catch(error => {
-                console.error('Booking error:', error);
-                Swal.fire({
-                    title: 'Error',
-                    text: 'Network error: ' + error.message,
-                    icon: 'error',
-                    confirmButtonColor: '#d72660'
                 });
             });
         });
