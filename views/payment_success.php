@@ -1,9 +1,24 @@
 <?php
 session_start();
 require_once '../settings/core.php';
+require_once '../controllers/order_controller.php';
 requireLogin();
 
 $reference = $_GET['ref'] ?? '';
+
+// Fetch booking details based on reference
+$booking_details = null;
+$payment_type = 'unknown';
+
+if (!empty($reference)) {
+    // Determine payment type from reference prefix
+    if (strpos($reference, 'COUNSELING-') === 0) {
+        $payment_type = 'counseling';
+        $booking_details = get_booking_by_reference_ctr($reference);
+    } elseif (strpos($reference, 'PREMIUM-') === 0) {
+        $payment_type = 'premium';
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -171,28 +186,110 @@ $reference = $_GET['ref'] ?? '';
                 <i class="fas fa-check"></i>
             </div>
 
-            <h1 class="page-title">Payment Successful! <span class="love-heart">❤️</span></h1>
-            <p class="success-message">Thank you for your payment. Your transaction has been completed successfully.</p>
+            <?php if ($payment_type === 'counseling' && $booking_details): ?>
+                <h1 class="page-title">Counseling Session Booked! <span class="love-heart">❤️</span></h1>
+                <p class="success-message">Your counseling session has been successfully booked. We're excited to support your relationship journey!</p>
 
-            <div class="details-card" id="payment-details">
-                <h5 style="color: #d72660; margin-bottom: 1.5rem; font-weight: 700;">
-                    <i class="fas fa-file-invoice me-2"></i>Payment Details
-                </h5>
-                <div class="detail-row">
-                    <span class="detail-label">Transaction Reference:</span>
-                    <span class="detail-value"><?php echo htmlspecialchars($reference); ?></span>
+                <div class="details-card" id="booking-details">
+                    <h5 style="color: #d72660; margin-bottom: 1.5rem; font-weight: 700;">
+                        <i class="fas fa-calendar-check me-2"></i>Session Details
+                    </h5>
+                    <div class="detail-row">
+                        <span class="detail-label">Booking Reference:</span>
+                        <span class="detail-value"><?php echo htmlspecialchars($booking_details['order_reference']); ?></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Counselor:</span>
+                        <span class="detail-value"><?php echo htmlspecialchars($booking_details['counselor_name']); ?></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Session Date:</span>
+                        <span class="detail-value"><?php echo date('F j, Y', strtotime($booking_details['session_date'])); ?></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Session Time:</span>
+                        <span class="detail-value"><?php echo htmlspecialchars($booking_details['session_time']); ?></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Session Type:</span>
+                        <span class="detail-value">
+                            <i class="fas fa-<?php
+                                echo $booking_details['session_type'] === 'video' ? 'video' :
+                                    ($booking_details['session_type'] === 'phone' ? 'phone' : 'comments');
+                            ?> me-1"></i>
+                            <?php echo ucfirst(htmlspecialchars($booking_details['session_type'])); ?>
+                        </span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Amount Paid:</span>
+                        <span class="detail-value">GH₵ <?php echo number_format($booking_details['total_amount'], 2); ?></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Status:</span>
+                        <span class="detail-value" style="color: #28a745; font-weight: 700;">
+                            <i class="fas fa-check-circle me-1"></i>Confirmed
+                        </span>
+                    </div>
+                    <?php if (!empty($booking_details['session_notes'])): ?>
+                    <div class="detail-row">
+                        <span class="detail-label">Your Notes:</span>
+                        <span class="detail-value" style="font-size: 0.9rem;"><?php echo nl2br(htmlspecialchars($booking_details['session_notes'])); ?></span>
+                    </div>
+                    <?php endif; ?>
                 </div>
-                <div class="detail-row">
-                    <span class="detail-label">Payment Date:</span>
-                    <span class="detail-value"><?php echo date('F j, Y - g:i A'); ?></span>
+
+            <?php elseif ($payment_type === 'premium'): ?>
+                <h1 class="page-title">Welcome to Premium! <span class="love-heart">❤️</span></h1>
+                <p class="success-message">Your premium subscription is now active. Enjoy all the exclusive benefits!</p>
+
+                <div class="details-card" id="payment-details">
+                    <h5 style="color: #d72660; margin-bottom: 1.5rem; font-weight: 700;">
+                        <i class="fas fa-crown me-2"></i>Subscription Details
+                    </h5>
+                    <div class="detail-row">
+                        <span class="detail-label">Plan:</span>
+                        <span class="detail-value">Premium Monthly</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Transaction Reference:</span>
+                        <span class="detail-value"><?php echo htmlspecialchars($reference); ?></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Payment Date:</span>
+                        <span class="detail-value"><?php echo date('F j, Y - g:i A'); ?></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Status:</span>
+                        <span class="detail-value" style="color: #28a745; font-weight: 700;">
+                            <i class="fas fa-check-circle me-1"></i>Active
+                        </span>
+                    </div>
                 </div>
-                <div class="detail-row">
-                    <span class="detail-label">Status:</span>
-                    <span class="detail-value" style="color: #28a745; font-weight: 700;">
-                        <i class="fas fa-check-circle me-1"></i>Successful
-                    </span>
+
+            <?php else: ?>
+                <h1 class="page-title">Payment Successful! <span class="love-heart">❤️</span></h1>
+                <p class="success-message">Thank you for your payment. Your transaction has been completed successfully.</p>
+
+                <div class="details-card" id="payment-details">
+                    <h5 style="color: #d72660; margin-bottom: 1.5rem; font-weight: 700;">
+                        <i class="fas fa-file-invoice me-2"></i>Payment Details
+                    </h5>
+                    <div class="detail-row">
+                        <span class="detail-label">Transaction Reference:</span>
+                        <span class="detail-value"><?php echo htmlspecialchars($reference); ?></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Payment Date:</span>
+                        <span class="detail-value"><?php echo date('F j, Y - g:i A'); ?></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Status:</span>
+                        <span class="detail-value" style="color: #28a745; font-weight: 700;">
+                            <i class="fas fa-check-circle me-1"></i>Successful
+                        </span>
+                    </div>
                 </div>
-            </div>
+            <?php endif; ?>
 
             <div class="action-buttons">
                 <button onclick="window.location.href='orders.php'" class="btn-primary-custom">

@@ -225,4 +225,18 @@ class Order extends db_connection {
             return [];
         }
     }
+
+    public function getBookingByReference($reference) {
+        try {
+            $sql = "SELECT * FROM orders WHERE order_reference = ? LIMIT 1";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bind_param("s", $reference);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            return $result->fetch_assoc();
+        } catch (Exception $e) {
+            error_log("Get booking by reference error: " . $e->getMessage());
+            return null;
+        }
+    }
 }

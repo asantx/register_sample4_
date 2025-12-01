@@ -50,3 +50,8 @@ function get_user_counseling_bookings_ctr($user_id) {
     $order = new Order();
     return $order->getUserCounselingBookings($user_id);
 }
+
+function get_booking_by_reference_ctr($reference) {
+    $order = new Order();
+    return $order->getBookingByReference($reference);
+}
