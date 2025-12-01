@@ -1035,123 +1035,93 @@ require_once '../settings/core.php';
                 return;
             <?php endif; ?>
 
-            // Prompt for email confirmation before payment
+            // Show loading and go directly to payment
             Swal.fire({
-                title: 'Confirm Your Email',
+                title: 'Initializing Payment...',
                 html: `
-                    <p>Please confirm your email address for your premium subscription:</p>
-                    <input type="email" id="premium-email" class="swal2-input" placeholder="Your email" value="<?php echo $_SESSION['user_email'] ?? ''; ?>">
-                    <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 10px; text-align: left;">
-                        <strong style="color: #d72660;">Premium Benefits:</strong>
-                        <ul style="margin: 10px 0 0 0; padding-left: 20px; font-size: 14px;">
-                            <li>Unlimited community access</li>
-                            <li>20% off all counseling sessions</li>
-                            <li>Access to premium date ideas</li>
-                            <li>Weekly expert advice emails</li>
-                            <li>Priority booking</li>
-                            <li>24/7 support</li>
-                        </ul>
+                    <div style="padding: 20px; text-align: left;">
+                        <p><strong>Subscription:</strong> Premium Monthly</p>
+                        <p><strong>Amount:</strong> GH₵ 320/month</p>
+                        <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 10px;">
+                            <strong style="color: #d72660;">Premium Benefits:</strong>
+                            <ul style="margin: 10px 0 0 0; padding-left: 20px; font-size: 14px;">
+                                <li>Unlimited community access</li>
+                                <li>20% off all counseling sessions</li>
+                                <li>Access to premium date ideas</li>
+                                <li>Weekly expert advice emails</li>
+                                <li>Priority booking</li>
+                                <li>24/7 support</li>
+                            </ul>
+                        </div>
                     </div>
                 `,
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: '#d72660',
-                confirmButtonText: 'Proceed to Payment',
-                cancelButtonText: 'Cancel',
-                preConfirm: () => {
-                    const email = document.getElementById('premium-email').value;
-                    if (!email || !email.includes('@')) {
-                        Swal.showValidationMessage('Please enter a valid email');
-                        return false;
-                    }
-                    return email;
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
                 }
-            }).then((result) => {
-                if (!result.isConfirmed) return;
+            });
 
-                const email = result.value;
+            // Use user's email from session
+            const email = '<?php echo $_SESSION['user_email'] ?? ''; ?>';
 
-                Swal.fire({
-                    title: 'Initializing Payment...',
-                    text: 'Redirecting to payment gateway',
-                    allowOutsideClick: false,
-                    didOpen: () => {
-                        Swal.showLoading();
-                    }
-                });
+            // Prepare subscription data
+            const subscriptionData = {
+                plan: 'monthly',
+                duration: 30
+            };
 
-                // Prepare subscription data
-                const subscriptionData = {
-                    plan: 'monthly',
-                    duration: 30
-                };
+            // Initialize Paystack payment
+            const paymentData = new FormData();
+            paymentData.append('email', email);
+            paymentData.append('amount', 320); // GH₵ 320/month
+            paymentData.append('payment_type', 'premium');
+            paymentData.append('service_data', JSON.stringify(subscriptionData));
 
-                // Initialize Paystack payment
-                const paymentData = new FormData();
-                paymentData.append('email', email);
-                paymentData.append('amount', 320); // GH₵ 320/month
-                paymentData.append('payment_type', 'premium');
-                paymentData.append('service_data', JSON.stringify(subscriptionData));
+            fetch('../actions/paystack_init_transaction.php', {
+                method: 'POST',
+                body: paymentData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Premium payment initialization response:', data);
 
-                fetch('../actions/paystack_init_transaction.php', {
-                    method: 'POST',
-                    body: paymentData
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Premium payment initialization response:', data);
-
-                    if (data.status && data.data && data.data.authorization_url) {
-                        // Redirect to Paystack payment page
-                        Swal.fire({
-                            title: 'Redirecting to Payment',
-                            html: `
-                                <p><strong>Subscription:</strong> Premium Monthly</p>
-                                <p><strong>Amount:</strong> GH₵ 320/month</p>
-                                <br>
-                                <p>You will be redirected to complete your payment securely...</p>
-                            `,
-                            icon: 'info',
-                            showConfirmButton: false,
-                            timer: 2000
-                        }).then(() => {
-                            window.location.href = data.data.authorization_url;
-                        });
-                    } else {
-                        Swal.fire({
-                            title: 'Payment Initialization Failed',
-                            html: `
-                                <p>${data.message || 'Unable to initialize payment. Please try again.'}</p>
-                                <div style="margin-top: 15px; padding: 10px; background: #f8f9fa; border-radius: 5px; font-size: 12px; text-align: left;">
-                                    <strong>Debug Info:</strong><br>
-                                    Status: ${data.status}<br>
-                                    ${data.message ? 'Message: ' + data.message : ''}
-                                </div>
-                            `,
-                            icon: 'error',
-                            confirmButtonColor: '#d72660'
-                        });
-                    }
-                })
-                .catch(error => {
-                    console.error('Premium payment error:', error);
+                if (data.status && data.data && data.data.authorization_url) {
+                    // Redirect directly to Paystack payment page
+                    window.location.href = data.data.authorization_url;
+                } else {
                     Swal.fire({
-                        title: 'Error Processing Payment',
+                        title: 'Payment Initialization Failed',
                         html: `
-                            <p>Unable to connect to payment gateway.</p>
+                            <p>${data.message || 'Unable to initialize payment. Please try again.'}</p>
                             <div style="margin-top: 15px; padding: 10px; background: #f8f9fa; border-radius: 5px; font-size: 12px; text-align: left;">
-                                <strong>Error details:</strong><br>
-                                ${error.message || 'Network error occurred'}
+                                <strong>Debug Info:</strong><br>
+                                Status: ${data.status}<br>
+                                ${data.message ? 'Message: ' + data.message : ''}
                             </div>
                         `,
                         icon: 'error',
                         confirmButtonColor: '#d72660'
                     });
+                }
+            })
+            .catch(error => {
+                console.error('Premium payment error:', error);
+                Swal.fire({
+                    title: 'Error Processing Payment',
+                    html: `
+                        <p>Unable to connect to payment gateway.</p>
+                        <div style="margin-top: 15px; padding: 10px; background: #f8f9fa; border-radius: 5px; font-size: 12px; text-align: left;">
+                            <strong>Error details:</strong><br>
+                            ${error.message || 'Network error occurred'}
+                        </div>
+                    `,
+                    icon: 'error',
+                    confirmButtonColor: '#d72660'
                 });
             });
         }
