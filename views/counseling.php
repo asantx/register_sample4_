@@ -786,7 +786,13 @@ require_once '../settings/core.php';
                     method: 'POST',
                     body: paymentData
                 })
-                .then(response => response.json())
+                .then(response => {
+                    // Check if response is OK
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
                 .then(data => {
                     console.log('Payment initialization response:', data);
 
@@ -808,21 +814,48 @@ require_once '../settings/core.php';
                             window.location.href = data.data.authorization_url;
                         });
                     } else {
+                        // Show detailed error message
+                        console.error('Payment initialization failed:', data);
                         Swal.fire({
                             title: 'Payment Initialization Failed',
-                            text: data.message || 'Unable to initialize payment. Please try again.',
+                            html: `
+                                <p>${data.message || 'Unable to initialize payment. Please try again.'}</p>
+                                <div style="margin-top: 15px; padding: 10px; background: #f8f9fa; border-radius: 5px; font-size: 12px; text-align: left;">
+                                    <strong>Debug Info:</strong><br>
+                                    Status: ${data.status}<br>
+                                    ${data.message ? 'Message: ' + data.message : ''}
+                                </div>
+                                <p style="margin-top: 15px; font-size: 11px; color: #999;">
+                                    Try the <a href="../test_paystack.php" target="_blank">test page</a> to diagnose the issue.
+                                </p>
+                            `,
                             icon: 'error',
-                            confirmButtonColor: '#d72660'
+                            confirmButtonColor: '#d72660',
+                            width: '500px'
                         });
                     }
                 })
                 .catch(error => {
                     console.error('Payment error:', error);
                     Swal.fire({
-                        title: 'Error',
-                        text: 'Unable to process payment. Please try again later.',
+                        title: 'Error Processing Payment',
+                        html: `
+                            <p>Unable to connect to payment gateway.</p>
+                            <div style="margin-top: 15px; padding: 10px; background: #f8f9fa; border-radius: 5px; font-size: 12px; text-align: left;">
+                                <strong>Error details:</strong><br>
+                                ${error.message || 'Network error occurred'}
+                            </div>
+                            <p style="margin-top: 15px; font-size: 12px; color: #666;">
+                                Possible causes:<br>
+                                • Not logged in<br>
+                                • Network connection issue<br>
+                                • Payment gateway configuration<br>
+                                <a href="../test_paystack.php" target="_blank">Run diagnostic test</a>
+                            </p>
+                        `,
                         icon: 'error',
-                        confirmButtonColor: '#d72660'
+                        confirmButtonColor: '#d72660',
+                        width: '500px'
                     });
                 });
             });
