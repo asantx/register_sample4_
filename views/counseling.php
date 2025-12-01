@@ -362,18 +362,12 @@ require_once '../settings/core.php';
                     <a href="shop.php" class="nav-link-modern">
                         <i class="fas fa-arrow-left"></i> Back to Home
                     </a>
-                    <?php if (isUserLoggedIn()): ?>
-                        <a href="orders.php" class="nav-link-modern">
-                            <i class="fas fa-box"></i> My Bookings
-                        </a>
-                        <a href="../login/logout.php" class="nav-link-modern">
-                            <i class="fas fa-sign-out-alt"></i> Logout
-                        </a>
-                    <?php else: ?>
-                        <a href="../login/login.php" class="nav-link-modern">
-                            <i class="fas fa-sign-in-alt"></i> Login
-                        </a>
-                    <?php endif; ?>
+                    <a href="orders.php" class="nav-link-modern">
+                        <i class="fas fa-box"></i> My Bookings
+                    </a>
+                    <a href="../login/logout.php" class="nav-link-modern">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
                 </div>
             </div>
         </div>
