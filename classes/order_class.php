@@ -146,21 +146,37 @@ class Order extends db_connection {
             $booking_reference = 'DL-' . date('Y') . '-' . str_pad(rand(1, 999999), 6, '0', STR_PAD_LEFT);
             $status = 'confirmed';
 
-            $sql = "INSERT INTO orders (user_id, order_reference, total_amount, status, customer_name, customer_email, order_type, session_date, session_time, session_type, counselor_name, session_notes)
-                    VALUES (?, ?, ?, ?, ?, ?, 'counseling', ?, ?, ?, ?, ?)";
-
-            $stmt = $this->db->prepare($sql);
-
             // Get user details
             $user_sql = "SELECT customer_name, customer_email FROM customer WHERE customer_id = ?";
             $user_stmt = $this->db->prepare($user_sql);
+
+            if (!$user_stmt) {
+                error_log("Counseling booking error: Failed to prepare user query - " . $this->db->error);
+                return false;
+            }
+
             $user_stmt->bind_param("i", $user_id);
             $user_stmt->execute();
             $user_result = $user_stmt->get_result();
             $user = $user_result->fetch_assoc();
 
+            if (!$user) {
+                error_log("Counseling booking error: User not found with ID: " . $user_id);
+                return false;
+            }
+
             $customer_name = $user['customer_name'];
             $customer_email = $user['customer_email'];
+
+            $sql = "INSERT INTO orders (user_id, order_reference, total_amount, status, customer_name, customer_email, order_type, session_date, session_time, session_type, counselor_name, session_notes)
+                    VALUES (?, ?, ?, ?, ?, ?, 'counseling', ?, ?, ?, ?, ?)";
+
+            $stmt = $this->db->prepare($sql);
+
+            if (!$stmt) {
+                error_log("Counseling booking error: Failed to prepare insert query - " . $this->db->error);
+                return false;
+            }
 
             $stmt->bind_param("isdssssssss",
                 $user_id,
@@ -177,14 +193,17 @@ class Order extends db_connection {
             );
 
             if ($stmt->execute()) {
+                error_log("Counseling booking success: Order ID " . $this->db->insert_id . ", Reference: " . $booking_reference);
                 return [
                     'order_id' => $this->db->insert_id,
                     'booking_reference' => $booking_reference
                 ];
+            } else {
+                error_log("Counseling booking error: Execute failed - " . $stmt->error . " | SQL Error: " . $this->db->error);
+                return false;
             }
-            return false;
         } catch (Exception $e) {
-            error_log("Counseling booking error: " . $e->getMessage());
+            error_log("Counseling booking exception: " . $e->getMessage() . " | Trace: " . $e->getTraceAsString());
             return false;
         }
     }

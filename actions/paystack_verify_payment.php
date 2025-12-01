@@ -66,6 +66,17 @@ try {
     $booking_ref = null;
 
     if ($payment_type === 'counseling') {
+        // Log the data being passed to booking creation
+        log_payment_transaction('BOOKING_ATTEMPT', [
+            'user_id' => $user_id,
+            'counselor_name' => $service_data['counselor_name'],
+            'session_date' => $service_data['session_date'],
+            'session_time' => $service_data['session_time'],
+            'session_type' => $service_data['session_type'],
+            'cost' => $paid_amount,
+            'session_notes' => $service_data['session_notes'] ?? ''
+        ]);
+
         // Create counseling booking
         $booking_result = create_counseling_booking_ctr(
             $user_id,
@@ -78,8 +89,17 @@ try {
         );
 
         if (!$booking_result) {
-            throw new Exception('Failed to create booking');
+            log_payment_transaction('BOOKING_FAILED', [
+                'user_id' => $user_id,
+                'error' => 'Booking function returned false'
+            ]);
+            throw new Exception('Failed to create booking. Please contact support with reference: ' . $reference);
         }
+
+        log_payment_transaction('BOOKING_SUCCESS', [
+            'order_id' => $booking_result['order_id'],
+            'booking_reference' => $booking_result['booking_reference']
+        ]);
 
         $order_id = $booking_result['order_id'];
         $booking_ref = $booking_result['booking_reference'];
