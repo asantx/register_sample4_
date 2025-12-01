@@ -110,10 +110,44 @@ try {
 
     } elseif ($payment_type === 'premium') {
         // Activate premium membership
-        // You would update user's premium status in database
-        // update_user_premium_status($user_id, true, ...);
+        require_once '../controllers/customer_controller.php';
+
+        $plan_type = $service_data['plan'] ?? 'monthly';
+
+        log_payment_transaction('PREMIUM_ATTEMPT', [
+            'user_id' => $user_id,
+            'plan_type' => $plan_type,
+            'amount' => $paid_amount,
+            'reference' => $reference
+        ]);
+
+        $subscription_result = activate_premium_subscription_ctr(
+            $user_id,
+            $plan_type,
+            $paid_amount,
+            $reference
+        );
+
+        if (!$subscription_result) {
+            log_payment_transaction('PREMIUM_FAILED', [
+                'user_id' => $user_id,
+                'error' => 'Failed to activate premium subscription'
+            ]);
+            throw new Exception('Failed to activate premium subscription. Please contact support with reference: ' . $reference);
+        }
+
+        log_payment_transaction('PREMIUM_SUCCESS', [
+            'user_id' => $user_id,
+            'subscription_id' => $subscription_result['subscription_id'],
+            'expires_at' => $subscription_result['end_date']
+        ]);
+
+        // Update session to reflect premium status
+        $_SESSION['is_premium'] = true;
+        $_SESSION['premium_expires_at'] = $subscription_result['end_date'];
 
         $booking_ref = 'PREMIUM-' . $user_id . '-' . time();
+        $order_id = $subscription_result['subscription_id'];
 
     } elseif ($payment_type === 'date_idea') {
         // Process date idea purchase

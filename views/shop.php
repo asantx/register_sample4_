@@ -951,7 +951,7 @@ require_once '../settings/core.php';
                     </div>
                 </div>
 
-                <button class="premium-btn" onclick="showSubscriptionModal()">
+                <button class="premium-btn" onclick="initiatePremiumSubscription()">
                     <i class="fas fa-crown"></i> Subscribe Now - GH₵ 320/month
                 </button>
             </div>
@@ -1023,11 +1023,8 @@ require_once '../settings/core.php';
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        function showSubscriptionModal() {
-            <?php if (isUserLoggedIn()): ?>
-                const modal = new bootstrap.Modal(document.getElementById('subscriptionModal'));
-                modal.show();
-            <?php else: ?>
+        function initiatePremiumSubscription() {
+            <?php if (!isUserLoggedIn()): ?>
                 Swal.fire({
                     title: 'Login Required',
                     text: 'Please login or register to subscribe to premium',
@@ -1044,34 +1041,129 @@ require_once '../settings/core.php';
                         window.location.href = '../login/register.php';
                     }
                 });
+                return;
             <?php endif; ?>
-        }
 
-        // Handle subscription form
-        document.getElementById('subscriptionForm')?.addEventListener('submit', function(e) {
-            e.preventDefault();
-
+            // Prompt for email confirmation before payment
             Swal.fire({
-                title: 'Processing...',
-                text: 'Please wait while we process your subscription',
-                allowOutsideClick: false,
-                didOpen: () => {
-                    Swal.showLoading();
+                title: 'Confirm Your Email',
+                html: `
+                    <p>Please confirm your email address for your premium subscription:</p>
+                    <input type="email" id="premium-email" class="swal2-input" placeholder="Your email" value="<?php echo $_SESSION['user_email'] ?? ''; ?>">
+                    <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 10px; text-align: left;">
+                        <strong style="color: #d72660;">Premium Benefits:</strong>
+                        <ul style="margin: 10px 0 0 0; padding-left: 20px; font-size: 14px;">
+                            <li>Unlimited community access</li>
+                            <li>20% off all counseling sessions</li>
+                            <li>Access to premium date ideas</li>
+                            <li>Weekly expert advice emails</li>
+                            <li>Priority booking</li>
+                            <li>24/7 support</li>
+                        </ul>
+                    </div>
+                `,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#d72660',
+                confirmButtonText: 'Proceed to Payment',
+                cancelButtonText: 'Cancel',
+                preConfirm: () => {
+                    const email = document.getElementById('premium-email').value;
+                    if (!email || !email.includes('@')) {
+                        Swal.showValidationMessage('Please enter a valid email');
+                        return false;
+                    }
+                    return email;
                 }
-            });
+            }).then((result) => {
+                if (!result.isConfirmed) return;
 
-            // Simulate payment processing
-            setTimeout(() => {
+                const email = result.value;
+
                 Swal.fire({
-                    title: 'Welcome to Premium!',
-                    text: 'Your subscription has been activated successfully',
-                    icon: 'success',
-                    confirmButtonColor: '#d72660'
-                }).then(() => {
-                    location.reload();
+                    title: 'Initializing Payment...',
+                    text: 'Redirecting to payment gateway',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
                 });
-            }, 2000);
-        });
+
+                // Prepare subscription data
+                const subscriptionData = {
+                    plan: 'monthly',
+                    duration: 30
+                };
+
+                // Initialize Paystack payment
+                const paymentData = new FormData();
+                paymentData.append('email', email);
+                paymentData.append('amount', 320); // GH₵ 320/month
+                paymentData.append('payment_type', 'premium');
+                paymentData.append('service_data', JSON.stringify(subscriptionData));
+
+                fetch('../actions/paystack_init_transaction.php', {
+                    method: 'POST',
+                    body: paymentData
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Premium payment initialization response:', data);
+
+                    if (data.status && data.data && data.data.authorization_url) {
+                        // Redirect to Paystack payment page
+                        Swal.fire({
+                            title: 'Redirecting to Payment',
+                            html: `
+                                <p><strong>Subscription:</strong> Premium Monthly</p>
+                                <p><strong>Amount:</strong> GH₵ 320/month</p>
+                                <br>
+                                <p>You will be redirected to complete your payment securely...</p>
+                            `,
+                            icon: 'info',
+                            showConfirmButton: false,
+                            timer: 2000
+                        }).then(() => {
+                            window.location.href = data.data.authorization_url;
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Payment Initialization Failed',
+                            html: `
+                                <p>${data.message || 'Unable to initialize payment. Please try again.'}</p>
+                                <div style="margin-top: 15px; padding: 10px; background: #f8f9fa; border-radius: 5px; font-size: 12px; text-align: left;">
+                                    <strong>Debug Info:</strong><br>
+                                    Status: ${data.status}<br>
+                                    ${data.message ? 'Message: ' + data.message : ''}
+                                </div>
+                            `,
+                            icon: 'error',
+                            confirmButtonColor: '#d72660'
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Premium payment error:', error);
+                    Swal.fire({
+                        title: 'Error Processing Payment',
+                        html: `
+                            <p>Unable to connect to payment gateway.</p>
+                            <div style="margin-top: 15px; padding: 10px; background: #f8f9fa; border-radius: 5px; font-size: 12px; text-align: left;">
+                                <strong>Error details:</strong><br>
+                                ${error.message || 'Network error occurred'}
+                            </div>
+                        `,
+                        icon: 'error',
+                        confirmButtonColor: '#d72660'
+                    });
+                });
+            });
+        }
     </script>
 </body>
 
