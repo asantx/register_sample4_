@@ -1,6 +1,21 @@
 <?php
 session_start();
 require_once '../settings/core.php';
+require_once '../controllers/customer_controller.php';
+
+// Check if user is premium
+$isPremium = false;
+if (isUserLoggedIn() && isset($_SESSION['user_id'])) {
+    // Check from session first (updated after payment)
+    if (isset($_SESSION['is_premium']) && $_SESSION['is_premium']) {
+        $isPremium = true;
+    } else {
+        // Check from database
+        $isPremium = check_premium_status_ctr($_SESSION['user_id']);
+        // Update session
+        $_SESSION['is_premium'] = $isPremium;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -617,6 +632,11 @@ require_once '../settings/core.php';
                     <span class="love-heart">❤️</span> DistantLove
                 </a>
                 <div class="nav-links-modern">
+                    <?php if ($isPremium): ?>
+                    <span class="nav-link-modern" style="background: linear-gradient(135deg, #d72660 0%, #a8325e 100%); color: white; padding: 8px 16px; border-radius: 20px;">
+                        <i class="fas fa-crown"></i> Premium Member
+                    </span>
+                    <?php endif; ?>
                     <a href="shop.php" class="nav-link-modern">
                         <i class="fas fa-heart"></i> Home
                     </a>
@@ -894,10 +914,51 @@ require_once '../settings/core.php';
     <div class="container">
         <div class="premium-banner">
             <div class="premium-content">
-                <h2 class="premium-title">Upgrade to DistantLove Premium</h2>
-                <p class="premium-subtitle">Unlock exclusive features and take your relationship to the next level</p>
+                <?php if ($isPremium): ?>
+                    <h2 class="premium-title">✨ You're a Premium Member!</h2>
+                    <p class="premium-subtitle">Thank you for being part of our premium community. Enjoy all exclusive features!</p>
 
-                <div class="premium-features">
+                    <div class="premium-features">
+                        <div class="premium-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <div class="premium-feature-content">
+                                <h4>Unlimited Community Access</h4>
+                                <p>You have full access to all community posts and exclusive discussions</p>
+                            </div>
+                        </div>
+                        <div class="premium-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <div class="premium-feature-content">
+                                <h4>20% Off All Sessions</h4>
+                                <p>Your exclusive discount is automatically applied to all bookings</p>
+                            </div>
+                        </div>
+                        <div class="premium-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <div class="premium-feature-content">
+                                <h4>Premium Date Ideas Unlocked</h4>
+                                <p>Browse and access all exclusive creative date ideas</p>
+                            </div>
+                        </div>
+                        <div class="premium-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <div class="premium-feature-content">
+                                <h4>Priority Support Active</h4>
+                                <p>Get 24/7 priority support whenever you need assistance</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <a href="date_ideas.php" class="premium-btn" style="background: white; color: var(--primary-pink); display: inline-block; text-decoration: none;">
+                            <i class="fas fa-heart"></i> Explore Premium Features
+                        </a>
+                    </div>
+                <?php else: ?>
+                    <h2 class="premium-title">Upgrade to DistantLove Premium</h2>
+                    <p class="premium-subtitle">Unlock exclusive features and take your relationship to the next level</p>
+
+                    <div class="premium-features">
                     <div class="premium-feature">
                         <i class="fas fa-star"></i>
                         <div class="premium-feature-content">
@@ -942,9 +1003,10 @@ require_once '../settings/core.php';
                     </div>
                 </div>
 
-                <button class="premium-btn" onclick="initiatePremiumSubscription()">
-                    <i class="fas fa-crown"></i> Subscribe Now - GH₵ 320/month
-                </button>
+                    <button class="premium-btn" onclick="initiatePremiumSubscription()">
+                        <i class="fas fa-crown"></i> Subscribe Now - GH₵ 320/month
+                    </button>
+                <?php endif; ?>
             </div>
         </div>
     </div>

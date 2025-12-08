@@ -1,9 +1,21 @@
 <?php
 session_start();
 require_once '../settings/core.php';
+require_once '../controllers/customer_controller.php';
 
-// Check if user is premium (for demo purposes)
-$isPremium = false; // This would come from database in production
+// Check if user is premium
+$isPremium = false;
+if (isUserLoggedIn() && isset($_SESSION['user_id'])) {
+    // Check from session first (updated after payment)
+    if (isset($_SESSION['is_premium']) && $_SESSION['is_premium']) {
+        $isPremium = true;
+    } else {
+        // Check from database
+        $isPremium = check_premium_status_ctr($_SESSION['user_id']);
+        // Update session
+        $_SESSION['is_premium'] = $isPremium;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

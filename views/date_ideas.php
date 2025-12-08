@@ -623,8 +623,8 @@ if (isUserLoggedIn() && isset($_SESSION['user_id'])) {
                             <span class="idea-tag">Team Building</span>
                             <span class="idea-tag">Exciting</span>
                         </div>
-                        <button class="view-details-btn" onclick="showPremiumPrompt()">
-                            <i class="fas fa-crown"></i> Premium Content
+                        <button class="view-details-btn" onclick="<?php echo $isPremium ? 'alert(\'Full details coming soon!\')' : 'showPremiumPrompt()'; ?>">
+                            <i class="fas fa-<?php echo $isPremium ? 'info-circle' : 'crown'; ?>"></i> <?php echo $isPremium ? 'View Details' : 'Premium Content'; ?>
                         </button>
                     </div>
                 </div>
@@ -649,8 +649,8 @@ if (isUserLoggedIn() && isset($_SESSION['user_id'])) {
                             <span class="idea-tag">Romantic</span>
                             <span class="idea-tag">Adventurous</span>
                         </div>
-                        <button class="view-details-btn" onclick="showPremiumPrompt()">
-                            <i class="fas fa-crown"></i> Premium Content
+                        <button class="view-details-btn" onclick="<?php echo $isPremium ? 'alert(\'Full details coming soon!\')' : 'showPremiumPrompt()'; ?>">
+                            <i class="fas fa-<?php echo $isPremium ? 'info-circle' : 'crown'; ?>"></i> <?php echo $isPremium ? 'View Details' : 'Premium Content'; ?>
                         </button>
                     </div>
                 </div>
@@ -675,8 +675,8 @@ if (isUserLoggedIn() && isset($_SESSION['user_id'])) {
                             <span class="idea-tag">Cultural</span>
                             <span class="idea-tag">Special</span>
                         </div>
-                        <button class="view-details-btn" onclick="showPremiumPrompt()">
-                            <i class="fas fa-crown"></i> Premium Content
+                        <button class="view-details-btn" onclick="<?php echo $isPremium ? 'alert(\'Full details coming soon!\')' : 'showPremiumPrompt()'; ?>">
+                            <i class="fas fa-<?php echo $isPremium ? 'info-circle' : 'crown'; ?>"></i> <?php echo $isPremium ? 'View Details' : 'Premium Content'; ?>
                         </button>
                     </div>
                 </div>
