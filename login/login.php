@@ -314,18 +314,19 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: var(--gradient-primary);
-            display: none;
+            background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
+            display: flex;
             align-items: center;
             justify-content: center;
             z-index: 9999;
             opacity: 0;
-            transition: opacity 0.5s ease-out;
+            visibility: hidden;
+            transition: opacity 0.4s ease-in-out, visibility 0.4s;
         }
 
         .loading-overlay.active {
-            display: flex;
             opacity: 1;
+            visibility: visible;
         }
 
         .loading-content {
@@ -507,14 +508,14 @@
                             const overlay = document.getElementById('loadingOverlay');
                             overlay.classList.add('active');
 
-                            // Wait for animation then redirect
+                            // Smooth redirect without popup using replace
                             setTimeout(function() {
                                 if (response.role === '2') {
-                                    window.location.href = '../admin/dashboard.php';
+                                    window.location.replace('../admin/dashboard.php');
                                 } else {
-                                    window.location.href = '../views/shop.php';
+                                    window.location.replace('../views/shop.php');
                                 }
-                            }, 1500);
+                            }, 800);
                         } else {
                             submitBtn.html(originalText);
                             submitBtn.prop('disabled', false);
