@@ -654,7 +654,13 @@ if (isUserLoggedIn() && isset($_SESSION['user_id'])) {
     <!-- Hero Section -->
     <div class="hero-section">
         <div class="container">
-            <h1 class="hero-title">Welcome to DistantLove</h1>
+            <h1 class="hero-title">
+                <?php if (isUserLoggedIn() && isset($_SESSION['user_name'])): ?>
+                    Welcome Back, <?php echo htmlspecialchars($_SESSION['user_name']); ?>! <span class="love-heart">❤️</span>
+                <?php else: ?>
+                    Welcome to DistantLove
+                <?php endif; ?>
+            </h1>
             <p class="hero-subtitle">Your Complete Hub for Thriving Long Distance Relationships</p>
 
             <div class="hero-stats">
